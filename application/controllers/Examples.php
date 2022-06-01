@@ -23,6 +23,30 @@ class Examples extends CI_Controller {
 	}
 
 
+	/*<a href='<?php echo site_url('examples/tabla_afiliados')?>'>Afiliados</a> |
+			<a href='<?php echo site_url('examples/tabla_mujeres_lideres')?>'>Mujeres Lideres</a> |*/
+	
+	public function tabla_afiliados(){
+		$crud = new grocery_CRUD;
+		$crud->set_language('spanish-uy');
+		$crud->set_table('afiliados');
+		$crud->set_subject('Afiliado');
+		// $crud->set_primary_key('cuit','afiliados');
+		// $crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
+		$crud->columns(['comuna','barrio','nombre','apellido','sexo','dni','fecha_nacimiento','fecha_afiliacion','ocupacion','direccion']);
+		$output = $crud->render();
+		$this->_example_output($output);
+	}
+	public function tabla_mujeres_lideres(){
+		$crud = new grocery_CRUD;
+		$crud->set_language('spanish-uy');
+		$crud->set_table('mujeres_lideres');
+		$crud->set_subject('Mujer Lider');
+		$crud->set_primary_key('cuit','mujeres_lideres');
+		$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
+		$output = $crud->render();
+		$this->_example_output($output);
+	}
 
 	public function tabla_gabinete(){
 		$crud = new grocery_CRUD;

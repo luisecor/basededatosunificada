@@ -21,6 +21,8 @@ foreach($css_files as $file): ?>
 			<a href='<?php echo site_url('examples/tabla_jdg')?>'>JDG</a> |
 			<a href='<?php echo site_url('examples/tabla_dg')?>'>DG</a> |
 			<a href='<?php echo site_url('examples/tabla_go')?>'>GO</a> |
+			<a href='<?php echo site_url('examples/tabla_afiliados')?>'>Afiliados</a> |
+			<a href='<?php echo site_url('examples/tabla_mujeres_lideres')?>'>Mujeres Lideres</a> |
 		<!-- <a href='<?php echo site_url('examples/roles_asignados')?>'>Roles Asignados</a> |
 		<a href='<?php echo site_url('examples/tabla_roles')?>'>Tabla de Roles</a> |
 		<a href='<?php echo site_url('examples/tabla_acciones')?>'>Tabla de Acciones</a> |
