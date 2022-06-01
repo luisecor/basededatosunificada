@@ -72,22 +72,41 @@ class Examples extends CI_Controller {
 		$crud = new grocery_CRUD;
 		$crud->set_language('spanish-uy');
 		$crud->set_table('bada_celulares_copia');
-		$crud->set_subject('Celular','Celulares');
-        $crud->columns(['virtual','cuit','celular_bada','mail']);
+		$crud->set_subject('Usuario','Usuarios');
+       
 		$crud->display_as('virtual', 'Cuit');
 		$crud->display_as('cuit', 'Nombre - Apellido');
         $crud->display_as('celular_bada','Telefono');
         $crud->display_as('mail','Email');
-		$crud->fields(['cuit','celular_bada']);
+		
 		$crud->set_primary_key('cuit','sas_activo');
 		$crud->set_relation('cuit','sas_activo','{nombre} - {apellido}');
-		$crud->unset_add();
-		$crud->unset_clone();
-		$crud->unset_delete();
+
+		$crud->set_primary_key('cuit','bada_celulares_copia');
+		$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
+
+		$crud->fields(['celular_bada', 'tags']);
+		$crud->columns(['virtual','cuit','celular_bada','mail','tags']);
+		// $crud->unset_add();
+		// $crud->unset_clone();
+		// $crud->unset_delete();
+		$crud->add_action('Cambiar Nombre o Apellido','https://www.grocerycrud.com/v1.x/assets/uploads/general/smiley.png','examples/cambiar_nombre_apellido');
 		$output = $crud->render();
 		$this->_example_output($output);
 
 	}
+
+	public function cambiar_nombre_apellido($id = null){
+		$query = $this->db->query('SELECT cuit, nombre, apellido FROM sas_activo WHERE cuit = '. $id .'');
+		
+		if ($query->result()){
+			redirect('examples/sas_activos/edit/'.$id.'');
+		} else
+		show_error('El cuit solicitado no se encuentra en la base de datos de SAS ACTIVOS',404,'CUIT no encontrado en la base de datos SAS_ACTIVO');
+		
+				
+	}
+
 
 	public function tabla_roles(){
 		$crud = new Grocery_CRUD();
@@ -126,10 +145,50 @@ class Examples extends CI_Controller {
 		$crud->set_primary_key('cuit','sas_activo');
 		$crud->set_relation('cuit','sas_activo','{nombre} - {apellido}');
 		$crud->set_relation('id_rol','rol', '{nombre}');
-		$crud->fields(['id_rol']);
+		$crud->fields(['rol']);
 		$output = $crud->render();
 		$this->_example_output($output);
 		
+	}
+
+	public function tabla_tags(){
+		$crud = new Grocery_CRUD();
+		$crud->set_language('spanish-uy');
+		$crud->set_table('tags');
+		$crud->columns('nombre','descripcion');
+		$crud->fields('nombre','descripcion');
+		$output = $crud->render();
+		$this->_example_output($output);
+	}
+
+	public function tabla_tag_asignado(){
+		$crud = new Grocery_CRUD();
+		$crud->set_language('spanish-uy');
+		$crud->set_table('bada_celulares_copia');
+		
+
+		$crud->set_primary_key('cuit','sas_activo');
+		$crud->set_relation('cuit','sas_activo','{nombre} - {apellido}');
+	
+		$crud->set_primary_key('cuit','bada_celulares_copia');
+		$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
+
+		$crud->display_as('virtual' , 'Cuit');
+		$crud->display_as('cuit' , 'Nombre - Apellido');
+
+		$crud->columns('virtual','cuit','tags');
+		$crud->fields('tags');
+		$output = $crud->render();
+		$this->_example_output($output);
+	}
+
+	public function tabla_tag_asignado2(){
+		$crud = new Grocery_CRUD();
+		$crud->set_language('spanish-uy');
+		$crud->set_table('cuit_tag');
+
+		
+
 	}
 
 	public function tabla_facts(){
@@ -141,7 +200,7 @@ class Examples extends CI_Controller {
 
 	}
 
-	public function taba_acciones(){
+	public function tabla_acciones(){
 		$crud = new Grocery_CRUD();
 		$crud->set_language('spanish-uy');
 		$crud->set_table('acciones');

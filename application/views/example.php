@@ -10,13 +10,15 @@ foreach($css_files as $file): ?>
 </head>
 <body>
 	<div>
-		<a href='<?php echo site_url('examples/bada_celulares')?>'>Celulares</a> |
+		<a href='<?php echo site_url('examples/bada_celulares')?>'>Usuarios Bada</a> |
 		<a href='<?php echo site_url('examples/sas_activos')?>'>Activos</a> |
 		<a href='<?php echo site_url('examples/tabla_facts')?>'>Tabla de Historicos</a> |
-		<a href='<?php echo site_url('examples/roles_asignados')?>'>Roles Asignados</a> |
+		<!-- <a href='<?php echo site_url('examples/roles_asignados')?>'>Roles Asignados</a> |
 		<a href='<?php echo site_url('examples/tabla_roles')?>'>Tabla de Roles</a> |
-		<a href='<?php echo site_url('examples/taba_acciones')?>'>Tabla de Acciones</a> |
-		<a href='<?php echo site_url('examples/taba_rol_acciones')?>'>Tabla de Rol-Acciones</a> |
+		<a href='<?php echo site_url('examples/tabla_acciones')?>'>Tabla de Acciones</a> |
+		<a href='<?php echo site_url('examples/taba_rol_acciones')?>'>Tabla de Rol-Acciones</a> | -->
+		<a href='<?php echo site_url('examples/tabla_tags')?>'>Tabla de Tags</a> |
+		<!-- <a href='<?php echo site_url('examples/tabla_tag_asignado')?>'>Tabla de CUIT-TAG</a> | -->
 <!-- 		 
 		<a href='<?php echo site_url('examples/employees_management')?>'>Employees</a> |		 
 		<a href='<?php echo site_url('examples/film_management')?>'>Films</a> |
