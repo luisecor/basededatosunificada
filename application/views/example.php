@@ -12,7 +12,15 @@ foreach($css_files as $file): ?>
 	<div>
 		<a href='<?php echo site_url('examples/bada_celulares')?>'>Usuarios Bada</a> |
 		<a href='<?php echo site_url('examples/sas_activos')?>'>Activos</a> |
-		<a href='<?php echo site_url('examples/tabla_facts')?>'>Tabla de Historicos</a> |
+		<!-- <a href='<?php echo site_url('examples/tabla_facts')?>'>Tabla de Historicos</a> | -->
+			<a href='<?php echo site_url('examples/tabla_gabinete')?>'>Gabinete</a> |
+			<a href='<?php echo site_url('examples/tabla_secretarios')?>'>Secretarios</a> |
+			<a href='<?php echo site_url('examples/tabla_SubSecretarios')?>'>SubSecretarios</a> |
+			<a href='<?php echo site_url('examples/tabla_ptesComunas')?>'>Ptes. Comunas</a> |
+			<a href='<?php echo site_url('examples/tabla_Legisladores')?>'>Legisladores</a> |
+			<a href='<?php echo site_url('examples/tabla_jdg')?>'>JDG</a> |
+			<a href='<?php echo site_url('examples/tabla_dg')?>'>DG</a> |
+			<a href='<?php echo site_url('examples/tabla_go')?>'>GO</a> |
 		<!-- <a href='<?php echo site_url('examples/roles_asignados')?>'>Roles Asignados</a> |
 		<a href='<?php echo site_url('examples/tabla_roles')?>'>Tabla de Roles</a> |
 		<a href='<?php echo site_url('examples/tabla_acciones')?>'>Tabla de Acciones</a> |

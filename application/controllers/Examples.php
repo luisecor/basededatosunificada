@@ -68,6 +68,97 @@ class Examples extends CI_Controller {
 	// 		$this->_example_output($output);
 	// }
 
+
+		public function tabla_gabinete(){
+			$crud = new grocery_CRUD;
+			$crud->set_language('spanish-uy');
+			$crud->set_table('gabinete');
+			$crud->set_subject('Personal');
+			$crud->set_primary_key('cuit','gabinete');
+			$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
+			$output = $crud->render();
+			$this->_example_output($output);
+		}
+
+		public function tabla_secretarios(){
+			$crud = new grocery_CRUD;
+			$crud->set_language('spanish-uy');
+			$crud->set_table('secretarios');
+			$crud->set_subject('Personal');
+			$crud->set_primary_key('cuit','secretarios');
+			$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
+			$output = $crud->render();
+			$this->_example_output($output);
+		}
+
+		public function tabla_SubSecretarios(){
+			$crud = new grocery_CRUD;
+			$crud->set_language('spanish-uy');
+			$crud->set_table('sub_secretarios');
+			$crud->set_subject('Personal');
+			$crud->set_primary_key('cuit','sub_secretarios');
+			$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
+			$output = $crud->render();
+			$this->_example_output($output);
+		}
+
+		public function tabla_ptesComunas(){
+			$crud = new grocery_CRUD;
+			$crud->set_language('spanish-uy');
+			$crud->set_table('ptes_comunas');
+			$crud->set_subject('Personal');
+			$crud->set_primary_key('cuit','ptes_comunas');
+			$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
+			$output = $crud->render();
+			$this->_example_output($output);
+		}
+
+		public function tabla_Legisladores(){
+			$crud = new grocery_CRUD;
+			$crud->set_language('spanish-uy');
+			$crud->set_table('legisladores');
+			$crud->set_subject('Personal');
+			$crud->set_primary_key('cuit','legisladores');
+			$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
+			$output = $crud->render();
+			$this->_example_output($output);
+		}
+
+		public function tabla_jdg(){
+			$crud = new grocery_CRUD;
+			$crud->set_language('spanish-uy');
+			$crud->set_table('jdg');
+			$crud->set_subject('Personal');
+			$crud->set_primary_key('cuit','jdg');
+			$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
+			$output = $crud->render();
+			$this->_example_output($output);
+		}
+
+		public function tabla_dg(){
+			$crud = new grocery_CRUD;
+			$crud->set_language('spanish-uy');
+			$crud->set_table('dg');
+			$crud->set_subject('Personal');
+			$crud->set_primary_key('cuit','dg');
+			$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
+			$output = $crud->render();
+			$this->_example_output($output);
+		}
+
+		public function tabla_go(){
+			$crud = new grocery_CRUD;
+			$crud->set_language('spanish-uy');
+			$crud->set_table('go');
+			$crud->set_subject('Personal');
+			$crud->set_primary_key('cuit','go');
+			$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
+			$output = $crud->render();
+			$this->_example_output($output);
+		}
+
+
+
 	public function bada_celulares(){
 		$crud = new grocery_CRUD;
 		$crud->set_language('spanish-uy');
@@ -87,9 +178,9 @@ class Examples extends CI_Controller {
 
 		$crud->fields(['celular_bada', 'tags']);
 		$crud->columns(['virtual','cuit','celular_bada','mail','tags']);
-		// $crud->unset_add();
-		// $crud->unset_clone();
-		// $crud->unset_delete();
+		$crud->unset_add();
+		$crud->unset_clone();
+		$crud->unset_delete();
 		$crud->add_action('Cambiar Nombre o Apellido','https://www.grocerycrud.com/v1.x/assets/uploads/general/smiley.png','examples/cambiar_nombre_apellido');
 		$output = $crud->render();
 		$this->_example_output($output);
