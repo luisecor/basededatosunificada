@@ -14,7 +14,11 @@ class Examples extends CI_Controller {
 
 	public function _example_output($output = null)
 	{
-		$this->load->view('example.php',(array)$output);
+		$this->load->view('index/header');
+        $this->load->view('index/navBar/navBarGrocery');
+        $this->load->view('example.php',(array)$output);
+        $this->load->view('index/footer');
+		
 	}
 
 	public function index()
@@ -31,8 +35,6 @@ class Examples extends CI_Controller {
 		$crud->set_language('spanish-uy');
 		$crud->set_table('afiliados');
 		$crud->set_subject('Afiliado');
-		// $crud->set_primary_key('cuit','afiliados');
-		// $crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
 		$crud->columns(['comuna','barrio','nombre','apellido','sexo','dni','fecha_nacimiento','fecha_afiliacion','ocupacion','direccion']);
 		$output = $crud->render();
 		$this->_example_output($output);
@@ -141,7 +143,7 @@ class Examples extends CI_Controller {
 	public function bada_celulares(){
 		$crud = new grocery_CRUD;
 		$crud->set_language('spanish-uy');
-		$crud->set_table('bada_celulares_copia');
+		$crud->set_table('bada_celulares');
 		$crud->set_subject('Usuario','Usuarios');
        
 		$crud->display_as('virtual', 'Cuit');
@@ -152,7 +154,7 @@ class Examples extends CI_Controller {
 		$crud->set_primary_key('cuit','sas_activo');
 		$crud->set_relation('cuit','sas_activo','{nombre} - {apellido}');
 
-		$crud->set_primary_key('cuit','bada_celulares_copia');
+		$crud->set_primary_key('cuit','bada_celulares');
 		$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
 
 		$crud->fields(['celular_bada', 'tags']);
@@ -225,8 +227,8 @@ class Examples extends CI_Controller {
 		$crud = new Grocery_CRUD();
 		$crud->set_language('spanish-uy');
 		$crud->set_table('tags');
-		$crud->columns('nombre','descripcion');
-		$crud->fields('nombre','descripcion');
+		$crud->columns('nombre');
+		$crud->fields('nombre');
 		$output = $crud->render();
 		$this->_example_output($output);
 	}
@@ -234,13 +236,13 @@ class Examples extends CI_Controller {
 	public function tabla_tag_asignado(){
 		$crud = new Grocery_CRUD();
 		$crud->set_language('spanish-uy');
-		$crud->set_table('bada_celulares_copia');
+		$crud->set_table('bada_celulares');
 		
 
 		$crud->set_primary_key('cuit','sas_activo');
 		$crud->set_relation('cuit','sas_activo','{nombre} - {apellido}');
 	
-		$crud->set_primary_key('cuit','bada_celulares_copia');
+		$crud->set_primary_key('cuit','bada_celulares');
 		$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
 
 		$crud->display_as('virtual' , 'Cuit');
@@ -284,11 +286,14 @@ class Examples extends CI_Controller {
 		$crud->set_language('spanish-uy');
 		$crud->set_table('sas_activo');
 		$crud->set_subject('Activo','Activos');
-        $crud->columns(['cuit','nombre','apellido']);
+        $crud->columns(['cuit','nombre','apellido','tags']);
 		$crud->display_as('cuit', 'CUIT');
         $crud->display_as('nombre','NOMBRE');
         $crud->display_as('apellido','APELLIDO');
-		$crud->set_primary_key('cuit');
+
+		$crud->set_primary_key('cuit','sas_activo');
+		$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
+		
 		
 		$crud->unset_add();
 		$crud->unset_clone();

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PHP grocery CRUD
  *
@@ -368,7 +369,7 @@ class grocery_CRUD_Field_Types
 							|| substr($value,-5) == '.tiff')
 							? true : false;
 
-					$file_url = base_url().$field_info->extras->upload_path."/$value";
+					$file_url = base_url.$field_info->extras->upload_path."/$value";
 
 					$file_url_anchor = '<a href="'.$file_url.'"';
 					if($is_image)
@@ -1502,7 +1503,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 				$options = array(
 					'upload_dir' 		=> $upload_info->upload_path.'/',
 					'param_name'		=> $this->_unique_field_name($state_info->field_name),
-					'upload_url'		=> base_url().$upload_info->upload_path.'/',
+					'upload_url'		=> base_url.$upload_info->upload_path.'/',
 					'accept_file_types' => $reg_exp,
 					'max_file_size'		=> $max_file_size_bytes
 				);
@@ -2159,24 +2160,24 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 
 	public function set_css($css_file)
 	{
-		$this->css_files[sha1($css_file)] = base_url().$css_file;
+		$this->css_files[sha1($css_file)] = base_url.$css_file;
 	}
 
 	public function set_js($js_file)
 	{
-		$this->js_files[sha1($js_file)] = base_url().$js_file;
+		$this->js_files[sha1($js_file)] = base_url.$js_file;
 	}
 
 	public function set_js_lib($js_file)
 	{
-		$this->js_lib_files[sha1($js_file)] = base_url().$js_file;
-		$this->js_files[sha1($js_file)] = base_url().$js_file;
+		$this->js_lib_files[sha1($js_file)] = base_url.$js_file;
+		$this->js_files[sha1($js_file)] = base_url.$js_file;
 	}
 
 	public function set_js_config($js_file)
 	{
-		$this->js_config_files[sha1($js_file)] = base_url().$js_file;
-		$this->js_files[sha1($js_file)] = base_url().$js_file;
+		$this->js_config_files[sha1($js_file)] = base_url.$js_file;
+		$this->js_files[sha1($js_file)] = base_url.$js_file;
 	}
 
 	public function is_IE7()
@@ -2276,11 +2277,11 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		{
 			/** Initialize JavaScript variables */
 			$js_vars =  array(
-					'default_javascript_path'	=> base_url().$this->default_javascript_path,
-					'default_css_path'			=> base_url().$this->default_css_path,
-					'default_texteditor_path'	=> base_url().$this->default_texteditor_path,
-					'default_theme_path'		=> base_url().$this->default_theme_path,
-					'base_url'				 	=> base_url()
+					'default_javascript_path'	=> base_url.$this->default_javascript_path,
+					'default_css_path'			=> base_url.$this->default_css_path,
+					'default_texteditor_path'	=> base_url.$this->default_texteditor_path,
+					'default_theme_path'		=> base_url.$this->default_theme_path,
+					'base_url'				 	=> base_url
 			);
 			$this->_add_js_vars($js_vars);
 
@@ -2674,7 +2675,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 
 	protected function get_upload_file_readonly_input($field_info,$value)
 	{
-		$file = $file_url = base_url().$field_info->extras->upload_path.'/'.$value;
+		$file = $file_url = base_url.$field_info->extras->upload_path.'/'.$value;
 
 		$value = !empty($value) ? '<a href="'.$file.'" target="_blank">'.$value.'</a>' : '';
 
@@ -2799,7 +2800,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			var error_max_file_size 		= "'.str_replace("{max_file_size}",$max_file_size_ui,$this->l('error_max_file_size')).'";
 			var error_min_file_size 		= "'.$this->l('error_min_file_size').'";
 
-			var base_url = "'.base_url().'";
+			var base_url = "'.base_url.'";
 			var upload_a_file_string = "'.$this->l('form_upload_a_file').'";
 		');
 
@@ -2824,7 +2825,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 
 		$this->set_css($this->default_css_path.'/jquery_plugins/file_upload/fileuploader.css');
 
-		$file_url = base_url().$field_info->extras->upload_path.'/'.$value;
+		$file_url = base_url.$field_info->extras->upload_path.'/'.$value;
 
 		$input .= "<div id='uploader_$unique' rel='$unique' class='grocery-crud-uploader' style='$uploader_display_none'></div>";
 		$input .= "<div id='success_$unique' class='upload-success-url' style='$file_display_none padding-top:7px;'>";
