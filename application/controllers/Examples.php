@@ -6,10 +6,10 @@ class Examples extends CI_Controller {
 	{
 		parent::__construct();
 
-		$this->load->database();
-		$this->load->helper('url');
+		// $this->load->database();
+		// $this->load->helper('url');
 
-		$this->load->library('grocery_CRUD');
+		// $this->load->library('grocery_CRUD');
 	}
 
 	public function _example_output($output = null)
