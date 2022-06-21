@@ -23,5 +23,5 @@
 
 
 </div>
-<script src="../js/hola.js"></script>
+<script src="js/hola.js"></script>
     
