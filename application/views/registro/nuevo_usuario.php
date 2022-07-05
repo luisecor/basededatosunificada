@@ -9,37 +9,33 @@
     <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
   </symbol>
 </svg>
-<div class="row">
-    <div>
-        <h2 class="text-center"> Bienvenido a la </h2>
-        <h1 class="text-center"> Base de Datos Unificada </h1>
-        <p class="text-center">Para poder utilizar la BDU debe solicitar acceso y los persisos necesarios a su nivel.</p>
-    </div>
-<form action="<?=base_url('confirm')?>" method="post" id="formLogin">
-    <?php if(isset($error)) 
+
+<form action="<?=base_url('registroVerificar')?>" method="post" id="formLogin">
+    <?php if(isset($error)) { 
     echo 
     '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-    '. $error . '
+    
+    <ul class="list-group">';
+
+    foreach ($error as $err) 
+    echo  '<li class="list-group-item list-group-item-danger"> <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>' . $err . "</li>";
+    echo '
+    </ul>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>' ?>
+    </div>'; } ?>
     <div class="mb-3">
-        <label for="cuit_username" class="form-label">CUIT - Usuario</label>
-        <input type="text" name="user_name" class="form-control" id="cuit_username" aria-describedby="emailHelp" required>
-        <div id="emailHelp" class="form-text">Ingrese CUIT o Usuario</div>
+        <label for="cuit_username" class="form-label">CUIT</label>
+        <input type="text" name="cuit" class="form-control <?php if(isset($tipo) && in_array("1", $tipo)) echo "is-invalid"?>" id="cuit" aria-describedby="emailHelp"  required <?php if(isset($usuario)) echo "placeholder=".$usuario['cuit'] ?> >
+        <div id="emailHelp" class="form-text">Ingrese CUIT</div>
+    </div>
+    <div class="mb-3">
+        <label for="cuit_username" class="form-label">Usuario</label>
+        <input type="text" name="user_name" class="form-control <?php if(isset($tipo) && in_array("2", $tipo)) echo "is-invalid"?>" id="username" aria-describedby="emailHelp" required <?php if(isset($usuario)) echo "placeholder=".$usuario['user_name'] ?>>
+        <div id="emailHelp" class="form-text">Ingrese Usuario</div>
     </div>
     <div class="mb-3">
         <label for="password" class="form-label">Contraseña</label>
         <input type="password" name="password" class="form-control" id="password" minlength="8" maxlenght="10" required>
     </div>
-    <div class="mb-3 form-check">
-        <input type="checkbox" name="sesion_abierta" class="form-check-input" id="sesion_abierta">
-        <label class="form-check-label" for="sesion_abierta">Mantener sesion abierta</label>
-    </div>
     <button type="submit" class="btn btn-primary">Ingresar</button>
 </form>
-
-
-</div>
-<script src="<?=base_url?>js/hola.js"></script>
-    

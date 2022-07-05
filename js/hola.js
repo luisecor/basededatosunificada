@@ -26,10 +26,10 @@ async function verificarDatos(e){
 
     if (verifyCuit(user_name.replaceAll('-',''))){
         console.log("ES CUIT");
-        form.submit(user_name,password,chkbox? true : false);
         
     } else
         console.log("ES USER");
+    form.submit(user_name,password,chkbox? true : false);
 
     console.log(user_name.replaceAll('-',''));
     console.log(password);
