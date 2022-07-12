@@ -8,6 +8,7 @@ class LoginController extends CI_Controller {
         parent::__construct();
         $this->load->helper('url');
         $this->load->model('login_model');
+        $this->load->model('logs_model');
     }
     
 
@@ -33,8 +34,10 @@ class LoginController extends CI_Controller {
         if ( isset($result))
             if ($result && password_verify($password,$result->password)){
                 $this->session->set_userdata(array(
-                    'user_name' => $result->user_name
+                    'user_name' => $result->user_name,
+                    'cuit' => $result->cuit
                 ));
+                $this->logs_model->insert_log_ingreso($result->cuit, $result->user_name);
                 return $this->ingreso();  
             } 
         $data = [ 'error' => 'Verifique usuario, contraseña y vuelva a intentar'];

@@ -601,7 +601,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 				$limit_page = ( ($state_info->page-1) * $state_info->per_page );
 				$this->limit($state_info->per_page, $limit_page);
 			}
-		}
+		} 
 
 		if(!empty($state_info->order_by))
 		{
