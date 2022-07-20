@@ -4,7 +4,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
    
     document.querySelector("#formRegistro").addEventListener('submit', verificarDatos); 
     let cuit = document.querySelector('#cuit');
-    cuit.onchange = function () { cambiar(cuit)}
+    let user_name = document.querySelector('#username');
+    cuit.onchange = function () { cambiar(cuit)};
+    user_name.onchange = function () { cambiar(user_name)};
 });
 
 document.querySelector("#cancelar").addEventListener('click',volver);
@@ -14,7 +16,7 @@ function volver(){
 }
 
 function cambiar (cuit){
-    cuit.value = cuit.value.replaceAll('-','');
+    cuit.value = cuit.value.replaceAll('-','').replaceAll('_','');
     
 }
 

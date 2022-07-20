@@ -9,6 +9,7 @@ class LoginController extends CI_Controller {
         $this->load->helper('url');
         $this->load->model('login_model');
         $this->load->model('logs_model');
+        $this->load->model('user_model');
     }
     
 
@@ -33,9 +34,11 @@ class LoginController extends CI_Controller {
 
         if ( isset($result))
             if ($result && password_verify($password,$result->password)){
+                $acceso = $this->user_model->get_access($result->cuit);
                 $this->session->set_userdata(array(
                     'user_name' => $result->user_name,
-                    'cuit' => $result->cuit
+                    'cuit' => $result->cuit,
+                    'acceso' => $acceso
                 ));
                 $this->logs_model->insert_log_ingreso($result->cuit, $result->user_name);
                 return $this->ingreso();  
