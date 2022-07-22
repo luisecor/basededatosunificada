@@ -58,7 +58,7 @@
             </ul>
            
             <li class="nav-item dropdown justify-content-end">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <!-- <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Carga Masiva
             </a>
             <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
@@ -80,7 +80,7 @@
                 <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/tabla_Afiliados')?>'>Afiliados</a></li>
                 <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/tabla_tags')?>'>TAGS</a></li>
                
-            </ul>
+            </ul> -->
 
             <li class="nav-item dropdown justify-content-end">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

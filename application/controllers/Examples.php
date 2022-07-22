@@ -9,7 +9,8 @@ class Examples extends CI_Controller {
 	use UsuariosController;
 	
 
-
+	
+	
 	public function __construct()
 	{
 		parent::__construct();
@@ -41,6 +42,19 @@ class Examples extends CI_Controller {
 		
 	}
 
+	protected function acceso_denegado(){
+		$user_name = strtoupper($this->session->user_name);
+				$data['message'] = " {$user_name} no tiene acceso a la tabla solicitada";
+				$data['status_code'] = 404;
+				$data['heading'] = "ACCESO DENEGADO";
+
+
+				$this->load->view('index/header');
+				$this->load->view('index/navBar/navBarGrocery');
+				$this->load->view('errors/html/error_general',$data);
+				$this->load->view('index/footer');
+	}
+
 	public function tabla_afiliados(){
 		if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || 
 			in_array('AFILIADOS', array_column($this->session->acceso,'tabla')) ){
@@ -59,7 +73,7 @@ class Examples extends CI_Controller {
 				$output = $crud->render();
 				$this->_example_output($output);
 			} else {
-				show_error(" {strtoupper($this->session->user_name)} no tiene acceso a la tabla solicitada",404,"ACCESO DENEGADO");
+				$this->acceso_denegado();				
 			}
 
 		
@@ -82,6 +96,8 @@ class Examples extends CI_Controller {
 				
 				$output = $crud->render();
 				$this->_example_output($output);
+			}else {
+				$this->acceso_denegado();				
 			}
 	}
 
@@ -103,6 +119,8 @@ class Examples extends CI_Controller {
 				
 				$output = $crud->render();
 				$this->_example_output($output);
+			} else {
+				$this->acceso_denegado();				
 			}
 	}
 
@@ -124,6 +142,8 @@ class Examples extends CI_Controller {
 				
 				$output = $crud->render();
 				$this->_example_output($output);
+			} else {
+				$this->acceso_denegado();				
 			}
 	}
 
@@ -145,6 +165,8 @@ class Examples extends CI_Controller {
 
 				$output = $crud->render();
 				$this->_example_output($output);
+			} else {
+				$this->acceso_denegado();				
 			}
 	}
 
@@ -166,6 +188,8 @@ class Examples extends CI_Controller {
 
 				$output = $crud->render();
 				$this->_example_output($output);
+			} else {
+				$this->acceso_denegado();				
 			}
 	}
 
@@ -187,6 +211,8 @@ class Examples extends CI_Controller {
 
 				$output = $crud->render();
 				$this->_example_output($output);
+			} else {
+				$this->acceso_denegado();				
 			}
 	}
 
@@ -229,6 +255,8 @@ class Examples extends CI_Controller {
 
 				$output = $crud->render();
 				$this->_example_output($output);
+			} else {
+				$this->acceso_denegado();				
 			}
 	}
 
@@ -250,6 +278,8 @@ class Examples extends CI_Controller {
 
 				$output = $crud->render();
 				$this->_example_output($output);
+			} else {
+				$this->acceso_denegado();				
 			}
 	}
 
@@ -292,6 +322,8 @@ class Examples extends CI_Controller {
 
 				$output = $crud->render();
 				$this->_example_output($output);
+			} else {
+				$this->acceso_denegado();				
 			}
 
 	}
@@ -392,6 +424,8 @@ class Examples extends CI_Controller {
 
 				$output = $crud->render();
 				$this->_example_output($output);
+			} else {
+				$this->acceso_denegado();				
 			}
 
 	}
