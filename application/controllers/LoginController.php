@@ -38,7 +38,10 @@ class LoginController extends CI_Controller {
                 $this->session->set_userdata(array(
                     'user_name' => $result->user_name,
                     'cuit' => $result->cuit,
-                    'acceso' => $acceso
+                    'tipo_usuario' => $result->tipo_usuario,
+                    'carga_masiva' => $result->carga_masiva,
+                    'acceso' => $acceso,
+                    
                 ));
                 $this->logs_model->insert_log_ingreso($result->cuit, $result->user_name);
                 return $this->ingreso();  

@@ -145,6 +145,11 @@ class Grocery_crud_model  extends CI_Model  {
     	$this->db->where( $key, $value, $escape);
     }
 
+	function where_in($key , $value = [], $escape = TRUE)
+	{
+		$this->db->where_in($key , $value, $escape);
+	}
+
     function or_where($key, $value = NULL, $escape = TRUE)
     {
     	$this->db->or_where( $key, $value, $escape);

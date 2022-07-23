@@ -58,39 +58,44 @@
             </ul>
            
             <li class="nav-item dropdown justify-content-end">
-            <!-- <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Carga Masiva
-            </a>
-            <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/guia_uso')?>'>Guia de uso</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/gabinete')?>'>Gabinete</a></li>
-                <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/tabla_secretarios')?>'>Secretarios</a></li>
-                <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/tabla_SubSecretarios')?>'>SubSecretarios</a></li>
-                <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/tabla_ptesComunas')?>'>Ptes. Comunas</a></li>
-                <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/tabla_Legisladores')?>'>Legisladores</a></li>
-                <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/tabla_JDG')?>'>JDG</a></li>
-                <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/tabla_DG')?>'>DG</a></li>
-                <li><a class="dropdown-item" href='<?php echo site_url('excarga_masivaamples/tabla_GO')?>'>GO</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/sas_activos')?>'>SAS Activos</a></li>
-                <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/tabla_mujeres_lideres')?>'>Mujeres Lideres</a></li>
-                <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/bada_celulares')?>'>Usuarios Bada</a></li>
-                <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/tabla_Afiliados')?>'>Afiliados</a></li>
-                <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/tabla_tags')?>'>TAGS</a></li>
-               
-            </ul> -->
+            
+            <?php if (in_array('SI', array_column($this->session->acceso,'carga_masiva')))  {  ?> 
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Carga Masiva
+                    </a>
+                    <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/guia_uso')?>'>Guia de uso</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/gabinete')?>'>Gabinete</a></li>
+                        <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/tabla_secretarios')?>'>Secretarios</a></li>
+                        <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/tabla_SubSecretarios')?>'>SubSecretarios</a></li>
+                        <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/tabla_ptesComunas')?>'>Ptes. Comunas</a></li>
+                        <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/tabla_Legisladores')?>'>Legisladores</a></li>
+                        <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/tabla_JDG')?>'>JDG</a></li>
+                        <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/tabla_DG')?>'>DG</a></li>
+                        <li><a class="dropdown-item" href='<?php echo site_url('excarga_masivaamples/tabla_GO')?>'>GO</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/sas_activos')?>'>SAS Activos</a></li>
+                        <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/tabla_mujeres_lideres')?>'>Mujeres Lideres</a></li>
+                        <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/bada_celulares')?>'>Usuarios Bada</a></li>
+                        <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/tabla_Afiliados')?>'>Afiliados</a></li>
+                        <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/tabla_tags')?>'>TAGS</a></li>
+                    
+                    </ul>
+        <?php } ?>
 
             <li class="nav-item dropdown justify-content-end">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <?=$this->session->user_name;?>
             </a>
             <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href='<?php echo site_url('examples')?>'>Datos de acceso</a></li>
-                <li><a class="dropdown-item" href='<?php echo site_url('logout')?>'>Cerrar Sesion</a></li>
-                <li><hr class="dropdown-divider"> SUPER USER </li>
-                <li><a class="dropdown-item" href='<?php echo site_url('registrarUsuario')?>'>Registrar Nuevo Usuario</a></li>
+                <li><a class="dropdown-item" href='<?=site_url('datos_ingreso')?>'>Datos de acceso</a></li>
+                <li><a class="dropdown-item" href='<?=site_url('logout')?>'>Cerrar Sesion</a></li>
+                <?php if (in_array('SU', array_column($this->session->acceso,'tipo_usuario')))  {  ?> 
+                    <li><hr class="dropdown-divider"> SUPER USER </li>
+                    <li><a class="dropdown-item" href='<?php echo site_url('registrarUsuario')?>'>Registrar Nuevo Usuario</a></li>
+                <?php } ?>
             </ul>
 
            

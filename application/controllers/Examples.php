@@ -1,12 +1,12 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-require_once "UsuariosController.php";
+require_once "UsuariosTrait.php";
 require_once "LoginController.php";
 
 
 class Examples extends CI_Controller {
 
-	use UsuariosController;
+	use UsuariosTrait;
 	
 
 	
@@ -25,12 +25,7 @@ class Examples extends CI_Controller {
 			$this->load->view('example.php',(array)$output);
 			$this->load->view('index/footer');}
 		else {
-			$data = [ 'error' => 'Debe inicar sesion para poder continuar'];
-			$this->load->view('index/header');
-			$this->load->view('index/navBar/navBar');
-			$this->load->view('login/login', $data);
-			$this->load->view('index/footer');
-
+			$this->debe_iniciar_sesion();
 		}
 			
 	}
@@ -48,7 +43,6 @@ class Examples extends CI_Controller {
 				$data['status_code'] = 404;
 				$data['heading'] = "ACCESO DENEGADO";
 
-
 				$this->load->view('index/header');
 				$this->load->view('index/navBar/navBarGrocery');
 				$this->load->view('errors/html/error_general',$data);
@@ -56,6 +50,10 @@ class Examples extends CI_Controller {
 	}
 
 	public function tabla_afiliados(){
+		if (!$this->verifySession()){
+			return $this->debe_iniciar_sesion();
+		}
+		else {		
 		if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || 
 			in_array('AFILIADOS', array_column($this->session->acceso,'tabla')) ){
 				$crud = new grocery_CRUD;
@@ -75,10 +73,15 @@ class Examples extends CI_Controller {
 			} else {
 				$this->acceso_denegado();				
 			}
+		}
 
 		
 	}
 	public function tabla_mujeres_lideres(){
+		if (!$this->verifySession()){
+			return $this->debe_iniciar_sesion();
+		}
+		else {	
 		if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || 
 			in_array('MUJERES LIDERES', array_column($this->session->acceso,'tabla')) ){
 				$crud = new grocery_CRUD;
@@ -99,9 +102,14 @@ class Examples extends CI_Controller {
 			}else {
 				$this->acceso_denegado();				
 			}
+		}
 	}
 
 	public function tabla_gabinete(){
+		if (!$this->verifySession()){
+			return $this->debe_iniciar_sesion();
+		}
+		else {	
 		if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || 
 			in_array('GABINETE', array_column($this->session->acceso,'tabla')) ){
 				$crud = new grocery_CRUD;
@@ -122,9 +130,14 @@ class Examples extends CI_Controller {
 			} else {
 				$this->acceso_denegado();				
 			}
+		}
 	}
 
 	public function tabla_secretarios(){
+		if (!$this->verifySession()){
+			return $this->debe_iniciar_sesion();
+		}
+		else {	
 		if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || 
 			in_array('SECRETARIOS', array_column($this->session->acceso,'tabla')) ){
 				$crud = new grocery_CRUD;
@@ -145,9 +158,14 @@ class Examples extends CI_Controller {
 			} else {
 				$this->acceso_denegado();				
 			}
+		}
 	}
 
 	public function tabla_SubSecretarios(){
+		if (!$this->verifySession()){
+			return $this->debe_iniciar_sesion();
+		}
+		else {	
 		if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || 
 			in_array('SUBSECRETARIOS', array_column($this->session->acceso,'tabla')) ){
 				$crud = new grocery_CRUD;
@@ -168,9 +186,14 @@ class Examples extends CI_Controller {
 			} else {
 				$this->acceso_denegado();				
 			}
+		}
 	}
 
 	public function tabla_ptesComunas(){
+		if (!$this->verifySession()){
+			return $this->debe_iniciar_sesion();
+		}
+		else {	
 		if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || 
 			in_array('PTES. COMUNAS', array_column($this->session->acceso,'tabla')) ){
 				$crud = new grocery_CRUD;
@@ -191,9 +214,14 @@ class Examples extends CI_Controller {
 			} else {
 				$this->acceso_denegado();				
 			}
+		}
 	}
 
 	public function tabla_Legisladores(){
+		if (!$this->verifySession()){
+			return $this->debe_iniciar_sesion();
+		}
+		else {	
 		if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || 
 			in_array('LEGISADORES', array_column($this->session->acceso,'tabla')) ){
 				$crud = new grocery_CRUD;
@@ -214,9 +242,14 @@ class Examples extends CI_Controller {
 			} else {
 				$this->acceso_denegado();				
 			}
+		}
 	}
 
 	public function tabla_jdg(){
+		if (!$this->verifySession()){
+			return $this->debe_iniciar_sesion();
+		}
+		else {	
 		if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || 
 			in_array('JDG', array_column($this->session->acceso,'tabla')) ){
 				$crud = new grocery_CRUD;
@@ -235,9 +268,14 @@ class Examples extends CI_Controller {
 				$output = $crud->render();
 				$this->_example_output($output);
 			}
+		}
 	}
 
 	public function tabla_dg(){
+		if (!$this->verifySession()){
+			return $this->debe_iniciar_sesion();
+		}
+		else {	
 		if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || 
 			in_array('DG', array_column($this->session->acceso,'tabla')) ){
 				$crud = new grocery_CRUD;
@@ -258,9 +296,14 @@ class Examples extends CI_Controller {
 			} else {
 				$this->acceso_denegado();				
 			}
+		}
 	}
 
 	public function tabla_go(){
+		if (!$this->verifySession()){
+			return $this->debe_iniciar_sesion();
+		}
+		else {	
 		if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || 
 			in_array('GO', array_column($this->session->acceso,'tabla')) ){
 				$crud = new grocery_CRUD;
@@ -281,11 +324,16 @@ class Examples extends CI_Controller {
 			} else {
 				$this->acceso_denegado();				
 			}
+		}
 	}
 
 
 
 	public function bada_celulares(){
+		if (!$this->verifySession()){
+			return $this->debe_iniciar_sesion();
+		}
+		else {	
 		if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || 
 			in_array('USUARIOS BADA', array_column($this->session->acceso,'tabla')) ){
 				$crud = new grocery_CRUD;
@@ -325,6 +373,7 @@ class Examples extends CI_Controller {
 			} else {
 				$this->acceso_denegado();				
 			}
+		}
 
 	}
 
@@ -341,6 +390,10 @@ class Examples extends CI_Controller {
 
 
 	public function tabla_tags(){
+		if (!$this->verifySession()){
+			return $this->debe_iniciar_sesion();
+		}
+		else {	
 		$crud = new Grocery_CRUD();
 		$crud->set_language('spanish-uy');
 		$crud->set_table('tags');
@@ -348,9 +401,14 @@ class Examples extends CI_Controller {
 		$crud->fields('nombre');
 		$output = $crud->render();
 		$this->_example_output($output);
+		}
 	}
 
 	public function tabla_tag_asignado(){
+		if (!$this->verifySession()){
+			return $this->debe_iniciar_sesion();
+		}
+		else {	
 		$crud = new Grocery_CRUD();
 		$crud->set_language('spanish-uy');
 		$crud->set_table('bada_celulares');
@@ -369,12 +427,17 @@ class Examples extends CI_Controller {
 		$crud->fields('tags');
 		$output = $crud->render();
 		$this->_example_output($output);
+		}
 	}
 
 
 
 
 	public function sas_activos(){
+		if (!$this->verifySession()){
+			return $this->debe_iniciar_sesion();
+		}
+		else {	
 		if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || 
 			in_array('SAS ACTIVOS', array_column($this->session->acceso,'tabla')) ){
 				$crud = new grocery_CRUD;
@@ -427,6 +490,7 @@ class Examples extends CI_Controller {
 			} else {
 				$this->acceso_denegado();				
 			}
+		}
 
 	}
 

@@ -1347,7 +1347,9 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 		if(!empty($this->where))
 			foreach($this->where as $where)
 				$this->basic_model->where($where[0],$where[1],$where[2]);
-
+		if (!empty($this->where_in))
+			foreach($this->where_in as $where_in)
+				$this->basic_model->where_in($where_in[0],$where_in[1],$where_in[2]);
 		if(!empty($this->or_where))
 			foreach($this->or_where as $or_where)
 				$this->basic_model->or_where($or_where[0],$or_where[1],$or_where[2]);
