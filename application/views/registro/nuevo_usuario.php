@@ -38,6 +38,31 @@
         <label for="password" class="form-label">Contraseña</label>
         <input type="password" name="password" class="form-control" id="password" minlength="8" maxlenght="10" required>
     </div>
+    <div class="mb-3">
+        <label for="tablas" class="form-label">Acceso a Tablas</label>
+        <select name="acceso_a_tabla" >
+          <option value="TODAS"> TODAS </option>
+          <option value="GABINETE">Gabinete</option>
+          <option value="SECRETARIOS">Secretarios</option>
+          <option value="SUBSECRETARIOS">SubSecretarios</option>
+          <option value="PTES. COMUNAS">Ptes. Comunas</option>
+          <option value="LEGISLADORES">Legisadores</option>
+          <option value="JDG">JDG</option>
+          <option value="DG">DG</option>
+          <option value="GO">GO</option>
+          <option value="SAS ACTIVOS">SAS Activos</option>
+          <option value="MUJERES LIDERES">Mujeres Lideres</option>
+          <option value="USUARIOS BADA">Usuarios Bada</option>
+          <option value="AFILIADOS">Afiliados</option>
+        </select>
+        <label for="rol" class="form-label">ROL</label>
+        <select name="rol" >
+          <option value="SU">Super Usuario</option>
+          <option value="VIEW">Solo Ver</option>
+          <!-- <option value="CREAT">Solo Ver</option> -->
+        </select>
+    </div>
+    
     <button type="submit" class="btn btn-primary">Registrar</button>
     <button type="button" class="btn btn-primary" onclick="history.back()" id="cancelar">Cancelar</button>
 </form>

@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     document.querySelector("#formRegistro").addEventListener('submit', verificarDatos); 
     let cuit = document.querySelector('#cuit');
     let user_name = document.querySelector('#username');
-    cuit.onchange = function () { cambiar(cuit)};
+    if (cuit !== null ) cuit.onchange = function () { cambiar(cuit)};
     user_name.onchange = function () { cambiar(user_name)};
 });
 
@@ -24,16 +24,20 @@ async function verificarDatos(e){
     e.preventDefault();
     let form = document.querySelector("#formRegistro");
     let formData = new FormData(form);
+    let cuit;
+    if (formData.get('cuit') !== null){
+        cuit = formData.get('cuit').replaceAll('-','');
+        if (verifyCuit(cuit.replaceAll('-',''))){
+            console.log("ES CUIT");
+            
+        } else
+           form.classList.add('was-validated') ;
 
-    let cuit = formData.get('cuit').replaceAll('-','');
+    }  
     let user_name = formData.get('user_name').replaceAll('-','').replaceAll('_','');
     let password = formData.get('password');
 
-    if (verifyCuit(cuit.replaceAll('-',''))){
-        console.log("ES CUIT");
-        
-    } else
-       form.classList.add('was-validated') ;
+   
     form.submit(cuit,user_name,password);
 
     console.log(user_name);

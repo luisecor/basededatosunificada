@@ -90,9 +90,9 @@
                 <?=$this->session->user_name;?>
             </a>
             <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href='<?=site_url('datos_ingreso')?>'>Datos de acceso</a></li>
+                <li><a class="dropdown-item" href='<?=site_url('usuario/datos_ingreso')?>'>Datos de acceso</a></li>
                 <li><a class="dropdown-item" href='<?=site_url('logout')?>'>Cerrar Sesion</a></li>
-                <?php if (in_array('SU', array_column($this->session->acceso,'tipo_usuario')))  {  ?> 
+                <?php if (('SU' === $this->session->tipo_usuario))  {  ?> 
                     <li><hr class="dropdown-divider"> SUPER USER </li>
                     <li><a class="dropdown-item" href='<?php echo site_url('registrarUsuario')?>'>Registrar Nuevo Usuario</a></li>
                 <?php } ?>

@@ -8,9 +8,6 @@ class Examples extends CI_Controller {
 
 	use UsuariosTrait;
 	
-
-	
-	
 	public function __construct()
 	{
 		parent::__construct();

@@ -23,22 +23,16 @@
     </ul>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>'; } ?>
-    <div class="mb-3">
-        <label for="cuit_username" class="form-label">CUIT</label>
-        <input type="text" name="cuit" class="form-control <?php if(isset($tipo) && in_array("1", $tipo)) echo "is-invalid"?>" id="cuit" aria-describedby="emailHelp"  required <?php if(isset($usuario)) echo "placeholder=".$usuario['cuit'] ?> >
-        <div id="emailHelp" class="form-text">Ingrese CUIT</div>
-        <div class="invalid-feedback"> Cuit incorrecto. </div>
-    </div>
+
     <div class="mb-3">
         <label for="cuit_username" class="form-label">Usuario</label>
         <input type="text" name="user_name" class="form-control <?php if(isset($tipo) && in_array("2", $tipo)) echo "is-invalid"?>" id="username" aria-describedby="emailHelp" required <?php if(isset($usuario)) echo "placeholder=".$usuario['user_name'] ?>>
-        <div id="emailHelp" class="form-text">Ingrese Usuario</div>
     </div>
     <div class="mb-3">
         <label for="password" class="form-label">Contraseña</label>
         <input type="password" name="password" class="form-control" id="password" minlength="8" maxlenght="10" required>
     </div>
-    <button type="submit" class="btn btn-primary">Registrar</button>
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
     <button type="button" class="btn btn-primary" onclick="history.back()" id="cancelar">Cancelar</button>
 </form>
 

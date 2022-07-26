@@ -77,6 +77,8 @@ class LoginController extends CI_Controller {
         $cuit = str_replace("-", "", $_REQUEST['cuit']);
         $user_name = $_REQUEST['user_name'];
         $password = password_hash( $_REQUEST['password'], PASSWORD_BCRYPT);
+        $acceso_tabla = $_REQUEST['acceso_a_tabla'];
+        $rol  = $_REQUEST['rol'];
 
         $usuario = [
             'cuit' => $cuit,
@@ -112,9 +114,14 @@ class LoginController extends CI_Controller {
             $this->load->view('registro/nuevo_usuario',$data);
             $this->load->view('index/footer');
         } else {
-            $result = $this->login_model->insert_new_user($cuit , $user_name, $password);
-            if ($result > 0)
-                return $this->index();
+            $result = $this->login_model->insert_new_user($cuit , $user_name, $password, $acceso_tabla, $rol);
+            if ($result > 0){
+                $this->load->view('index/header');
+                $this->load->view('index/navBar/navBarGrocery');
+                $this->load->view('index/footer');
+
+            }
+                
             else {
                 array_push($error, "Hubo un error al registrar usuario. Por favor vuelva a intentarlo mas tarde.");
                 array_push($tipo, 3);
