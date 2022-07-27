@@ -11,6 +11,8 @@ class Examples extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+		$this->load->model('observaciones_model');
+		$this->load->model('mujeres_lideres');
 		
 	}
 
@@ -93,6 +95,9 @@ class Examples extends CI_Controller {
 				$crud->callback_before_delete(array($this,'action_befor_delete'));
 				$crud->callback_after_insert(array($this, 'action_befor_insert'));
 				$crud->callback_before_update(array($this,'action_befor_update'));
+
+				$crud->add_action(	'Observaciones', 'https://www.grocerycrud.com/v1.x/assets/uploads/general/smiley.png', 
+									'examples/ver_observaciones','ui-icon-image');
 				
 				$output = $crud->render();
 				$this->_example_output($output);
@@ -100,6 +105,71 @@ class Examples extends CI_Controller {
 				$this->acceso_denegado();				
 			}
 		}
+	}
+
+	public function ver_observaciones($primary_key){
+		if (!$this->verifySession()){
+			return $this->debe_iniciar_sesion();
+		}
+		else {	
+			$this->tabla_observaciones();
+		}	
+		
+	}
+
+	public function tabla_observaciones(){
+		if (!$this->verifySession()){
+			return $this->debe_iniciar_sesion();
+		}
+		else {
+			
+			$tabla = $this->session->flashdata('table'); 	//Recupero del flash -> se borra
+			$this->session->set_flashdata('table',$tabla);	//Lo vuelvo a designar de forma global
+			$cuit_user = $this->session->cuit;
+			$user_name = $this->session->user_name;
+
+			$tabla_ = $tabla;
+			$tabla_ = strtoupper(str_replace("_"," ",$tabla_));
+
+			$crud = new grocery_CRUD;
+			$crud->set_subject("observacion a {$tabla_}");
+
+			$crud	->where('tabla', $tabla)
+					->where('deleted_at =' , null);
+
+			$crud->set_language('spanish-uy');
+			$crud->set_table('observaciones');
+			
+			
+			$crud	->columns('created_at','cuit_user','user_name','cuit_tabla','observacion','resuelto')
+					->display_as('created_at', 'Creado el')
+					->display_as('cuit_user','Observado por')
+					->display_as('user_name','User')
+					->display_as('cuit_tabla','CUIT')
+					->required_fields('Observacion')
+					->required_fields('Resuelto');
+
+			$crud->field_type('resuelto','dropdown',array('1' => 'SI' , '0' => 'NO'));
+
+			$cuit_list_model = $this->$tabla->get_cuit_list();
+			$cuit_list = [];
+			
+			foreach ($cuit_list_model as $cuit_model)
+				array_push($cuit_list, "{$cuit_model->cuit} - {$cuit_model->apellido_nombre}");
+			
+			$crud->field_type('cuit_tabla', 'dropdown', array_combine($cuit_list,$cuit_list));
+
+
+			$crud->fields('cuit_tabla','observacion','resuelto','tabla','cuit_user','user_name');
+			$crud->field_type('tabla','hidden',$tabla);
+			$crud->field_type('cuit_user','hidden',$this->session->cuit);
+			$crud->field_type('user_name','hidden',$this->session->user_name);
+			$crud->change_field_type('observacion','string');
+			$output = $crud->render();
+			$this->_example_output($output);
+			
+		}		
+
 	}
 
 	public function tabla_gabinete(){
@@ -357,7 +427,8 @@ class Examples extends CI_Controller {
 				$crud->unset_add();
 				$crud->unset_clone();
 				$crud->unset_delete();
-				$crud->add_action('Cambiar Registro','https://www.grocerycrud.com/v1.x/assets/uploads/general/smiley.png','examples/cambiar_nombre_apellido');
+				$crud->add_action('Cambiar Registro','https://www.grocerycrud.com/v1.x/assets/uploads/general/smiley.png',
+									'examples/cambiar_nombre_apellido');
 				
 				$this->session->set_flashdata('table','bada_celulares');
 
@@ -490,6 +561,8 @@ class Examples extends CI_Controller {
 		}
 
 	}
+
+
 
 	public function action_befor_update($post_array, $primary_key){
 

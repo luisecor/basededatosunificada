@@ -58,6 +58,8 @@
         <label for="rol" class="form-label">ROL</label>
         <select name="rol" >
           <option value="SU">Super Usuario</option>
+          <option value="CREAT">Crear, Ver y Modificar</option>
+          <option value="UPDATE">Ver y Modificar</option>
           <option value="VIEW">Solo Ver</option>
           <!-- <option value="CREAT">Solo Ver</option> -->
         </select>

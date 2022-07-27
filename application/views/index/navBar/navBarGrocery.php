@@ -44,7 +44,7 @@
                <?php if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || in_array('SAS ACTIVOS', array_column($this->session->acceso,'tabla'))) {  ?> 
                 <li><a class="dropdown-item" href='<?php echo site_url('examples/sas_activos')?>'>SAS Activos</a></li>
                <?php }; ?>  
-               <?php if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || in_array('MUERES LIDERES', array_column($this->session->acceso,'tabla'))) {  ?> 
+               <?php if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || in_array('MUJERES LIDERES', array_column($this->session->acceso,'tabla'))) {  ?> 
                 <li><a class="dropdown-item" href='<?php echo site_url('examples/tabla_mujeres_lideres')?>'>Mujeres Lideres</a></li>
                <?php }; ?>  
                <?php if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || in_array('USUARIOS BADA', array_column($this->session->acceso,'tabla'))) {  ?> 
