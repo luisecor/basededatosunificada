@@ -13,6 +13,8 @@ class Examples extends CI_Controller {
 		parent::__construct();
 		$this->load->model('observaciones_model');
 		$this->load->model('mujeres_lideres');
+		$this->load->model('sas_activo_model');
+		$this->load->model('bada_celulares_model');
 		
 	}
 
@@ -83,12 +85,46 @@ class Examples extends CI_Controller {
 		else {	
 		if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || 
 			in_array('MUJERES LIDERES', array_column($this->session->acceso,'tabla')) ){
+
+				// $crud = new grocery_CRUD();
+				// $crud->set_model('custom_query_model');
+				// $crud->set_table('mujeres_lideres'); //Change to your table name
+				// $crud->basic_model->set_query_str(''); //Query text here
+				// $output = $crud->render();
+
 				$crud = new grocery_CRUD;
 				$crud->set_language('spanish-uy');
 				$crud->set_table('mujeres_lideres');
 				$crud->set_subject('Mujer Lider');
+
 				$crud->set_primary_key('cuit','mujeres_lideres');
 				$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
+
+				$crud->columns(	'cuit','tipo','apellido','nombre','sexo','direccion','altura','departamento','provincia','comuna','fecha_nacimiento',
+								'desc_reparticion','desc_lvl1','desc_lvl2','desc_tarea','desc_regimen','telfono');
+				
+				$this->session->set_flashdata('model_reemplazo','sas_activo_model');
+				$this->session->set_flashdata('campo','tipo_documento');				
+				$crud->callback_column('tipo',array($this,'callback_column'));
+
+				
+				$this->session->set_flashdata('model_reemplazo','sas_activo_model');
+				$this->session->set_flashdata('campo','apellido');	
+				$crud->callback_column('apellido',array($this,'callback_column'));
+
+				// $this->session->set_flashdata('model_reemplazo','bada_celulares_model');
+				// $this->session->set_flashdata('campo','nombre');
+				// $crud->callback_column('nombre',array($this,'callback_column'));
+
+				// $this->session->set_flashdata('model_reemplazo','bada_celulares_model');
+				// $this->session->set_flashdata('campo','domicilio');
+				// $crud->callback_column('direccion',array($this,'callback_column'));
+
+
+				// $this->session->set_flashdata('model_reemplazo','sas_activo_model');
+				// $this->session->set_flashdata('campo','sexo');
+				// $crud->callback_column('sexo',array($this,'callback_column'));
+				
 				
 				$this->session->set_flashdata('table','mujeres_lideres');
 
@@ -106,6 +142,19 @@ class Examples extends CI_Controller {
 			}
 		}
 	}
+
+	public function callback_column($value , $row){
+		
+		$model = $this->session->flashdata('model_reemplazo');
+		$campo = $this->session->flashdata('campo');
+		$data = $this->$model->get_all_data_from_cuit($row->cuit);
+
+		// var_dump($data);
+		
+		return (isset($data[0]->$campo)) ? $data[0]->$campo : 'No actulizado';
+
+	}
+
 
 	public function ver_observaciones($primary_key){
 		if (!$this->verifySession()){
