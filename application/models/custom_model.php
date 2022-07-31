@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
  
-class Custom_query_model extends grocery_CRUD_model {
+class Custom_model extends grocery_CRUD_model {
  
 	private  $query_str = ''; 
 	function __construct() {

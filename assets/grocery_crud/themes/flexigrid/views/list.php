@@ -34,7 +34,7 @@
 			<?php }?>
 			<?php if(!$unset_delete || !$unset_edit || !$unset_read || !empty($actions)){?>
 			<td align="left" width='20%'>
-				<div class='tools'>				
+				<div class='tools d-flex justify-content-center'>				
 					<?php if(!$unset_delete){?>
                     	<a href='<?php echo $row->delete_url?>' title='<?php echo $this->l('list_delete')?> <?php echo $subject?>' class="delete-row" >
                     			<span class='delete-icon'></span>
@@ -46,9 +46,9 @@
                     <?php if(!$unset_clone){?>
                         <a href='<?php echo $row->clone_url?>' title='<?php echo $this->l('list_clone')?> <?php echo $subject?>' class="clone_button"><span class='clone-icon'></span></a>
                     <?php }?>
-					<?php if(!$unset_read){?>
-						<a href='<?php echo $row->read_url?>' title='<?php echo $this->l('list_view')?> <?php echo $subject?>' class="edit_button"><span class='read-icon'></span></a>
-					<?php }?>
+					<!-- <?php if(!$unset_read){?>
+						<a href='<?php //echo $row->read_url?>' title='<?php //echo $this->l('list_view')?> <?php //echo $subject?>' class="edit_button"><span class='read-icon'></span></a>
+					<?php }?> -->
 					<?php 
 					if(!empty($row->action_urls)){
 						foreach($row->action_urls as $action_unique_id => $action_url){ 

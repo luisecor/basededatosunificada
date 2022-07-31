@@ -24,4 +24,14 @@ trait UsuariosTrait   {
 			$this->load->view('index/footer');
 	}
 
+    public function error_(){
+        $this->load->view('index/header');
+			$this->load->view('index/navBar/navBar');
+			show_error('El cuit solicitado no se encuentra en la base de datos de SAS ACTIVOS',404,'CUIT no encontrado en la base de datos SAS_ACTIVO');
+			$this->load->view('index/footer');
+
+        
+
+    }
+
 }

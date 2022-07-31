@@ -85,7 +85,7 @@ class LoginController extends CI_Controller {
             'user_name' => $user_name
         ];
 
-
+        //Verificar usuario por CUIT
         $existe = $this->login_model->get_user($cuit);
       
 
@@ -97,6 +97,7 @@ class LoginController extends CI_Controller {
             array_push($tipo, 1);
         }
 
+        //Verificar usuario por user_name
         $existe = $this->login_model->get_user(null, $user_name);
    
 
