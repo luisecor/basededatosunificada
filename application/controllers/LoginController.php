@@ -49,12 +49,15 @@ class LoginController extends CI_Controller {
         $this->load->view('login/login',$data);
         $this->load->view('index/footer'); 
         
+        
 
     }
 
     public function ingreso(){
         $this->load->view('index/header');
+        $data = [ 'ingresado' => 'Bienvenido a la Súperbase'];
         $this->load->view('index/navBar/navBarGrocery');
+        $this->load->view('welcome/welcome', $data); 
         $this->load->view('index/footer'); 
     }
 
@@ -65,7 +68,7 @@ class LoginController extends CI_Controller {
 
     public function registro() {
         $this->load->view('index/header');
-        $this->load->view('index/navBar/navBar');
+        $this->load->view('index/navBar/navBarGrocery');
         $this->load->view('registro/nuevo_usuario');
         $this->load->view('index/footer'); 
     }
