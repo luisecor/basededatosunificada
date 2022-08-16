@@ -61,6 +61,7 @@ class LoginController extends CI_Controller {
         $this->load->view('index/footer'); 
     }
 
+    
     public function logout(){
         session_destroy();
         return $this->index();
