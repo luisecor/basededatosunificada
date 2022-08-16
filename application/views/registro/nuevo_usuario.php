@@ -38,10 +38,10 @@
         <label for="password" class="form-label">Contraseña</label>
         <input type="password" name="password" class="form-control" id="password" minlength="8" maxlenght="10" required>
     </div>
-    <div class="mb-3">
+    <!-- <div class="mb-3">
         <label for="tablas" class="form-label">Acceso a Tablas</label>
         <select name="acceso_a_tabla" >
-          <option value="TODAS"> TODAS </option>
+           <option value="TODAS"> TODAS </option> 
           <option value="GABINETE">Gabinete</option>
           <option value="SECRETARIOS">Secretarios</option>
           <option value="SUBSECRETARIOS">SubSecretarios</option>
@@ -61,9 +61,9 @@
           <option value="CREAT">Crear, Ver y Modificar</option>
           <option value="UPDATE">Ver y Modificar</option>
           <option value="VIEW">Solo Ver</option>
-          <!-- <option value="CREAT">Solo Ver</option> -->
+           <option value="CREAT">Solo Ver</option>
         </select>
-    </div>
+    </div> -->
     
     <button type="submit" class="btn btn-primary">Registrar</button>
     <button type="button" class="btn btn-primary" onclick="history.back()" id="cancelar">Cancelar</button>

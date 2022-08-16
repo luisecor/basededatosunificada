@@ -10,6 +10,7 @@ class LoginController extends CI_Controller {
         $this->load->model('login_model');
         $this->load->model('logs_model');
         $this->load->model('user_model');
+        $this->load->model('filtros_session_model');
     }
     
 
@@ -35,14 +36,17 @@ class LoginController extends CI_Controller {
         if ( isset($result))
             if ($result && password_verify($password,$result->password)){
                 $acceso = $this->user_model->get_access($result->cuit);
+                $filtros = $this->filtros_session_model->get_filters($result->cuit);
                 $this->session->set_userdata(array(
                     'user_name' => $result->user_name,
                     'cuit' => $result->cuit,
                     'tipo_usuario' => $result->tipo_usuario,
                     'carga_masiva' => $result->carga_masiva,
                     'acceso' => $acceso,
+                    'filtro_session' =>$filtros
                     
                 ));
+               
                 $this->logs_model->insert_log_ingreso($result->cuit, $result->user_name);
                 return $this->ingreso();  
             } 
@@ -77,8 +81,8 @@ class LoginController extends CI_Controller {
         $cuit = str_replace("-", "", $_REQUEST['cuit']);
         $user_name = $_REQUEST['user_name'];
         $password = password_hash( $_REQUEST['password'], PASSWORD_BCRYPT);
-        $acceso_tabla = $_REQUEST['acceso_a_tabla'];
-        $rol  = $_REQUEST['rol'];
+       // $acceso_tabla = $_REQUEST['acceso_a_tabla'];
+       // $rol  = $_REQUEST['rol'];
 
         $usuario = [
             'cuit' => $cuit,
@@ -115,7 +119,8 @@ class LoginController extends CI_Controller {
             $this->load->view('registro/nuevo_usuario',$data);
             $this->load->view('index/footer');
         } else {
-            $result = $this->login_model->insert_new_user($cuit , $user_name, $password, $acceso_tabla, $rol);
+            // $result = $this->login_model->insert_new_user($cuit , $user_name, $password, $acceso_tabla, $rol);
+            $result = $this->login_model->insert_new_user($cuit , $user_name, $password);
             if ($result > 0){
                 $this->load->view('index/header');
                 $this->load->view('index/navBar/navBarGrocery');

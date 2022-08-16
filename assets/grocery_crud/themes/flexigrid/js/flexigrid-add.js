@@ -1,5 +1,5 @@
 $(function(){
-	console.log("HOLA");
+	
 		$('.ptogtitle').click(function(){
 			if($(this).hasClass('vsble'))
 			{

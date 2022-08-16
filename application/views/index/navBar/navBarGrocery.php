@@ -14,47 +14,48 @@
                 Tablas
             </a>
             <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
-               <?php if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || 
-                        in_array('GABINETE', array_column($this->session->acceso,'tabla'))) { ?>
+               <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
+                        in_array('GABINETE', array_column($this->session->acceso,'nombre'))) { ?>
                 <li><a class="dropdown-item" href='<?php echo site_url('examples/tabla_gabinete')?>'>Gabinete</a></li>
                <?php }; ?> 
-               <?php if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || in_array('SECRETARIOS', array_column($this->session->acceso,'tabla'))) { ?> 
+               <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || in_array('SECRETARIOS', array_column($this->session->acceso,'nombre'))) { ?> 
                 <li><a class="dropdown-item" href='<?php echo site_url('examples/tabla_secretarios')?>'>Secretarios</a></li>
                <?php }; ?>  
-               <?php if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || 
-                        in_array('SUBSECRETARIOS', array_column($this->session->acceso,'tabla'))) {  ?> 
+               <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
+                        in_array('SUBSECRETARIOS', array_column($this->session->acceso,'nombre'))) {  ?> 
                 <li><a class="dropdown-item" href='<?php echo site_url('examples/tabla_SubSecretarios')?>'>SubSecretarios</a></li>
                <?php }; ?>  
-               <?php if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || in_array('PTES. COMUNAS', array_column($this->session->acceso,'tabla'))) {  ?> 
+               <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || in_array('PTES. COMUNAS', array_column($this->session->acceso,'nombre'))) {  ?> 
                 <li><a class="dropdown-item" href='<?php echo site_url('examples/tabla_ptesComunas')?>'>Ptes. Comunas</a></li>
                <?php } ?> 
-               <?php if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || in_array('LEGISLADORES', array_column($this->session->acceso,'tabla'))) {  ?> 
+               <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || in_array('LEGISLADORES', array_column($this->session->acceso,'nombre'))) {  ?> 
                 <li><a class="dropdown-item" href='<?php echo site_url('examples/tabla_Legisladores')?>'>Legisladores</a></li>
                <?php }; ?>  
-               <?php if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || in_array('JDG', array_column($this->session->acceso,'tabla'))) {  ?> 
+               <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || in_array('JDG', array_column($this->session->acceso,'nombre'))) {  ?> 
                 <li><a class="dropdown-item" href='<?php echo site_url('examples/tabla_JDG')?>'>JDG</a></li>
                <?php }; ?>  
-               <?php if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || in_array('DG', array_column($this->session->acceso,'tabla'))) {  ?> 
+               <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || in_array('DG', array_column($this->session->acceso,'nombre'))) {  ?> 
                 <li><a class="dropdown-item" href='<?php echo site_url('examples/tabla_DG')?>'>DG</a></li>
                <?php }; ?>  
-               <?php if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || in_array('GO', array_column($this->session->acceso,'tabla'))) {  ?> 
+               <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || in_array('GO', array_column($this->session->acceso,'nombre'))) {  ?> 
                 <li><a class="dropdown-item" href='<?php echo site_url('examples/tabla_GO')?>'>GO</a></li>
                <?php }; ?>  
                 <li><hr class="dropdown-divider"></li>
-               <?php if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || in_array('SAS ACTIVOS', array_column($this->session->acceso,'tabla'))) {  ?> 
+               <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || in_array('SAS ACTIVOS', array_column($this->session->acceso,'nombre'))) {  ?> 
                 <li><a class="dropdown-item" href='<?php echo site_url('examples/sas_activos')?>'>SAS Activos</a></li>
                <?php }; ?>  
-               <?php if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || in_array('MUJERES LIDERES', array_column($this->session->acceso,'tabla'))) {  ?> 
+               <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || in_array('MUJERES LIDERES', array_column($this->session->acceso,'nombre'))) {  ?> 
                 <li><a class="dropdown-item" href='<?php echo site_url('examples/tabla_mujeres_lideres')?>'>Mujeres Lideres</a></li>
                <?php }; ?>  
-               <?php if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || in_array('USUARIOS BADA', array_column($this->session->acceso,'tabla'))) {  ?> 
+               <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || in_array('USUARIOS BADA', array_column($this->session->acceso,'nombre'))) {  ?> 
                 <li><a class="dropdown-item" href='<?php echo site_url('examples/bada_celulares')?>'>Usuarios Bada</a></li>
                <?php }; ?>  
-               <?php if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || in_array('AFILIADOS', array_column($this->session->acceso,'tabla'))) {  ?> 
+               <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || in_array('AFILIADOS', array_column($this->session->acceso,'nombre'))) {  ?> 
                 <li><a class="dropdown-item" href='<?php echo site_url('examples/tabla_Afiliados')?>'>Afiliados</a></li>
               <?php }?>  
-                
+              <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || in_array('TAGS', array_column($this->session->acceso,'nombre'))) {  ?> 
                 <li><a class="dropdown-item" href='<?php echo site_url('examples/tabla_tags')?>'>TAGS</a></li>
+              <?php } ?>  
             </ul>
            
             <li class="nav-item dropdown justify-content-end">
@@ -95,6 +96,7 @@
                 <?php if (('SU' === $this->session->tipo_usuario))  {  ?> 
                     <li><hr class="dropdown-divider"> SUPER USER </li>
                     <li><a class="dropdown-item" href='<?php echo site_url('registrarUsuario')?>'>Registrar Nuevo Usuario</a></li>
+                    <li><a class="dropdown-item" href='<?php echo site_url('usuarios/session')?>'>Permisos de Usuarios</a></li>
                 <?php } ?>
             </ul>
 

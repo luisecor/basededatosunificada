@@ -15,6 +15,8 @@ class Examples extends CI_Controller {
 		$this->load->model('mujeres_lideres');
 		$this->load->model('sas_activo_model');
 		$this->load->model('bada_celulares_model');
+		$this->load->model('tags_model');
+		$this->load->model('accionar_tag_mogel');
 		
 	}
 
@@ -55,8 +57,8 @@ class Examples extends CI_Controller {
 			return $this->debe_iniciar_sesion();
 		}
 		else {		
-		if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || 
-			in_array('AFILIADOS', array_column($this->session->acceso,'tabla')) ){
+		if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
+			in_array('AFILIADOS', array_column($this->session->acceso,'nombre')) ){
 				$crud = new grocery_CRUD;
 				$crud->set_language('spanish-uy');
 				$crud->set_table('afiliados');
@@ -83,12 +85,13 @@ class Examples extends CI_Controller {
 			return $this->debe_iniciar_sesion();
 		}
 		else {	
-		if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || 
-			in_array('MUJERES LIDERES', array_column($this->session->acceso,'tabla')) ){
+		if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
+			in_array('MUJERES LIDERES', array_column($this->session->acceso,'nombre')) ){
 				$crud = new grocery_CRUD;
 				$crud->set_language('spanish-uy');
 				$crud->set_primary_key('cuit','mujeres_lideres_view');
 				$crud->set_table('mujeres_lideres_view');
+				
 				$crud->set_subject('Mujer Lider');
 
 				$this->session->set_flashdata('table','mujeres_lideres');
@@ -98,18 +101,45 @@ class Examples extends CI_Controller {
 				//$crud->callback_before_update(array($this,'action_befor_update')); !TODO revisar
 				//$crud->callback_after_update(array($this,'before_update_mujeres_lideres'));
 				
-				$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');				
+				$crud->set_primary_key('id','tags');
+				$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
+
+				$filtro_session	= $this->session->filtro_session;
+
+				//Filtros de SESSION-USUARIO
+				if (empty($filtro_session) !== true) {
+					foreach($filtro_session as $filtro){
+						$crud->where("tag_list LIKE '%{$filtro['nombre']}%'");
+	
+					}
+				}
+
+				$filtro_busqueda = $this->session->filtro_busqueda;
+
+				if (empty($filtro_busqueda) !== true){
+
+					foreach ($filtro_busqueda['filtro'] as $filtro){
+											$nombre = $this->tags_model->get_tag_name($filtro);
+						$crud->where("tag_list LIKE '%{$nombre[0]['nombre']}%'");
+	
+					}
+				}
+
+				
+						
 				$crud	//->unset_add()
 						->unset_edit()
-						->unset_delete();
+						->unset_delete()
+						->unset_clone()
+						->unset_columns('tag_list')
+						->add_fields('cuit','edicion')
+						;
 
-				 $crud	->add_action(	'Editar Datos Personales',  base_url.'assets/icons/datos_personales', 'examples/cambiar_nombre_apellido')
-						->add_action(	'Editar Tags y Atributos de Mujer Lider', base_url.'assets/icons/contact_page_FILL0_wght400_GRAD0_opsz24.png','examples/editar_atributos_mj')
+				 $crud	->add_action(	'Editar Datos Personales',  base_url.'assets/icons/datos_personales.png', 'examples/cambiar_datos_personales')
+						->add_action(	'Editar Atributos de Mujer Lider', base_url.'assets/icons/contact_page_FILL0_wght400_GRAD0_opsz24.png','examples/editar_atributos')
 						->add_action(	'Ver Registros completo', base_url.'assets/icons/search_FILL0_wght400_GRAD0_opsz24.png','examples/tabla_mujeres_lideres/read','ui-icon-image')
 						->add_action(	'Observaciones', base_url.'assets/icons/more.png','examples/ver_observaciones','ui-icon-image')
-						->callback_insert(array($this,'examples/progando_add'))
-						
-						//->unset_read()
+						// ->callback_insert(array($this,'probando_add'))
 						;
 									
 								
@@ -121,16 +151,37 @@ class Examples extends CI_Controller {
 		}
 	}
 
-	public function progando_add($post_array){
-		return $this->load->view('index/header');
-
+	public function probando_add(){
+		redirect('examples/mujeres_lideres/add');
 	}
 
-	//redirect('examples/sas_activos/edit/'.$id.'');
-	public function editar_atributos_mj($pk){
-		//redirect('examples/mujeres_lideres/edit/'.$pk.'');
-		var_dump($pk);
-		redirect('examples/mujeres_lideres/edit/'.$pk.'');
+
+
+	public function editar_atributos($pk){
+		$tabla = $this->session->flashdata('table');
+
+		if ($tabla !== 'mujeres_lideres')
+			$tabla = "tabla_{$tabla}";
+
+		$cuit_usuario = $this->session->cuit;
+
+		$accesos_usuario = $this->accionar_tag_mogel->get_actioned_tags($cuit_usuario);
+		$tags_registro = $this->tags_model->get_tags_by_cuit($pk);
+
+		
+		$tiene_acceso = false;
+
+		var_dump($tabla);
+
+		foreach($tags_registro as $tag_reg)
+			foreach ($accesos_usuario as $acc_us)
+				if ($tag_reg == $acc_us)
+					$tiene_acceso = true;
+
+		if ($tiene_acceso) 
+			redirect("examples/{$tabla}/edit/{$pk}");
+		else redirect("examples/{$tabla}");
+
 	}
 
 	public function mujeres_lideres(){
@@ -138,22 +189,23 @@ class Examples extends CI_Controller {
 			return $this->debe_iniciar_sesion();
 		}
 		else {	
-		if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || 
-			in_array('MUJERES LIDERES', array_column($this->session->acceso,'tabla')) ){
+		if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
+			in_array('MUJERES LIDERES', array_column($this->session->acceso,'nombre')) ){
 				$crud = new grocery_CRUD;
 				$crud->set_language('spanish-uy');
 				$crud->set_primary_key('cuit','mujeres_lideres');
 				$crud->set_table('mujeres_lideres');
 				$crud->set_subject('Mujer Lider');
-				$crud->fields('edicion','tags');
+				$crud	->fields('edicion')
+						->add_fields('cuit','edicion');
 
 				$this->session->set_flashdata('table','mujeres_lideres');
 
-				//$crud->callback_before_delete(array($this,'action_befor_delete')); !TODO revisar
-				//$crud->callback_after_insert(array($this, 'action_befor_insert')); !TODO revisar
-				//$crud->callback_before_update(array($this,'action_befor_update')); !TODO revisar
+				$crud->callback_before_delete(array($this,'action_befor_delete')); //!TODO revisar
+				$crud->callback_after_insert(array($this, 'action_befor_insert')); //!TODO revisar
+				$crud->callback_before_update(array($this,'action_befor_update')); //!TODO revisar
 				
-				$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');				
+				//$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');				
 				//$crud->unset_add()->unset_edit()->unset_delete();
 
 				$output = $crud->render();
@@ -170,9 +222,6 @@ class Examples extends CI_Controller {
 		var_dump($pk);
 		
 	}
-
-	
-
 
 	public function ver_observaciones($primary_key){
 		if (!$this->verifySession()){
@@ -214,7 +263,10 @@ class Examples extends CI_Controller {
 					->display_as('user_name','User')
 					->display_as('cuit_tabla','CUIT')
 					->required_fields('Observacion')
-					->required_fields('Resuelto');
+					->required_fields('Resuelto')
+					->fields('observacion','resuelto')
+					->unset_clone()
+					->order_by('created_at','desc');
 
 			$crud->field_type('resuelto','dropdown',array('1' => 'SI' , '0' => 'NO'));
 
@@ -244,8 +296,8 @@ class Examples extends CI_Controller {
 			return $this->debe_iniciar_sesion();
 		}
 		else {	
-		if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || 
-			in_array('GABINETE', array_column($this->session->acceso,'tabla')) ){
+		if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
+			in_array('GABINETE', array_column($this->session->acceso,'nombre')) ){
 				$crud = new grocery_CRUD;
 				$crud->set_language('spanish-uy');
 				$crud->set_table('gabinete');
@@ -254,6 +306,11 @@ class Examples extends CI_Controller {
 				$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
 				
 				$this->session->set_flashdata('table','gabinete');
+
+				$crud	
+				// ->add_action(	'Editar Datos Personales',  base_url.'assets/icons/datos_personales.png', 'examples/cambiar_datos_personales')
+				->add_action(	'Editar Atributos de Mujer Lider', base_url.'assets/icons/contact_page_FILL0_wght400_GRAD0_opsz24.png','examples/editar_atributos')
+				;
 
 				$crud->callback_before_delete(array($this,'action_befor_delete'));
 				$crud->callback_after_insert(array($this, 'action_befor_insert'));
@@ -272,8 +329,8 @@ class Examples extends CI_Controller {
 			return $this->debe_iniciar_sesion();
 		}
 		else {	
-		if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || 
-			in_array('SECRETARIOS', array_column($this->session->acceso,'tabla')) ){
+		if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
+			in_array('SECRETARIOS', array_column($this->session->acceso,'nombre')) ){
 				$crud = new grocery_CRUD;
 				$crud->set_language('spanish-uy');
 				$crud->set_table('secretarios');
@@ -300,8 +357,8 @@ class Examples extends CI_Controller {
 			return $this->debe_iniciar_sesion();
 		}
 		else {	
-		if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || 
-			in_array('SUBSECRETARIOS', array_column($this->session->acceso,'tabla')) ){
+		if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
+			in_array('SUBSECRETARIOS', array_column($this->session->acceso,'nombre')) ){
 				$crud = new grocery_CRUD;
 				$crud->set_language('spanish-uy');
 				$crud->set_table('sub_secretarios');
@@ -328,8 +385,8 @@ class Examples extends CI_Controller {
 			return $this->debe_iniciar_sesion();
 		}
 		else {	
-		if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || 
-			in_array('PTES. COMUNAS', array_column($this->session->acceso,'tabla')) ){
+		if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
+			in_array('PTES. COMUNAS', array_column($this->session->acceso,'nombre')) ){
 				$crud = new grocery_CRUD;
 				$crud->set_language('spanish-uy');
 				$crud->set_table('ptes_comunas');
@@ -356,8 +413,8 @@ class Examples extends CI_Controller {
 			return $this->debe_iniciar_sesion();
 		}
 		else {	
-		if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || 
-			in_array('LEGISADORES', array_column($this->session->acceso,'tabla')) ){
+		if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
+			in_array('LEGISADORES', array_column($this->session->acceso,'nombre')) ){
 				$crud = new grocery_CRUD;
 				$crud->set_language('spanish-uy');
 				$crud->set_table('legisladores');
@@ -384,8 +441,8 @@ class Examples extends CI_Controller {
 			return $this->debe_iniciar_sesion();
 		}
 		else {	
-		if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || 
-			in_array('JDG', array_column($this->session->acceso,'tabla')) ){
+		if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
+			in_array('JDG', array_column($this->session->acceso,'nombre')) ){
 				$crud = new grocery_CRUD;
 				$crud->set_language('spanish-uy');
 				$crud->set_table('jdg');
@@ -410,8 +467,8 @@ class Examples extends CI_Controller {
 			return $this->debe_iniciar_sesion();
 		}
 		else {	
-		if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || 
-			in_array('DG', array_column($this->session->acceso,'tabla')) ){
+		if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
+			in_array('DG', array_column($this->session->acceso,'nombre')) ){
 				$crud = new grocery_CRUD;
 				$crud->set_language('spanish-uy');
 				$crud->set_table('dg');
@@ -438,8 +495,8 @@ class Examples extends CI_Controller {
 			return $this->debe_iniciar_sesion();
 		}
 		else {	
-		if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || 
-			in_array('GO', array_column($this->session->acceso,'tabla')) ){
+		if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
+			in_array('GO', array_column($this->session->acceso,'nombre')) ){
 				$crud = new grocery_CRUD;
 				$crud->set_language('spanish-uy');
 				$crud->set_table('go');
@@ -464,12 +521,18 @@ class Examples extends CI_Controller {
 
 
 	public function bada_celulares(){
+
+		
+			$vengo = $this->session->flashdata('vengo');
+			if ($vengo) $this->session->set_flashdata('vengo','true');
+
 		if (!$this->verifySession()){
 			return $this->debe_iniciar_sesion();
 		}
 		else {	
-		if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || 
-			in_array('USUARIOS BADA', array_column($this->session->acceso,'tabla')) ){
+		if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
+			in_array('USUARIOS BADA', array_column($this->session->acceso,'nombre')) ||
+			isset($vengo) ){
 				$crud = new grocery_CRUD;
 				$crud->set_language('spanish-uy');
 				$crud->set_table('bada_celulares');
@@ -486,7 +549,8 @@ class Examples extends CI_Controller {
 				$crud->set_primary_key('cuit','bada_celulares');
 				$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
 
-				$crud->fields(['celular_bada', 'mail', 'calle_bada', 'altura_bada','departamento_bada','provincia_bada', 'barrio_normalizado','comuna','intereses','notificaciones', 'tags', ]);
+				$crud	->fields(['celular_bada', 'mail', 'calle_bada', 'altura_bada','departamento_bada','provincia_bada', 'barrio_normalizado','comuna','intereses','notificaciones','tags'])
+						->field_type('notificaciones','enum',array('Si','No'));
 				$crud->display_as('calle_bada','Calle');
 				$crud->display_as('altura_bada','Altura');
 
@@ -498,10 +562,14 @@ class Examples extends CI_Controller {
 									'examples/cambiar_nombre_apellido');
 				
 				$this->session->set_flashdata('table','bada_celulares');
+				
 
 				$crud->callback_before_delete(array($this,'action_befor_delete'));
 				$crud->callback_after_insert(array($this, 'action_befor_insert'));
 				$crud->callback_before_update(array($this,'action_befor_update'));
+
+				$crud	->unset_texteditor('barrio_normalizado','intereses');
+						
 
 				$output = $crud->render();
 				$this->_example_output($output);
@@ -512,13 +580,30 @@ class Examples extends CI_Controller {
 
 	}
 
+	public function cambiar_datos_personales($id){
+
+		$this->session->set_flashdata('vengo','true');
+
+		$query = $this->db->query('SELECT cuit FROM bada_celulares WHERE cuit = '. $id .'');
+
+		if ($query->result()){
+			redirect('examples/bada_celulares/edit/'.$id.'');
+		} else
+
+		$this->error_("bada_celulares");
+
+	}
+
 	public function cambiar_nombre_apellido($id = null){
+		
+		$this->session->set_flashdata('vengo','true');
+
 		$query = $this->db->query('SELECT cuit, nombre, apellido FROM sas_activo WHERE cuit = '. $id .'');
 		
 		if ($query->result()){
 			redirect('examples/sas_activos/edit/'.$id.'');
 		} else
-		$this->error_();
+		$this->error_("sas_activo");
 		
 				
 	}
@@ -569,12 +654,16 @@ class Examples extends CI_Controller {
 
 
 	public function sas_activos(){
+
+		$vengo = $this->session->flashdata('vengo');
+
 		if (!$this->verifySession()){
 			return $this->debe_iniciar_sesion();
 		}
 		else {	
-		if (in_array('TODAS', array_column($this->session->acceso,'tabla')) || 
-			in_array('SAS ACTIVOS', array_column($this->session->acceso,'tabla')) ){
+		if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
+			in_array('SAS ACTIVOS', array_column($this->session->acceso,'nombre')) ||
+			$vengo ){
 				$crud = new grocery_CRUD;
 				$crud->set_language('spanish-uy');
 				$crud->set_table('sas_activo');
@@ -603,11 +692,10 @@ class Examples extends CI_Controller {
 				$crud->set_primary_key('cuit','sas_activo');
 				$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
 				
-				$crud->fields([	'cuit','tipo_documento','nro_documento','apellido', 'nombre','domicilio','localidad',
+				$crud	->fields(['cuit','tipo_documento','nro_documento','apellido', 'nombre',
 								'comuna','fecha_nacimiento_sql',
-								'desc_tarea','cod_rep_rrhh_rep','desc_rep', 'desc_registro','desc_regimen',
-								'cod_rep_rrhh_lvl1','desc_lvl1',
-								'cod_rep_rrhh_lvl2','desc_lvl2','tags']);
+								'desc_tarea','desc_rep', 'desc_registro','desc_regimen',
+								'desc_lvl1','desc_lvl2','tags']);
 				
 			
 

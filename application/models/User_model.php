@@ -5,10 +5,13 @@ class User_model extends CI_Model {
 
 
     public function get_access($cuit){ 
-        $query = $this->db  ->select('tabla')
-                            ->where('cuit' , $cuit)
-                            ->get('acceso_tabla');
-        return $query->result();
+        $query = $this->db  ->select('nombre')
+                            ->from('acceso_tabla')
+                            ->where("acceso_tabla.cuit = {$cuit}")
+                            ->join('tablas','tablas.id = acceso_tabla.id_tabla')
+                            ->get();
+        $results = $query->result_array();
+        return $results;
 
     }
 
