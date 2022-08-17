@@ -158,21 +158,20 @@ class Examples extends CI_Controller {
 
 
 	public function editar_atributos($pk){
+		//Es necesario traer el nombre de la tabla de la cual venis para indicarle a cual tabla debe ir
 		$tabla = $this->session->flashdata('table');
 
 		if ($tabla !== 'mujeres_lideres')
 			$tabla = "tabla_{$tabla}";
 
+		// Obtenemos el CUIT para consultar los accesos de usuario, tablas, tags que puede modificar
+		// Y sobre que registros puede accionar
 		$cuit_usuario = $this->session->cuit;
-
 		$accesos_usuario = $this->accionar_tag_mogel->get_actioned_tags($cuit_usuario);
 		$tags_registro = $this->tags_model->get_tags_by_cuit($pk);
 
-		
+		// Verificar si alguno de los tags son los principales del usuario
 		$tiene_acceso = false;
-
-		var_dump($tabla);
-
 		foreach($tags_registro as $tag_reg)
 			foreach ($accesos_usuario as $acc_us)
 				if ($tag_reg == $acc_us)
@@ -180,7 +179,7 @@ class Examples extends CI_Controller {
 
 		if ($tiene_acceso) 
 			redirect("examples/{$tabla}/edit/{$pk}");
-		else redirect("examples/{$tabla}");
+		else $this->sin_acceso_tag_principal();
 
 	}
 
@@ -305,12 +304,23 @@ class Examples extends CI_Controller {
 				$crud->set_primary_key('cuit','gabinete');
 				$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
 				
+				$table = "gabinete";
+				$table = strtoupper($table);
 				$this->session->set_flashdata('table','gabinete');
 
+				$crud
+						// ->unset_edit()
+						// ->unset_delete()
+						// ->unset_clone()
+						;
+
 				$crud	
-				// ->add_action(	'Editar Datos Personales',  base_url.'assets/icons/datos_personales.png', 'examples/cambiar_datos_personales')
-				->add_action(	'Editar Atributos de Mujer Lider', base_url.'assets/icons/contact_page_FILL0_wght400_GRAD0_opsz24.png','examples/editar_atributos')
-				;
+						//->add_action(	'Editar Datos Personales',  base_url.'assets/icons/datos_personales.png', 'examples/cambiar_datos_personales')
+						->add_action(	"Editar Atributos de {$table}", base_url.'assets/icons/contact_page_FILL0_wght400_GRAD0_opsz24.png','examples/editar_atributos')
+						//->add_action(	'Ver Registros completo', base_url.'assets/icons/search_FILL0_wght400_GRAD0_opsz24.png','examples/tabla_mujeres_lideres/read','ui-icon-image')
+						//->add_action(	'Observaciones', base_url.'assets/icons/more.png','examples/ver_observaciones','ui-icon-image')
+						//->callback_insert(array($this,'probando_add'))
+						;
 
 				$crud->callback_before_delete(array($this,'action_befor_delete'));
 				$crud->callback_after_insert(array($this, 'action_befor_insert'));

@@ -65,4 +65,26 @@ $route['carga_masiva/guia_uso'] = 'cargaMasivaController/index';
 $route['carga_masiva/gabinete'] = 'cargaMasivaController/gabinete';
 $route['carga_masiva/gabinete/importarCSVaDB'] = 'cargaMasivaController/importarCSVaDB';
 
+$route['usuario/datos_ingreso'] = 'usuariosController/datos_ingreso';
+$route['usuario/verificarCambios'] = 'usuariosController/verificarCambios';
+
+$route['usuarios/session'] = 'sessionFiltroController/cuit_tag_filtro';
+$route['usuarios/session/add'] = 'sessionFiltroController/cuit_tag_filtro/add';
+
+$route['usuarios/session/edit/(:num)'] = 'sessionFiltroController/cuit_tag_filtro/edit/$id';
+$route['usuarios/session/update_validation/(:num)'] = 'sessionFiltroController/cuit_tag_filtro/update_validation/$id';
+$route['usuarios/session/update/(:num)'] = 'sessionFiltroController/cuit_tag_filtro/update/$id';
+
+$route['examples/tabla_mujeres_lideres/add'] = 'examples/probando_add';
+
+$route['filtro_tags'] = 'filtrosController/filtros_selected';
+$route['cargar_vista'] = 'filtrosController/cargar_vista';
+
+
+
+
+
+
+
+//LOCAL
 
