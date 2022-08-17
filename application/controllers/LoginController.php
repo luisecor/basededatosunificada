@@ -56,15 +56,19 @@ class LoginController extends CI_Controller {
         $this->load->view('login/login',$data);
         $this->load->view('index/footer'); 
         
+        
 
     }
 
     public function ingreso(){
         $this->load->view('index/header');
+        $data = [ 'ingresado' => 'Bienvenido a la Súperbase'];
         $this->load->view('index/navBar/navBarGrocery');
+        $this->load->view('welcome/welcome', $data); 
         $this->load->view('index/footer'); 
     }
 
+    
     public function logout(){
         session_destroy();
         return $this->index();

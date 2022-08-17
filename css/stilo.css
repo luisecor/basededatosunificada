@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box !important;
+    font-family: 'Roboto', sans-serif;
+
+}
+
+body {
+    background-color: #f9fbfc;
+}
+
+.navbar a {
+   text-decoration: none;
+   color: white !important;
+}
+
+a {
+    text-decoration: none !important;
+    color: #4c5773 !important;
+ }
+
+
+.navbar :hover {
+    text-decoration: none;
+    color: white;
+   
+ }
+
+.root-container {
+    height: 90vh;
+    
+}
+
+.navbar-bg {
+    background-color: #509ee3;
+    box-shadow: 0px 2.98256px 7.4564px rgba(0, 0, 0, 0.1) !important;
+}
+
+.login-container {
+    color: #4c5773;
+    width: 420px;
+    height: auto;
+    margin-top: 32px;
+    background-color: white;
+    border: 1px solid rgb(237, 242, 245);
+    border-radius: 6px;
+    box-shadow: rgb(0 0 0 / 8%) 0px 7px 20px;
+    line-height: 24px;
+}
+
+.login-container input, label {
+    margin-bottom: 1.5rem;
+}
+
+.login-container h3 {
+    font-weight: 600;
+}
+
+.table-card {
+    width: 305px;
+    height: 70px;
+    color: #4c5773 !important;
+    background-color: white !important;
+    border: 1px solid rgb(237, 242, 245) !important;
+    border-radius: 6px !important;
+    box-shadow: rgb(0 0 0 / 8%) 0px 7px 20px !important;
+    box-sizing: border-box !important;
+}
+
+.table-card a:hover {
+    color: rgb(80, 158, 227) !important;
+}
+
+.table-card:hover {
+    box-shadow: rgb(0 0 0 / 15%) 0px 7px 20px !important;
+}
+
+.dropdown-menu a {
+    color: rgb(148, 154, 171) !important;
+    font-size: 14px !important;
+    font-weight: 500;
+}
+
+.table-link {
+    display: flex !important;
+    align-items: center;
+}
+
+.register-container {
+    color: #4c5773;
+    width: 520px;
+    height: auto;
+    margin-top: 32px;
+    background-color: white;
+    border: 1px solid rgb(237, 242, 245);
+    border-radius: 6px;
+    box-shadow: rgb(0 0 0 / 8%) 0px 7px 20px;
+    line-height: 24px;
+}
