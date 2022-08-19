@@ -69,6 +69,9 @@ class SessionFiltroController extends CI_Controller {
         // $crud->callback_after_insert(array($this, 'action_befor_insert'));
         // $crud->callback_before_update(array($this,'action_befor_update'));
 
+			$crud	->add_action(	'Editar',  base_url.'assets/icons/datos_personales.png', 'usuarios/session/edit')
+					;
+
         $output = $crud->render();
         $this->_example_output($output);
 
@@ -82,6 +85,13 @@ class SessionFiltroController extends CI_Controller {
 		var_dump($post_array);
 
 		return $post_array;
+
+
+	}
+
+	public function editar($id){
+
+			redirect("usuarios/session/edit/{$id}");
 
 
 	}
