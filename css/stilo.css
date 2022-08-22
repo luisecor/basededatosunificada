@@ -31,7 +31,6 @@ a {
 
 .root-container {
     height: 90vh;
-    
 }
 
 .navbar-bg {
@@ -39,16 +38,19 @@ a {
     box-shadow: 0px 2.98256px 7.4564px rgba(0, 0, 0, 0.1) !important;
 }
 
-.login-container {
+.shadow-box {
     color: #4c5773;
-    width: 420px;
-    height: auto;
-    margin-top: 32px;
     background-color: white;
     border: 1px solid rgb(237, 242, 245);
     border-radius: 6px;
     box-shadow: rgb(0 0 0 / 8%) 0px 7px 20px;
     line-height: 24px;
+}
+
+.login-container {
+    width: 420px;
+    height: auto;
+    margin-top: 32px;
 }
 
 .login-container input, label {
@@ -62,12 +64,6 @@ a {
 .table-card {
     width: 305px;
     height: 70px;
-    color: #4c5773 !important;
-    background-color: white !important;
-    border: 1px solid rgb(237, 242, 245) !important;
-    border-radius: 6px !important;
-    box-shadow: rgb(0 0 0 / 8%) 0px 7px 20px !important;
-    box-sizing: border-box !important;
 }
 
 .table-card a:hover {
@@ -90,13 +86,66 @@ a {
 }
 
 .register-container {
-    color: #4c5773;
     width: 520px;
     height: auto;
     margin-top: 32px;
-    background-color: white;
-    border: 1px solid rgb(237, 242, 245);
+}
+
+.filter-title {
+    color: #4c5773;
+    margin: .5rem;
+}
+
+.filter-list {
+    overflow-y: scroll;
+    max-height: 60vh;
+}
+
+*::-webkit-scrollbar {
+    width: 16px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #ffffff;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: rgb(166, 167, 195);
+    border-radius: 10px;
+    border: 3px solid #ffffff;
+  }
+
+.filter-row {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    width: 250px;
+}
+
+.filter-row label {
+    width: 100%;
+}
+
+.filter-row:hover {
+    color: white;
+    background-color: rgb(166, 167, 195);
+    border-radius: 5px;
+
+}
+
+.filter-container {
+    width: 40%;
+}
+
+.filter-btn {
+    background-color: rgb(147, 149, 202);
+    color: white;
+    border: none;
     border-radius: 6px;
-    box-shadow: rgb(0 0 0 / 8%) 0px 7px 20px;
-    line-height: 24px;
+    padding: 8px 25px;
+}
+
+.filter-btn:hover {
+    background-color: rgb(113, 114, 173);
+    
 }

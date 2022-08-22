@@ -96,12 +96,13 @@
             </a>
             <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href='<?=site_url('usuario/datos_ingreso')?>'>Datos de acceso</a></li>
-                <li><a class="dropdown-item" href='<?=site_url('logout')?>'>Cerrar Sesion</a></li>
+                
                 <?php if (('SU' === $this->session->tipo_usuario))  {  ?> 
-                    <li><hr class="dropdown-divider"> SUPER USER </li>
                     <li><a class="dropdown-item" href='<?php echo site_url('registrarUsuario')?>'>Registrar Nuevo Usuario</a></li>
                     <li><a class="dropdown-item" href='<?php echo site_url('usuarios/session')?>'>Permisos de Usuarios</a></li>
                 <?php } ?>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href='<?=site_url('logout')?>'>Cerrar Sesion</a></li>
             </ul>
 
            
