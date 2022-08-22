@@ -11,6 +11,10 @@ class Tags_model  extends CI_Model {
 
     }
 
+    public function hola(){
+        echo "HOLA";
+    }
+
     public function get_tag_name($id){
 
         $query = $this->db

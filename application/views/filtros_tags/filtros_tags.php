@@ -8,6 +8,7 @@
 
                 <input name='filtro[]' class='form-check-input filtroNombre' type='checkbox' value='{$filtro['id']}' id='{$filtro['nombre']}'>
                 <label class='form-check-label' for='{$filtro['nombre']}'>{$filtro['nombre']}</label>
+                
             
             </div>" . 
             // <div class='col'>
@@ -21,6 +22,9 @@
               "
         </div>
         ";
+        if (in_array($filtro['id'], array_column($this->session->filtro_busqueda,'filtro')) )
+        echo "ESTE SE FILTRA";
+        
     }?>
     <button type="submit" class="btn btn-primary"> Filtrar </button>
 </form>

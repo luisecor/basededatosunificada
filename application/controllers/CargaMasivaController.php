@@ -4,9 +4,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class CargaMasivaController extends CI_Controller {
 
-    public function __constructor(){
-        parent::__construct();
-        $this->load->helper(array('form', 'url'));
+    public function __construct()	{
+		parent::__construct();
+        $this->load->model('tags_model');
     }
 
     public function index(){
@@ -141,6 +141,11 @@ class CargaMasivaController extends CI_Controller {
         
 
     }
-    
+
+    public function tags_main(){
+      $tag_list = $this->tags_model->get_tags_list();
+     // $this->load->view();
+
+    }
 
 }

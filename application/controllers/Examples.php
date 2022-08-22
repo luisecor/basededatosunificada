@@ -4,12 +4,12 @@ require_once "UsuariosTrait.php";
 require_once "LoginController.php";
 
 
+
 class Examples extends CI_Controller {
 
 	use UsuariosTrait;
 	
-	public function __construct()
-	{
+	public function __construct()	{
 		parent::__construct();
 		$this->load->model('observaciones_model');
 		$this->load->model('mujeres_lideres');
@@ -125,7 +125,7 @@ class Examples extends CI_Controller {
 					}
 				}
 
-				
+				//&&VienaConsilia#!
 						
 				$crud	//->unset_add()
 						->unset_edit()
@@ -135,13 +135,15 @@ class Examples extends CI_Controller {
 						->add_fields('cuit','edicion')
 						;
 
-				 $crud	->add_action(	'Editar Datos Personales',  base_url.'assets/icons/datos_personales.png', 'examples/cambiar_datos_personales')
+				$crud	->add_action(	'Editar Datos Personales',  base_url.'assets/icons/datos_personales.png', 'examples/cambiar_datos_personales')
 						->add_action(	'Editar Atributos de Mujer Lider', base_url.'assets/icons/contact_page_FILL0_wght400_GRAD0_opsz24.png','examples/editar_atributos')
 						->add_action(	'Ver Registros completo', base_url.'assets/icons/search_FILL0_wght400_GRAD0_opsz24.png','examples/tabla_mujeres_lideres/read','ui-icon-image')
 						->add_action(	'Observaciones', base_url.'assets/icons/more.png','examples/ver_observaciones','ui-icon-image')
+						->add_action(	'Borrar registro', base_url.'assets/icons/delete_FILL0_wght400_GRAD0_opsz24.png','examples/delete','ui-icon-image')
 						// ->callback_insert(array($this,'probando_add'))
 						;
-									
+				
+				$crud	->columns(['cuit','documento','apellido','nombre','edicion','ministerio','secr','ss','dg','tags']);					
 								
 				$output = $crud->render();
 				$this->_example_output($output);
@@ -153,6 +155,36 @@ class Examples extends CI_Controller {
 
 	public function probando_add(){
 		redirect('examples/mujeres_lideres/add');
+	}
+
+	public function delete($pk){
+		//Es necesario traer el nombre de la tabla de la cual venis para indicarle a cual tabla debe ir
+		$tabla = $this->session->flashdata('table');
+
+		if ($tabla !== 'mujeres_lideres')
+			$tabla = "tabla_{$tabla}";
+
+		// Obtenemos el CUIT para consultar los accesos de usuario, tablas, tags que puede modificar
+		// Y sobre que registros puede accionar
+		$cuit_usuario = $this->session->cuit;
+		$accesos_usuario = $this->accionar_tag_mogel->get_actioned_tags($cuit_usuario);
+		$tags_registro = $this->tags_model->get_tags_by_cuit($pk);
+
+		// Verificar si alguno de los tags son los principales del usuario
+		$tiene_acceso = false;
+		foreach($tags_registro as $tag_reg)
+			foreach ($accesos_usuario as $acc_us)
+				if ($tag_reg == $acc_us)
+					$tiene_acceso = true;
+
+		if ($tiene_acceso) 
+			{
+				exec(array(redirect("examples/{$tabla}/delete/{$pk}"),redirect("examples/tabla_{$tabla}")));
+				
+				
+		}
+		else $this->sin_acceso_tag_principal();
+
 	}
 
 

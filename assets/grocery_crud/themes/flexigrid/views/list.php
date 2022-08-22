@@ -48,7 +48,7 @@
                     <?php if(!$unset_clone){?>
                         <a href='<?php echo $row->clone_url?>' title='<?php echo $this->l('list_clone')?> <?php echo $subject?>' class="clone_button"><span class='clone-icon'></span></a>
                     <?php }?>
-					<!-- <?php if(!$unset_read){?>
+					 <?php if(!$unset_read){?>
 						<a href='<?php //echo $row->read_url?>' title='<?php //echo $this->l('list_view')?> <?php //echo $subject?>' class="edit_button"><span class='read-icon'></span></a>
 					<?php }?> --> 
 					<?php 

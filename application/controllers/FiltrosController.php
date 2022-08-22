@@ -25,8 +25,13 @@ class FiltrosController extends CI_Controller {
 
     public function filtros_selected(){
         $valores = $this->input->post();
-        $this->session->set_flashdata('filtro_busqueda',$valores);
-        // $this->session->keep_flashdata('filtro_busqueda',300);
+        // $this->session->set_flashdata('filtro_busqueda',$valores);
+        $this->session->set_userdata( array (
+            'filtro_busqueda' => $valores
+        ));
+
+        // var_dump($this->session->filtro_busqueda);
+        // $this->session->keep_flashdata('filtro_busqueda',5000);
 
        redirect('examples/tabla_mujeres_lideres');
          

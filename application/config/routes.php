@@ -61,9 +61,7 @@ $route['logout'] = 'loginController/logout';
 $route['registrarUsuario'] = 'loginController/registro';
 $route['registroVerificar'] = 'loginController/registroVerificar';
 
-$route['carga_masiva/guia_uso'] = 'cargaMasivaController/index';
-$route['carga_masiva/gabinete'] = 'cargaMasivaController/gabinete';
-$route['carga_masiva/gabinete/importarCSVaDB'] = 'cargaMasivaController/importarCSVaDB';
+
 
 $route['usuario/datos_ingreso'] = 'usuariosController/datos_ingreso';
 $route['usuario/verificarCambios'] = 'usuariosController/verificarCambios';
@@ -79,6 +77,12 @@ $route['examples/tabla_mujeres_lideres/add'] = 'examples/probando_add';
 
 $route['filtro_tags'] = 'filtrosController/filtros_selected';
 $route['cargar_vista'] = 'filtrosController/cargar_vista';
+
+//CARGA MASIVA
+$route['carga_masiva/tags'] = 'cargaMasivaController/tags_main';
+$route['carga_masiva/guia_uso'] = 'cargaMasivaController/index';
+$route['carga_masiva/gabinete'] = 'cargaMasivaController/gabinete';
+$route['carga_masiva/gabinete/importarCSVaDB'] = 'cargaMasivaController/importarCSVaDB';
 
 
 
