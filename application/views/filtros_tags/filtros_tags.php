@@ -22,12 +22,13 @@
               "
         </div>
         ";
-        if (in_array($filtro['id'], array_column($this->session->filtro_busqueda,'filtro')) )
-        echo "ESTE SE FILTRA";
+       
         
     }?>
     <button type="submit" class="btn btn-primary"> Filtrar </button>
 </form>
+
+<?= var_dump($this->session->filtro_busqueda) ?>
 
 <script src="<?=base_url?>js/filtros.js"></script>
 
