@@ -13,7 +13,7 @@
     </symbol>
 </svg>
 <div class="d-flex flex-column align-items-center justify-content-center mt-5">
-<div class="register-container py-4 px-3">
+<div class="register-container shadow-box py-4 px-3">
     <div>
         <p>Registrar nuevo Usuario</p>
     </div>
