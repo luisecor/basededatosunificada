@@ -25,8 +25,8 @@
         <div >
             <div class='mx-2 filter-row p-1'>
 
-                <input name='filtro[]' class='form-check-input filtroNombre' type='checkbox' value='{$filtro['id']}' id='{$filtro['nombre']}'>
-                <label class='form-check-label' for='{$filtro['nombre']}'>{$filtro['nombre']}</label>
+                <input name='filtro[]' class='form-check-input filtroNombre m-0' type='checkbox' value='{$filtro['id']}' id='{$filtro['nombre']}'>
+                <label class='filter-label mb-0 ms-2' for='{$filtro['nombre']}'>{$filtro['nombre']}</label>
             
             </div>" . 
             // <div class='col'>
@@ -40,8 +40,6 @@
               "
         </div>
         ";
-       
-        
     }?>
             </div>
             <div class="m-2">
