@@ -67,6 +67,7 @@ class Examples extends CI_Controller {
 				$crud->columns(['comuna','barrio','nombre','apellido','sexo','dni','fecha_nacimiento','fecha_afiliacion','ocupacion','direccion']);
 				
 				$this->session->set_flashdata('table','afiliados');
+				$_SESSION['tabla'] = "Afiliados";
 
 				$crud->callback_before_delete(array($this,'action_befor_delete'));
 				$crud->callback_after_insert(array($this, 'action_befor_insert'));
