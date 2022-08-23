@@ -26,6 +26,7 @@ class FiltrosController extends CI_Controller {
     public function filtros_selected(){
         $valores = $this->input->post();
         // $this->session->set_flashdata('filtro_busqueda',$valores);
+        $_SESSION['filtro_busqueda'] = $valores;
         $this->session->set_userdata( array (
             'filtro_busqueda' => $valores
         ));

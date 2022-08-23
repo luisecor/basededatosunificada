@@ -17,6 +17,7 @@ class Examples extends CI_Controller {
 		$this->load->model('bada_celulares_model');
 		$this->load->model('tags_model');
 		$this->load->model('accionar_tag_mogel');
+		$this->load->model('tags_model');
 		
 	}
 
@@ -91,10 +92,10 @@ class Examples extends CI_Controller {
 				$crud->set_language('spanish-uy');
 				$crud->set_primary_key('cuit','mujeres_lideres_view');
 				$crud->set_table('mujeres_lideres_view');
-				
 				$crud->set_subject('Mujer Lider');
 
 				$this->session->set_flashdata('table','mujeres_lideres');
+				$_SESSION['tabla'] = "Mujeres Lideres";
 
 				//$crud->callback_before_delete(array($this,'action_befor_delete')); !TODO revisar
 				//$crud->callback_after_insert(array($this, 'action_befor_insert')); !TODO revisar
@@ -125,7 +126,6 @@ class Examples extends CI_Controller {
 					}
 				}
 
-				//&&VienaConsilia#!
 						
 				$crud	//->unset_add()
 						->unset_edit()
@@ -143,8 +143,10 @@ class Examples extends CI_Controller {
 						// ->callback_insert(array($this,'probando_add'))
 						;
 				
-				$crud	->columns(['cuit','documento','apellido','nombre','edicion','ministerio','secr','ss','dg','tags']);					
-								
+				$crud	->columns(['cuit','documento','apellido','nombre','edicion','ministerio','secr','ss','dg','tags']);		
+				
+				$filtros = $this->tags_model->get_tags_list();
+				$_SESSION['filtros'] = $filtros;								
 				$output = $crud->render();
 				$this->_example_output($output);
 			}else {
@@ -161,9 +163,15 @@ class Examples extends CI_Controller {
 		//Es necesario traer el nombre de la tabla de la cual venis para indicarle a cual tabla debe ir
 		$tabla = $this->session->flashdata('table');
 
-		if ($tabla !== 'mujeres_lideres')
+		if ($tabla !== 'mujeres_lideres'){
 			$tabla = "tabla_{$tabla}";
+			$volver = $tabla;
+		} else{ 
+			$volver = "tabla_{$tabla}";
+		}
+			
 
+		
 		// Obtenemos el CUIT para consultar los accesos de usuario, tablas, tags que puede modificar
 		// Y sobre que registros puede accionar
 		$cuit_usuario = $this->session->cuit;
@@ -178,11 +186,13 @@ class Examples extends CI_Controller {
 					$tiene_acceso = true;
 
 		if ($tiene_acceso) 
-			{
-				exec(array(redirect("examples/{$tabla}/delete/{$pk}"),redirect("examples/tabla_{$tabla}")));
+			{ 
+				echo "EN PROCESO";
+				// Hay que hacer un delete desde el modelo
+			}
 				
 				
-		}
+		
 		else $this->sin_acceso_tag_principal();
 
 	}
