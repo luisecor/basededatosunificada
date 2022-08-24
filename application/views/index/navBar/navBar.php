@@ -10,4 +10,4 @@
         </div>
      </div>
 </nav>
-<div class="container d-flex flex-column align-items-center justify-content-center root-container">
+<div class="container-fluid d-flex flex-column align-items-center justify-content-center root-container">
