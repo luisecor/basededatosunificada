@@ -220,7 +220,7 @@ if($success_message !== null){?>
                         </div>
                         <div class="filter-list">
                             <?php 
-							$filtros = $_SESSION['filtros'];
+							if (isset($_SESSION['filtros'])) $filtros = $_SESSION['filtros']; else $filtros = null;
 							if (isset($_SESSION['filtro_busqueda']))	{
 								$filtro_busqueda = $_SESSION['filtro_busqueda'];
 							} else $filtro_busqueda = null;	   	

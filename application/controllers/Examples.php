@@ -18,6 +18,8 @@ class Examples extends CI_Controller {
 		$this->load->model('tags_model');
 		$this->load->model('accionar_tag_mogel');
 		$this->load->model('tags_model');
+		$filtros = $this->tags_model->get_tags_list();
+		$_SESSION['filtros'] = $filtros;
 		
 	}
 
@@ -146,8 +148,7 @@ class Examples extends CI_Controller {
 				
 				$crud	->columns(['cuit','documento','apellido','nombre','edicion','ministerio','secr','ss','dg','tags']);		
 				
-				$filtros = $this->tags_model->get_tags_list();
-				$_SESSION['filtros'] = $filtros;								
+												
 				$output = $crud->render();
 				$this->_example_output($output);
 			}else {
@@ -242,6 +243,7 @@ class Examples extends CI_Controller {
 						->add_fields('cuit','edicion');
 
 				$this->session->set_flashdata('table','mujeres_lideres');
+				$_SESSION['tabla'] = "Mujeres Lideres";
 
 				$crud->callback_before_delete(array($this,'action_befor_delete')); //!TODO revisar
 				$crud->callback_after_insert(array($this, 'action_befor_insert')); //!TODO revisar
@@ -283,6 +285,7 @@ class Examples extends CI_Controller {
 			
 			$tabla = $this->session->flashdata('table'); 	//Recupero del flash -> se borra
 			$this->session->set_flashdata('table',$tabla);	//Lo vuelvo a designar de forma global
+			$_SESSION['tabla'] = "Observaciones - {$tabla}";
 			$cuit_user = $this->session->cuit;
 			$user_name = $this->session->user_name;
 
@@ -350,6 +353,7 @@ class Examples extends CI_Controller {
 				$table = "gabinete";
 				$table = strtoupper($table);
 				$this->session->set_flashdata('table','gabinete');
+				$_SESSION['tabla'] = "Gabinete";
 
 				$crud
 						// ->unset_edit()
@@ -392,6 +396,7 @@ class Examples extends CI_Controller {
 				$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
 				
 				$this->session->set_flashdata('table','secretarios');
+				$_SESSION['tabla'] = "Secretarios";
 
 				$crud->callback_before_delete(array($this,'action_befor_delete'));
 				$crud->callback_after_insert(array($this, 'action_befor_insert'));
@@ -420,6 +425,7 @@ class Examples extends CI_Controller {
 				$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
 				
 				$this->session->set_flashdata('table','sub_secretarios');
+				$_SESSION['tabla'] = "SubSecretarios";
 
 				$crud->callback_before_delete(array($this,'action_befor_delete'));
 				$crud->callback_after_insert(array($this, 'action_befor_insert'));
@@ -448,6 +454,7 @@ class Examples extends CI_Controller {
 				$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
 
 				$this->session->set_flashdata('table','ptes_comunas');
+				$_SESSION['tabla'] = "Ptes. Comuna";
 
 				$crud->callback_before_delete(array($this,'action_befor_delete'));
 				$crud->callback_after_insert(array($this, 'action_befor_insert'));
@@ -467,7 +474,7 @@ class Examples extends CI_Controller {
 		}
 		else {	
 		if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
-			in_array('LEGISADORES', array_column($this->session->acceso,'nombre')) ){
+			in_array('LEGISLADORES', array_column($this->session->acceso,'nombre')) ){
 				$crud = new grocery_CRUD;
 				$crud->set_language('spanish-uy');
 				$crud->set_table('legisladores');
@@ -476,6 +483,7 @@ class Examples extends CI_Controller {
 				$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
 
 				$this->session->set_flashdata('table','legisladores');
+				$_SESSION['tabla'] = "Legisladores";
 
 				$crud->callback_before_delete(array($this,'action_befor_delete'));
 				$crud->callback_after_insert(array($this, 'action_befor_insert'));
@@ -504,6 +512,7 @@ class Examples extends CI_Controller {
 				$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
 
 				$this->session->set_flashdata('table','jdg');
+				$_SESSION['tabla'] = "JDG";
 
 				$crud->callback_before_delete(array($this,'action_befor_delete'));
 				$crud->callback_after_insert(array($this, 'action_befor_insert'));
@@ -530,6 +539,7 @@ class Examples extends CI_Controller {
 				$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
 
 				$this->session->set_flashdata('table','dg');
+				$_SESSION['tabla'] = "DG";
 
 				$crud->callback_before_delete(array($this,'action_befor_delete'));
 				$crud->callback_after_insert(array($this, 'action_befor_insert'));
@@ -558,6 +568,7 @@ class Examples extends CI_Controller {
 				$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
 
 				$this->session->set_flashdata('table','go');
+				$_SESSION['tabla'] = "GO";
 
 				$crud->callback_before_delete(array($this,'action_befor_delete'));
 				$crud->callback_after_insert(array($this, 'action_befor_insert'));
@@ -615,6 +626,7 @@ class Examples extends CI_Controller {
 									'examples/cambiar_nombre_apellido');
 				
 				$this->session->set_flashdata('table','bada_celulares');
+				$_SESSION['tabla'] = "Bada Celulares";
 				
 
 				$crud->callback_before_delete(array($this,'action_befor_delete'));
@@ -672,6 +684,7 @@ class Examples extends CI_Controller {
 		$crud->set_table('tags');
 		$crud->columns('nombre');
 		$crud->fields('nombre');
+		$_SESSION['tabla'] = "TAGS";
 		$output = $crud->render();
 		$this->_example_output($output);
 		}
@@ -698,6 +711,7 @@ class Examples extends CI_Controller {
 
 		$crud->columns('virtual','cuit','tags');
 		$crud->fields('tags');
+		$_SESSION['tabla'] = "Tags Asignados";
 		$output = $crud->render();
 		$this->_example_output($output);
 		}
@@ -740,7 +754,9 @@ class Examples extends CI_Controller {
 				$crud->display_as('desc_regimen','Desc Regimen');
 				$crud->display_as('desc_lvl1','Desc Lvl 1');
 				$crud->display_as('desc_lvl2','Desc  Lvl 2');
+
 				$this->session->set_flashdata('table','sas_activo');
+				$_SESSION['tabla'] = "SAS Activos";
 
 				$crud->set_primary_key('cuit','sas_activo');
 				$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
@@ -784,8 +800,7 @@ class Examples extends CI_Controller {
 		return $this->db->insert('log_'.$this->session->flashdata('table'), $data);
 	}
 
-	public function action_befor_insert($post_array, $primary_key)
-{
+	public function action_befor_insert($post_array, $primary_key){
 
 	$data = [
 		'cuit_usuario' => $this->session->cuit,
@@ -799,8 +814,7 @@ class Examples extends CI_Controller {
     return $this->db->insert('log_'.$this->session->flashdata('table'), $data);
 }
 
-public function action_befor_delete($primary_key)
-{
+public function action_befor_delete($primary_key){
 	$this->db->where('cuit',$primary_key);
 	$registro = $this->db->get($this->session->flashdata('table'),$primary_key)->row();
 
