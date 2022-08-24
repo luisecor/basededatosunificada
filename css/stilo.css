@@ -166,3 +166,14 @@ a {
  color: white;
 }
 
+.login-btn {
+    color: white;
+    background-color: #509ee3;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 25px;
+}
+
+.login-btn:hover {
+    background-color: #2a91eb;
+}

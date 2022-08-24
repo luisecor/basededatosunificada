@@ -40,7 +40,7 @@
             <input type="checkbox" name="sesion_abierta" class="form-check-input" id="sesion_abierta">
             <label class="form-check-label" for="sesion_abierta">Mantener sesion abierta</label>
         </div>
-        <button type="submit" class="btn btn-primary login-btn">Ingresar</button>
+        <button type="submit" class="login-btn">Ingresar</button>
     </form>
 
 
