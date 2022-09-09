@@ -93,7 +93,7 @@
             <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
             in_array('SAS ACTIVOS', array_column($this->session->acceso,'nombre'))) {  ?>
             <div class='table-card shadow-box d-flex justify-content-center align-items-center my-3'>
-                <a href='<?php echo site_url('examples/sas_activos')?>' class="d-flex align-items-center w-100 h-100">
+                <a href='<?php echo site_url('examples/tabla_sas_activos')?>' class="d-flex align-items-center w-100 h-100">
                     <img src="<?=base_url?>css/svg/table.svg" alt="Icono de base de datos" class="ms-4 me-2">
                     SAS Activos</a>
             </div>
@@ -111,7 +111,7 @@
             <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
             in_array('USUARIOS BADA', array_column($this->session->acceso,'nombre'))) {  ?>
             <div class='table-card shadow-box d-flex justify-content-center align-items-center my-3'>
-                <a href='<?php echo site_url('examples/bada_celulares')?>' class="d-flex align-items-center w-100 h-100">
+                <a href='<?php echo site_url('examples/tabla_bada_celulares')?>' class="d-flex align-items-center w-100 h-100">
                     <img src="<?=base_url?>css/svg/table.svg" alt="Icono de base de datos" class="ms-4 me-2">
                     Usuarios Bada</a>
             </div>

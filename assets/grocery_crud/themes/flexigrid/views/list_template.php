@@ -237,13 +237,10 @@ if($success_message !== null){?>
 							// }
 							
 					foreach ($filtros as $filtro) {
-						if (!is_null($filtro_busqueda)){ 
-							foreach ($filtro_busqueda as $filtro_b)
-								if ($filtro['id'] === $filtro_b[0]) {
-									$cheked = "checked='true'";
-									break;}
-						} else
-								$cheked = "";
+						$cheked = "";
+
+						if ($filtro_busqueda!=null and in_array($filtro['id'],$filtro_busqueda['filtro'] ))
+							$cheked =  "checked='true'";
 
 								
                     echo 
@@ -259,6 +256,7 @@ if($success_message !== null){?>
                     "
 					;
                 }
+
 				?>
                
 

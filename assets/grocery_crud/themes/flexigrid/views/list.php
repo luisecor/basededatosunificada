@@ -37,7 +37,7 @@
 				<div class='tools d-flex justify-content-center'>
 					
 				<!-- Deje comentado los UNSETS para que no los muestre en el fronto, pero si que esten disponibles como accion -->
-					<?php if(!$unset_delete){?>
+					<!-- <?php if(!$unset_delete){?>
                     	<a href='<?php echo $row->delete_url?>' title='<?php echo $this->l('list_delete')?> <?php echo $subject?>' class="delete-row" >
                     			<span class='delete-icon'></span>
                     	</a>
@@ -50,7 +50,7 @@
                     <?php }?>
 					 <?php if(!$unset_read){?>
 						<a href='<?php //echo $row->read_url?>' title='<?php //echo $this->l('list_view')?> <?php //echo $subject?>' class="edit_button"><span class='read-icon'></span></a>
-					<?php }?> 
+					<?php }?>  -->
 					<?php 
 					if(!empty($row->action_urls)){
 						foreach($row->action_urls as $action_unique_id => $action_url){ 

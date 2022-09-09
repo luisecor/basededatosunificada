@@ -47,13 +47,13 @@
                <?php }; ?>  
                 <li><hr class="dropdown-divider"></li>
                <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || in_array('SAS ACTIVOS', array_column($this->session->acceso,'nombre'))) {  ?> 
-                <li><a class="dropdown-item" href='<?php echo site_url('examples/sas_activos')?>'>SAS Activos</a></li>
+                <li><a class="dropdown-item" href='<?php echo site_url('examples/tabla_sas_activos')?>'>SAS Activos</a></li>
                <?php }; ?>  
                <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || in_array('MUJERES LIDERES', array_column($this->session->acceso,'nombre'))) {  ?> 
                 <li><a class="dropdown-item" href='<?php echo site_url('examples/tabla_mujeres_lideres')?>'>Mujeres Lideres</a></li>
                <?php }; ?>  
                <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || in_array('USUARIOS BADA', array_column($this->session->acceso,'nombre'))) {  ?> 
-                <li><a class="dropdown-item" href='<?php echo site_url('examples/bada_celulares')?>'>Usuarios Bada</a></li>
+                <li><a class="dropdown-item" href='<?php echo site_url('examples/tabla_bada_celulares')?>'>Usuarios Bada</a></li>
                <?php }; ?>  
                <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || in_array('AFILIADOS', array_column($this->session->acceso,'nombre'))) {  ?> 
                 <li><a class="dropdown-item" href='<?php echo site_url('examples/tabla_Afiliados')?>'>Afiliados</a></li>
@@ -64,7 +64,7 @@
             </ul>
            
             <li class="nav-item dropdown justify-content-end">
-            <!-- <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Carga Masiva
             </a>
             <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
@@ -80,13 +80,13 @@
                 <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/tabla_DG')?>'>DG</a></li>
                 <li><a class="dropdown-item" href='<?php echo site_url('excarga_masivaamples/tabla_GO')?>'>GO</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/sas_activos')?>'>SAS Activos</a></li>
+                <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/tabla_sas_activos')?>'>SAS Activos</a></li>
                 <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/tabla_mujeres_lideres')?>'>Mujeres Lideres</a></li>
-                <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/bada_celulares')?>'>Usuarios Bada</a></li>
+                <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/tabla_bada_celulares')?>'>Usuarios Bada</a></li>
                 <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/tabla_Afiliados')?>'>Afiliados</a></li>
                 <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/tabla_tags')?>'>TAGS</a></li>
                
-            </ul> -->
+            </ul>
 
             <li class="nav-item dropdown justify-content-end">
             <a class="nav-link " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
