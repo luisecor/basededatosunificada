@@ -81,7 +81,8 @@ $route['cargar_vista'] = 'filtrosController/cargar_vista';
 //CARGA MASIVA
 $route['carga_masiva/tags'] = 'cargaMasivaController/tags_main';
 $route['carga_masiva/guia_uso'] = 'cargaMasivaController/index';
-$route['carga_masiva/gabinete'] = 'cargaMasivaController/gabinete';
+$route['carga_masiva/form_tabla'] = 'cargaMasivaController/form_tabla';
+$route['carga_masiva/form_tag'] = 'cargaMasivaController/form_tag';
 $route['carga_masiva/gabinete/importarCSVaDB'] = 'cargaMasivaController/importarCSVaDB';
 
 

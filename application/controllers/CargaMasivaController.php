@@ -16,11 +16,19 @@ class CargaMasivaController extends CI_Controller {
         $this->load->view('index/footer');
     }
 
-    public function gabinete(){
+    public function form_tabla(){
         $data['tabla'] = "GABINETE";
         $this->load->view('index/header');
         $this->load->view('index/navBar/navBarGrocery');
         $this->load->view('cargaMasiva/gabinete',$data);
+        $this->load->view('index/footer');
+    }
+
+    public function form_tag(){
+        $data['tabla'] = "GABINETE";
+        $this->load->view('index/header');
+        $this->load->view('index/navBar/navBarGrocery');
+        $this->load->view('cargaMasiva/cargaMasivaTags',$data);
         $this->load->view('index/footer');
     }
 

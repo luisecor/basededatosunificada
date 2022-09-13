@@ -5,7 +5,6 @@
     padding: 0;
     box-sizing: border-box !important;
     font-family: 'Roboto', sans-serif;
-
 }
 
 body {
@@ -31,6 +30,9 @@ a {
 
 .root-container {
     height: 90vh;
+    background-image: url(./png/Estetita_Superbase.png);
+    background-position: center;
+    background-attachment: fixed;
 }
 
 .navbar-bg {
@@ -138,7 +140,7 @@ a {
 }
 
 .filter-btn {
-    background-color: rgb(147, 149, 202);
+    background-color: #9395ca;
     color: white;
     border: none;
     border-radius: 6px;
@@ -146,6 +148,49 @@ a {
 }
 
 .filter-btn:hover {
-    background-color: rgb(113, 114, 173);
+    background-color: #7172ad;
     
+}
+
+.cancel-btn {
+    background-color: rgb(160, 161, 171);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 25px;
+}
+
+.cancel-btn:hover {
+    background-color: rgb(105, 105, 105);
+ color: white;
+}
+
+.login-btn {
+    color: white;
+    background-color: #509ee3;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 25px;
+}
+
+.login-btn:hover {
+    background-color: rgb(32, 120, 198);
+}
+
+.dropdown-menu {
+    position: relative;
+    z-index: 10000;
+}
+
+.flexigrid table tr.hDiv th {
+    overflow: visible !important;
+}
+
+.btn:focus,.btn:active {
+    outline: none !important;
+    box-shadow: none;
+ }
+
+ .btn{
+	box-shadow: none !important
 }
