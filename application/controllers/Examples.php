@@ -368,7 +368,7 @@ class Examples extends CI_Controller {
 				$filtro_session	= $this->session->filtro_session;
 				if (empty($filtro_session) !== true) {
 					foreach($filtro_session as $filtro){
-						$crud->where("tag_list LIKE '%{$filtro['nombre']}%'");
+						$crud->or_where("tag_list LIKE '%{$filtro['nombre']}%'");
 	
 					}
 				}

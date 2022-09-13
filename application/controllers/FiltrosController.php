@@ -9,6 +9,7 @@ class FiltrosController extends CI_Controller {
         parent::__construct();
         $this->load->helper('url');
         $this->load->model('tags_model');
+        $this->load->model('filtros_model');
     }
 
     public function cargar_vista(){
@@ -36,6 +37,36 @@ class FiltrosController extends CI_Controller {
 
      redirect("examples/tabla_{$tabla}");
          
+    }
+
+    public function filtros_columnas(){
+
+        $filtro_ = [];
+        $columnas = [
+            'ministerio' , 'secr', 'ss', 'dg', 'dop', 'gop', 'sgo' , 'dept', 'divi', 'secc'
+        ];
+
+
+
+        // $collection = $this->filtros_model->get_("ministerio");
+
+        foreach ($columnas as $col){
+            
+            $collection = $this->filtros_model->get_("{$col}");
+            $filtro_[$col] = array();
+
+            foreach($collection as $collect){
+                array_push($filtro_[$col], array_values($collect)[0]);
+            }
+
+        }
+        
+        foreach ($filtro_ as $filtro => $valor){
+           echo "{$filtro} - > # ". count($valor) ." <br>"  ;
+        }
+            
+
+        // var_dump( $filtro_);
     }
 
 }
