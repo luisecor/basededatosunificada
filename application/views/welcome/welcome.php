@@ -6,6 +6,38 @@
     </div>
 
     <div class="d-flex flex-column justify-content-center">
+        <p class=" mb-0">Vistas:</p>
+        <div class='d-flex flex-wrap justify-content-between'>
+
+           
+            <div class='table-card shadow-box d-flex justify-content-center align-items-center my-3'>
+                <a href='<?php echo site_url('vista/mujeres_lideres')?>' class="d-flex align-items-center w-100 h-100">
+                    <img src="<?=base_url?>css/svg/table.svg" alt="Icono de base de datos" class="ms-4 me-2">
+                    Mujeres Lideres</a>
+            </div>
+            
+
+            
+            <div class='table-card shadow-box d-flex justify-content-center align-items-center my-3'>
+                <a href='<?php echo site_url('vista/jovenes')?>' class="d-flex align-items-center w-100 h-100">
+                    <img src="<?=base_url?>css/svg/table.svg" alt="Icono de base de datos" class="ms-4 me-2">
+                   Jovenes</a>
+            </div>
+
+            <div class='table-card shadow-box d-flex justify-content-center align-items-center my-3'>
+                <a href='<?php echo site_url('cargar_vista')?>' class="d-flex align-items-center w-100 h-100">
+                    <img src="<?=base_url?>css/svg/table.svg" alt="Icono de base de datos" class="ms-4 me-2">
+                   PROXIMO CAMBIO</a>
+            </div>
+           
+
+        </div>
+
+
+
+    </div>
+
+    <div class="d-flex flex-column justify-content-center">
         <p class=" mb-0">Nuestros datos:</p>
         <div class='d-flex flex-wrap justify-content-between'>
 

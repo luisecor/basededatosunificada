@@ -207,9 +207,24 @@ if($success_message !== null){?>
         <button type="button" class="btn-close me-2" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+
+
+						<!-- FILTROD DE COLUMNAS  -->
+						<!-- <form  id="formFiltros"  autocomplete="off" action="<?=site_url()?>filtro_col" method="post">
+						<div class="row">
+						<div id="FormOptions" class="d-flex flex-wrap justify-content-between">
+							
+
+						
+
+						</div>
+						</div>
+
+						<input type="submit">
+						</form> -->
        
               
-
+					<!-- FILTRO DE TAGS  -->
                     <form action="<?=site_url()?>filtro_tags" method="post">
                         
                       
@@ -219,18 +234,7 @@ if($success_message !== null){?>
 							if (isset($_SESSION['filtro_busqueda']))	{
 								$filtro_busqueda = $_SESSION['filtro_busqueda'];
 							} else $filtro_busqueda = null;	   	
-						
-							
-							// foreach ($filtros as $filtro){
-							// 	echo "{$filtro['id']}  ";
-							// 	foreach ($filtro_busqueda as $filtro_b){
-							// 		if ($filtro['id'] === $filtro_b[0])
-							// 			echo " Iguales ";
-							// 		echo "{$filtro_b[0]} <br>";
-							// 	}
-								
-							// }
-							
+					
 					foreach ($filtros as $filtro) {
 						$cheked = "";
 
@@ -276,5 +280,93 @@ if($success_message !== null){?>
   </div>
 </div>
 
+<form  id="formFiltros"  autocomplete="off" action="<?=site_url()?>filtro_col" method="post">
+						<div class="row">
+						<div id="FormOptions" class="d-flex flex-wrap justify-content-between">
+							
+
+						
+
+						</div>
+						</div>
+
+						<input type="submit">
+						</form>
+
+
+	
+
+	<script>
+
+<?php $selected =(isset($_SESSION['filtro_col_selected']) ? $_SESSION['filtro_col_selected'] : [] ); ?>;
+const  selected = <?php echo json_encode($selected); ?>;
+
+
+<?php 
+	$selected_table =(isset($_SESSION['table']) ? $_SESSION['table'] : null ); 
+	if ($selected_table == "mujeres_lideres") {
+
+	
+?>;
+const  selected_table = <?php echo json_encode($selected_table); ?>;
+
+  $(document).ready(function() {
+   
+    var columnas = ['cuit','documento','apellido','nombre','ministerio','tag'];
+
+      $.each(columnas, function(i, idName) {
+
+        //Creo los div con las columnas que deseo filtrar
+        //Tal cual aparecen en la tabla cuit_reparticion
+        var $DIV = $(
+                      "<div class='col-3'>"+
+                      `<select id="${idName}" name="${idName}[]" class="form-control"  multiple>` +   
+                      "</select>"+
+                      "</div>"
+                    );
+        //Le hago append del div que cree
+        $("#FormOptions").append($DIV);
+        //Cargo los datos del selectable
+        cargar(selected_table,idName);
+        //Inicio select2 para el div creado
+        $(`#${idName}`).select2({
+            placeholder: `${idName}`,
+            minimumInputLength: 1
+         });
+      })
+
+
+});
+
+
+const arreglo=[];
+//Cambiar aca luego en el servidor 
+const win = window.location.origin + "/codeigniter3/index.php";
+
+function cargar(tabla,idName) {
+  // console.log(selected[idName]);
+  $.ajax({
+  url:  win + `/traer/${tabla}/${idName}`,
+  dataType: 'JSON',
+  success: function (result){
+ 
+    $.each(result, function(i, item) {
+		arreglo.push(item[0]);
+		let selected_ ;
+		if (item[0] && selected[idName]!=null && selected[idName].includes(item[0]) ) { 
+				selected_ = 'selected="selected"';}
+		var $container = $(`<option ${selected_} value="${item}"> ${item} <option>`);
+		$(`#${idName}`).append($container);  
+    })
+    
+  }
+  })
+ }
+
+
+
+</script>
+
+<?php } ?>
 
 <script src="<?=base_url?>js/filtros.js"></script>

@@ -23,6 +23,40 @@ class Examples extends CI_Controller {
 		
 	}
 
+	public function vista($tabla){
+
+		$vistas_disponibles= [
+			"mujeres_lideres" 	=> ['filtro_vista' 	=> ['MUJERES LIDERES'],
+									'tabla'			=> 'tabla_mujeres_lideres']
+			,
+			"jovenes"			=> ['filtro_vista'	=> ['SUB 30','SUB 33']]
+		];
+
+		
+
+		if (!$this->verifySession()){
+			return $this->debe_iniciar_sesion();
+		}
+		else {	
+			if (isset($vistas_disponibles["{$tabla}"])){
+				
+				if (isset($vistas_disponibles["{$tabla}"]['tabla'])){
+					// var_dump($vistas_disponibles[$tabla]['tabla']);
+					$accion = $vistas_disponibles[$tabla]['tabla'];
+					$_SESSION['vista_']="mujeres_lideres";
+					$this-> $accion();
+				} else
+					$this->encapsulamiento_("sas_activo_view",	"sas_activo",			"Personal", "Jovenes VISTA",	$vistas_disponibles["{$tabla}"],	"jovenes");
+					// 	   encapsulamiento_($tabla_view,		$tabla_materializada,	$subject,	$titulo,			$filtro_vista = null, 				$vista_ = null){
+			
+			}
+		 else {
+				$this->acceso_denegado();				
+			}
+		}
+		
+	}
+
 	public function _example_output($output = null)
 	{
 		if ($this->verifySession()){
@@ -112,27 +146,31 @@ class Examples extends CI_Controller {
 				$crud->set_primary_key('id','tags');
 				$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
 
+				$filtro_columna = $this->session->filtro_col;
+
 				//Filtros de SESSION-USUARIO
 				// Es neceario que la tabla tenga el conjunto listado de todos los tags como atributo "tag_list"
 				$filtro_session	= $this->session->filtro_session;
 				if (empty($filtro_session) !== true) {
 					foreach($filtro_session as $filtro){
-						$crud->where("tag_list LIKE '%{$filtro['nombre']}%'");
+						$crud->or_where("tag_list LIKE '%{$filtro['nombre']}%'");
 	
 					}
 				}
 
 				//Filtros de BUSQUEDA por TAG
 				//Es neceario que la tabla tenga el conjunto listado de todos los tags como atributo "tag_list"
-				$filtro_busqueda = $this->session->filtro_busqueda;
-				if (empty($filtro_busqueda) !== true){
-
-					foreach ($filtro_busqueda['filtro'] as $filtro){
-											$nombre = $this->tags_model->get_tag_name($filtro);
-						$crud->where("tag_list LIKE '%{$nombre[0]['nombre']}%'");
-	
-					}
-				}
+				$filtro_busqueda = $this->session->filtro_busqueda_query;
+				// var_dump($filtro_busqueda);
+				// if (isset($filtro_columna)) var_dump($filtro_columna);
+				if (isset($filtro_busqueda)){
+					if (isset($filtro_columna))
+						$crud->where("({$filtro_busqueda}) AND {$filtro_columna}");
+					else
+						$crud->where($filtro_busqueda);
+				} else
+					if (isset($filtro_columna))
+						$crud->where($filtro_columna);
 
 				//Configuracion de acciones por defecto 
 				// -> Si estan si setear no se pueden utilizar de ningna forma	
@@ -140,6 +178,7 @@ class Examples extends CI_Controller {
 						->unset_edit()
 						->unset_delete()
 						->unset_clone()
+						->unset_read()
 						->unset_columns('tag_list')
 						->add_fields('cuit','edicion')
 						;
@@ -152,7 +191,7 @@ class Examples extends CI_Controller {
 						// ->callback_insert(array($this,'probando_add'))
 						;
 				
-				$crud	->columns(['cuit','documento','apellido','nombre','edicion','ministerio','secr','ss','dg','tags']);
+				$crud	->columns(['cuit','documento','apellido','nombre','genero','fecha_nacimiento','telefono_particular','mail','provincia','comuna','barrio_normalizado','edicion','regimen','tarea','ministerio','secr','tags']);
 				
 				$crud	->display_as('secr', 'SECR')
 						->display_as('ss', 'SS')
@@ -352,7 +391,7 @@ class Examples extends CI_Controller {
 
 	}
 
-	public function encapsulamiento_($tabla_view,$tabla_materializada,$subject,$titulo){
+	public function encapsulamiento_($tabla_view,$tabla_materializada,$subject,$titulo,$filtro_vista = null, $vista_ = null){
 		$crud = new grocery_CRUD;
 				$crud->set_language('spanish-uy');
 				$crud->set_table("{$tabla_view}");
@@ -361,38 +400,77 @@ class Examples extends CI_Controller {
 
 				$crud->set_primary_key('id','tags');
 				$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
+				$filtro_busqueda = $this->session->filtro_busqueda_query;
+				$filtro_columna = $this->session->filtro_col;
+
+				// var_dump($filtro_busqueda);
+				// var_dump($filtro_columna);
 				
-
-				//Filtros de SESSION-USUARIO
-				// Es neceario que la tabla tenga el conjunto listado de todos los tags como atributo "tag_list"
-				$filtro_session	= $this->session->filtro_session;
-				if (empty($filtro_session) !== true) {
-					foreach($filtro_session as $filtro){
-						$crud->or_where("tag_list LIKE '%{$filtro['nombre']}%'");
-	
+				// FILTRO DE VISTA
+				// El filtro de vistas no tiene Filtro de Session
+				if (isset($filtro_vista)){
+					$where_filtro_vista;
+					foreach ($filtro_vista as $filtros ){
+						foreach($filtros as $filtro){ 
+							
+							if (isset($where_filtro_vista))
+								$where_filtro_vista = $where_filtro_vista. " or tag_list LIKE '%{$filtro}%'";
+							else 
+								$where_filtro_vista ="tag_list LIKE '%{$filtro}%'";
+						}
+								
 					}
-				}
-
-				//Filtros de BUSQUEDA por TAG
-				//Es neceario que la tabla tenga el conjunto listado de todos los tags como atributo "tag_list"
-				$filtro_busqueda = $this->session->filtro_busqueda;
-				if (empty($filtro_busqueda) !== true){
-
-					foreach ($filtro_busqueda['filtro'] as $filtro){
-											$nombre = $this->tags_model->get_tag_name($filtro);
-						$crud->where("tag_list LIKE '%{$nombre[0]['nombre']}%'");
-	
+					
+					if (isset($filtro_columna)){
+						if (isset($filtro_busqueda))
+							$crud->where("{$filtro_columna} AND ({$filtro_busqueda}) AND ({$where_filtro_vista})");
+						else
+							$crud->where("{$filtro_columna} AND ({$where_filtro_vista})");
+					} else { 
+						if (isset($filtro_busqueda))
+							$crud->where("({$filtro_busqueda}) AND ({$where_filtro_vista})");
+						else
+							$crud->where("{$where_filtro_vista}");
 					}
+
+					
+
+				} else {
+
+					// Filtros de SESSION-USUARIO
+					// Es neceario que la tabla tenga el conjunto listado de todos los tags como atributo "tag_list"
+					$filtro_session	= $this->session->filtro_session;
+					if (empty($filtro_session) !== true) {
+						foreach($filtro_session as $filtro){
+							$crud->or_where("tag_list LIKE '%{$filtro['nombre']}%'");
+		
+						}
+					}
+
+					//Filtros de BUSQUEDA por TAG
+					//Es neceario que la tabla tenga el conjunto listado de todos los tags como atributo "tag_list"
+					
+					if (isset($filtro_busqueda)){
+
+							$crud->where("{$filtro_busqueda}");
+					}
+
 				}
-				
+						
 				
 				$this->session->set_flashdata('table',"{$tabla_materializada}");
 				$_SESSION['tabla'] = "{$titulo}";
+				
+				if (isset($vista_)){
+					$_SESSION['vista_'] = $vista_;
+				} else 
+					$_SESSION['vista_'] = null;
 
 				$crud
 						->unset_edit()
 						->unset_delete()
 						->unset_clone()
+						->unset_read()
 						//->unset_add(); -> Hay que modificar el route para estos
 						;
 
@@ -408,7 +486,9 @@ class Examples extends CI_Controller {
 				// $crud->callback_after_insert(array($this, 'action_befor_insert'));
 				// $crud->callback_before_update(array($this,'action_befor_update'));
 
-				$crud	->columns(['cuit','documento','apellido','nombre','ministerio','secr','ss','dg','tags']);
+				$crud->columns(['cuit','documento','apellido','nombre','genero','fecha_nacimiento','telefono_particular','mail','provincia','comuna','barrio_normalizado','regimen','tarea','ministerio','secr','tags']);
+				
+
 				
 				$crud	->display_as('secr', 'SECR')
 						->display_as('ss', 'SS')
@@ -794,69 +874,12 @@ class Examples extends CI_Controller {
 		if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
 			in_array('USUARIOS BADA', array_column($this->session->acceso,'nombre')) ||
 		isset($vengo) ){
-			$crud = new grocery_CRUD;
-			$crud->set_language('spanish-uy');
-			$crud->set_table('bada_celulares');
-			$crud->set_subject('Usuario','Usuarios');
-		
-			$crud->display_as('virtual', 'Cuit');
-			$crud->display_as('cuit', 'Nombre - Apellido');
-			$crud->display_as('celular_bada','Telefono');
-			$crud->display_as('mail','Email');
-			
-			$crud->set_primary_key('cuit','sas_activo');
-			$crud->set_relation('cuit','sas_activo','{nombre} - {apellido}');
-
-			$crud->set_primary_key('cuit','bada_celulares');
-			$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
-
-			$crud	->fields(['celular_bada', 'mail', 'calle_bada', 'altura_bada','departamento_bada','provincia_bada', 'barrio_normalizado','comuna','intereses','notificaciones','tags'])
-					->field_type('notificaciones','enum',array('Si','No'));
-			$crud->display_as('calle_bada','Calle');
-			$crud->display_as('altura_bada','Altura');
-
-			$crud->columns(['virtual','cuit','celular_bada','mail','tags']);
-			$crud->unset_add();
-			$crud->unset_clone();
-			$crud->unset_delete();
-			// $crud->add_action('Cambiar Registro','https://www.grocerycrud.com/v1.x/assets/uploads/general/smiley.png',
-			// 					'examples/cambiar_nombre_apellido');
-
-			//Filtros de SESSION-USUARIO
-				// Es neceario que la tabla tenga el conjunto listado de todos los tags como atributo "tag_list"
-				$filtro_session	= $this->session->filtro_session;
-				if (empty($filtro_session) !== true) {
-					foreach($filtro_session as $filtro){
-						$crud->where("tag_list LIKE '%{$filtro['nombre']}%'");
-	
-					}
-				}
-
-				//Filtros de BUSQUEDA por TAG
-				//Es neceario que la tabla tenga el conjunto listado de todos los tags como atributo "tag_list"
-				$filtro_busqueda = $this->session->filtro_busqueda;
-				if (empty($filtro_busqueda) !== true){
-
-					foreach ($filtro_busqueda['filtro'] as $filtro){
-											$nombre = $this->tags_model->get_tag_name($filtro);
-						$crud->where("tag_list LIKE '%{$nombre[0]['nombre']}%'");
-	
-					}
-				}
-			
-			$this->session->set_flashdata('table','bada_celulares');
-			$_SESSION['tabla'] = "Bada Celulares";
-			
-
-			$crud->callback_before_delete(array($this,'action_befor_delete'));
-			$crud->callback_after_insert(array($this, 'action_befor_insert'));
-			$crud->callback_before_update(array($this,'action_befor_update'));
-
-			$crud	->unset_texteditor('barrio_normalizado','intereses');
-					
-
-			$output = $crud->render();
-			$this->_example_output($output);
+			if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
+			in_array('GO', array_column($this->session->acceso,'nombre')) ){
+				$this->encapsulamiento_("bada_celulares_view","bada_celulares","Personal","Usuarios Bada");
+			} else {
+				$this->acceso_denegado();				
+			}
 		} else {
 			$this->acceso_denegado();				
 		}
@@ -1002,89 +1025,32 @@ class Examples extends CI_Controller {
 
 	public function tabla_sas_activos(){
 
-		$vengo = $this->session->flashdata('vengo');
-
 		if (!$this->verifySession()){
 			return $this->debe_iniciar_sesion();
 		}
 		else {	
 		if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
-			in_array('SAS ACTIVOS', array_column($this->session->acceso,'nombre')) ||
-			$vengo ){
-				$crud = new grocery_CRUD;
-				$crud->set_language('spanish-uy');
-				$crud->set_table('sas_activo');
-				$crud->set_subject('Activo','Activos');
-				$crud->columns(['cuit','tipo_documento','nro_documento', 'apellido', 'nombre','sexo',
-								'fecha_nacimiento_sql','fecha_inicio', 
-								'domicilio','partido','localidad','provincia',
-								'desc_tarea','desc_registro','desc_regimen','desc_rep',
-								'desc_lvl1','desc_lvl2','tags']);
-
-				$crud->display_as('cuit', 'Cuit');
-				$crud->display_as('nombre','Nombre');
-				$crud->display_as('tipo_documento','Tipo');
-				$crud->display_as('nro_documento','NRO');
-				$crud->display_as('fecha_nacimiento_sql','F Nac');
-				$crud->display_as('fecha_inicio','F Inicio');
-				$crud->display_as('apellido','Apellido');
-				$crud->display_as('desc_tarea','Desc Tarea');
-				$crud->display_as('desc_rep','Desc Reparticion');
-				$crud->display_as('desc_registro','Desc Registro');
-				$crud->display_as('desc_regimen','Desc Regimen');
-				$crud->display_as('desc_lvl1','Desc Lvl 1');
-				$crud->display_as('desc_lvl2','Desc  Lvl 2');
-
-				//Filtros de SESSION-USUARIO
-				// Es neceario que la tabla tenga el conjunto listado de todos los tags como atributo "tag_list"
-				$filtro_session	= $this->session->filtro_session;
-				if (empty($filtro_session) !== true) {
-					foreach($filtro_session as $filtro){
-						$crud->where("tag_list LIKE '%{$filtro['nombre']}%'");
-	
-					}
-				}
-
-				//Filtros de BUSQUEDA por TAG
-				//Es neceario que la tabla tenga el conjunto listado de todos los tags como atributo "tag_list"
-				$filtro_busqueda = $this->session->filtro_busqueda;
-				if (empty($filtro_busqueda) !== true){
-
-					foreach ($filtro_busqueda['filtro'] as $filtro){
-											$nombre = $this->tags_model->get_tag_name($filtro);
-						$crud->where("tag_list LIKE '%{$nombre[0]['nombre']}%'");
-	
-					}
-				}
-
-				$this->session->set_flashdata('table','sas_activo');
-				$_SESSION['tabla'] = "SAS Activos";
-
-				$crud->set_primary_key('cuit','sas_activo');
-				$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
-				
-				$crud	->fields(['cuit','tipo_documento','nro_documento','apellido', 'nombre',
-								'comuna','fecha_nacimiento_sql',
-								'desc_tarea','desc_rep', 'desc_registro','desc_regimen',
-								'desc_lvl1','desc_lvl2','tags']);
-				
-			
-
-				$crud->callback_before_delete(array($this,'action_befor_delete'));
-				$crud->callback_after_insert(array($this, 'action_befor_insert'));
-				$crud->callback_before_update(array($this,'action_befor_update'));
-							
-				//$crud->unset_add();
-				$crud->unset_clone();
-				//$crud->unset_delete();
-
-
-				$output = $crud->render();
-				$this->_example_output($output);
+			in_array('SAS ACTIVOS', array_column($this->session->acceso,'nombre')) ){
+				$this->sas_activos();
 			} else {
 				$this->acceso_denegado();				
 			}
 		}
+
+
+		// if (!$this->verifySession()){
+		// 	return $this->debe_iniciar_sesion();
+		// }
+		// else {	
+		// 	if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
+		// 	in_array('SAS ACTIVOS', array_column($this->session->acceso,'nombre'))){
+		// 		$this->encapsulamiento_("sas_activo_view","sas_activo","Personal","SAS ACTIVOS");				
+		// 	} else {
+		// 		$this->acceso_denegado();				
+		// 	}
+
+		// 	$this->encapsulamiento_("sas_activo_view","sas_activo","Personal","Jovenes VISTA"
+		// }
 
 	}
 
@@ -1101,48 +1067,48 @@ class Examples extends CI_Controller {
 			$vengo ){
 				$crud = new grocery_CRUD;
 				$crud->set_language('spanish-uy');
-				$crud->set_table('sas_activo');
-				$crud->set_subject('Activo','Activos');
-				$crud->columns(['cuit','tipo_documento','nro_documento', 'apellido', 'nombre','sexo',
-								'fecha_nacimiento_sql','fecha_inicio', 
-								'domicilio','partido','localidad','provincia',
-								'desc_tarea','desc_registro','desc_regimen','desc_rep',
-								'desc_lvl1','desc_lvl2','tags']);
+				$crud->set_table('bada_celulares_view');
+				// $crud->set_subject('Activo','Activos');
+				// $crud->columns(['cuit','tipo_documento','nro_documento', 'apellido', 'nombre','sexo',
+				// 				'fecha_nacimiento_sql','fecha_inicio', 
+				// 				'domicilio','partido','localidad','provincia',
+				// 				'desc_tarea','desc_registro','desc_regimen','desc_rep',
+				// 				'desc_lvl1','desc_lvl2','tags']);
 
-				$crud->display_as('cuit', 'Cuit');
-				$crud->display_as('nombre','Nombre');
-				$crud->display_as('tipo_documento','Tipo');
-				$crud->display_as('nro_documento','NRO');
-				$crud->display_as('fecha_nacimiento_sql','F Nac');
-				$crud->display_as('fecha_inicio','F Inicio');
-				$crud->display_as('apellido','Apellido');
-				$crud->display_as('desc_tarea','Desc Tarea');
-				$crud->display_as('desc_rep','Desc Reparticion');
-				$crud->display_as('desc_registro','Desc Registro');
-				$crud->display_as('desc_regimen','Desc Regimen');
-				$crud->display_as('desc_lvl1','Desc Lvl 1');
-				$crud->display_as('desc_lvl2','Desc  Lvl 2');
+				// $crud->display_as('cuit', 'Cuit');
+				// $crud->display_as('nombre','Nombre');
+				// $crud->display_as('tipo_documento','Tipo');
+				// $crud->display_as('nro_documento','NRO');
+				// $crud->display_as('fecha_nacimiento_sql','F Nac');
+				// $crud->display_as('fecha_inicio','F Inicio');
+				// $crud->display_as('apellido','Apellido');
+				// $crud->display_as('desc_tarea','Desc Tarea');
+				// $crud->display_as('desc_rep','Desc Reparticion');
+				// $crud->display_as('desc_registro','Desc Registro');
+				// $crud->display_as('desc_regimen','Desc Regimen');
+				// $crud->display_as('desc_lvl1','Desc Lvl 1');
+				// $crud->display_as('desc_lvl2','Desc  Lvl 2');
 
-				$this->session->set_flashdata('table','sas_activo');
-				$_SESSION['tabla'] = "SAS Activos";
+				// $this->session->set_flashdata('table','sas_activo');
+				// $_SESSION['tabla'] = "SAS Activos";
 
-				$crud->set_primary_key('cuit','sas_activo');
-				$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
+				// $crud->set_primary_key('cuit','sas_activo');
+				// $crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
 				
-				$crud	->fields(['cuit','tipo_documento','nro_documento','apellido', 'nombre',
-								'comuna','fecha_nacimiento_sql',
-								'desc_tarea','desc_rep', 'desc_registro','desc_regimen',
-								'desc_lvl1','desc_lvl2','tags']);
+				// $crud	->fields(['cuit','tipo_documento','nro_documento','apellido', 'nombre',
+				// 				'comuna','fecha_nacimiento_sql',
+				// 				'desc_tarea','desc_rep', 'desc_registro','desc_regimen',
+				// 				'desc_lvl1','desc_lvl2','tags']);
 				
 			
 
-				$crud->callback_before_delete(array($this,'action_befor_delete'));
-				$crud->callback_after_insert(array($this, 'action_befor_insert'));
-				$crud->callback_before_update(array($this,'action_befor_update'));
+				// $crud->callback_before_delete(array($this,'action_befor_delete'));
+				// $crud->callback_after_insert(array($this, 'action_befor_insert'));
+				// $crud->callback_before_update(array($this,'action_befor_update'));
 							
-				//$crud->unset_add();
-				$crud->unset_clone();
-				//$crud->unset_delete();
+				// //$crud->unset_add();
+				// $crud->unset_clone();
+				// //$crud->unset_delete();
 
 
 				$output = $crud->render();

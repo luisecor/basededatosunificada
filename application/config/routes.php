@@ -69,14 +69,22 @@ $route['usuario/verificarCambios'] = 'usuariosController/verificarCambios';
 $route['usuarios/session'] = 'sessionFiltroController/cuit_tag_filtro';
 $route['usuarios/session/add'] = 'sessionFiltroController/cuit_tag_filtro/add';
 
+$route['usuarios/session/ajax_list_info'] = 'sessionFiltroController/cuit_tag_filtro/$1/ajax_list_info';
+$route['usuarios/session/ajax_list'] = 'sessionFiltroController/cuit_tag_filtro/ajax_list';
+
 $route['usuarios/session/edit/(:num)'] = 'sessionFiltroController/cuit_tag_filtro/edit/$id';
 $route['usuarios/session/update_validation/(:num)'] = 'sessionFiltroController/cuit_tag_filtro/update_validation/$id';
 $route['usuarios/session/update/(:num)'] = 'sessionFiltroController/cuit_tag_filtro/update/$id';
 
 $route['examples/tabla_mujeres_lideres/add'] = 'examples/probando_add';
 
+//Filtro TAGS -> Version 1
 $route['filtro_tags'] = 'filtrosController/filtros_selected';
 $route['cargar_vista'] = 'filtrosController/cargar_vista';
+
+//FILROS DE COL
+$route['traer/(:any)/(:any)'] = 'filtrosController/traer/$1/$2';
+$route['filtro_col'] = 'filtrosController/filtros_col_selected';
 
 //CARGA MASIVA
 $route['carga_masiva/tags'] = 'cargaMasivaController/tags_main';
@@ -85,6 +93,14 @@ $route['carga_masiva/form_tabla'] = 'cargaMasivaController/form_tabla';
 $route['carga_masiva/form_tag'] = 'cargaMasivaController/form_tag';
 $route['carga_masiva/gabinete/importarCSVaDB'] = 'cargaMasivaController/importarCSVaDB';
 
+
+
+//VISTAS
+$route['vista/(:any)'] = 'Examples/vista/$1';
+$route['vista/(:any)/ajax_list_info'] = 'examples/vista/$1/ajax_list_info';
+$route['vista/(:any)/ajax_list'] = 'examples/vista/$1/ajax_list';
+
+$route['vista/(:any)/export'] = 'examples/vista/$1/export';
 
 
 //LOCAL

@@ -9,7 +9,12 @@
             <tr class='hDiv'>
                 <?php foreach($columns as $column){?>
                 <th width='<?php echo $column_width?>%'>
-                    <div class="dropdown">
+                <div class="text-left field-sorting <?php if(isset($order_by[0]) &&  $column->field_name == $order_by[0]){?><?php echo $order_by[1]?><?php }?>" 
+						rel='<?php echo $column->field_name?>'>
+						<?php echo $column->display_as?>
+				</div>
+                
+                <!-- <div class="dropdown">
                         <button class="btn btn-secondary w-100" type="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
                             <div class="text-left<?php if(isset($order_by[0]) &&  $column->field_name == $order_by[0]){?><?php echo $order_by[1]?><?php }?>"
@@ -23,7 +28,7 @@
                             <li><a class="dropdown-item" href="#">Another action</a></li>
                             <li><a class="dropdown-item" href="#">Something else here</a></li>
                         </ul>
-                    </div>
+                    </div> -->
 
 
                 </th>
@@ -51,7 +56,7 @@
                 <td align="left" width='20%'>
                     <div class='tools d-flex justify-content-center'>
 
-                        <!-- Deje comentado los UNSETS para que no los muestre en el fronto, pero si que esten disponibles como accion -->
+                        <!-- Deje comentado los UNSETS para que no los muestre en el front, pero si que esten disponibles como accion -->
                         <?php if(!$unset_delete){?>
                         <a href='<?php echo $row->delete_url?>'
                             title='<?php echo $this->l('list_delete')?> <?php echo $subject?>' class="delete-row">
@@ -68,7 +73,9 @@
                             title='<?php echo $this->l('list_clone')?> <?php echo $subject?>' class="clone_button"><span
                                 class='clone-icon'></span></a>
                         <?php }?>
-                        <?php if(!$unset_read){?>
+                        <?php 
+                        $unset_read = true;
+                        if(!$unset_read){?>
                         <a href='<?php //echo $row->read_url?>'
                             title='<?php //echo $this->l('list_view')?> <?php //echo $subject?>'
                             class="edit_button"><span class='read-icon'></span></a>

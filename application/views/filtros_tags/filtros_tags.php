@@ -1,73 +1,188 @@
-
-
-<!-- Button trigger modal -->
-<button type="button" class="filter-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Launch demo modal
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-       
-              
-
-                    <form action="<?=site_url()?>filtro_tags" method="post">
-                        <div class="filter-title d-flex align-items-center justify-content-between my-3 mx-2">
-                            <div class="d-flex align-items-center">
-                            <svg class="ms-1" width="19" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M2.03379 0.000281271H16.0333C16.2988 -0.00417085 16.5624 0.0442698 16.809 0.142779C17.0555 0.241288 17.28 0.387894 17.4693 0.57405C17.6586 0.760206 17.809 0.982185 17.9116 1.22705C18.0142 1.47191 18.0671 1.73475 18.0671 2.00025C18.0671 2.26575 18.0142 2.52859 17.9116 2.77345C17.809 3.01831 17.6586 3.24029 17.4693 3.42645C17.28 3.61261 17.0555 3.75921 16.809 3.85772C16.5624 3.95623 16.2988 4.00467 16.0333 4.00022H2.03379C1.76833 4.00467 1.50464 3.95623 1.25809 3.85772C1.01154 3.75921 0.787073 3.61261 0.597769 3.42645C0.408465 3.24029 0.258115 3.01831 0.155485 2.77345C0.0528557 2.52859 0 2.26575 0 2.00025C0 1.73475 0.0528557 1.47191 0.155485 1.22705C0.258115 0.982185 0.408465 0.760206 0.597769 0.57405C0.787073 0.387894 1.01154 0.241288 1.25809 0.142779C1.50464 0.0442698 1.76833 -0.00417085 2.03379 0.000281271V0.000281271ZM4.28379 6.50053H13.7833C13.9474 6.50053 14.11 6.53286 14.2616 6.59567C14.4132 6.65848 14.551 6.75055 14.6671 6.86661C14.7831 6.98267 14.8752 7.12046 14.938 7.2721C15.0008 7.42374 15.0332 7.58627 15.0332 7.75041C15.0332 7.91454 15.0008 8.07707 14.938 8.22871C14.8752 8.38035 14.7831 8.51814 14.6671 8.6342C14.551 8.75026 14.4132 8.84233 14.2616 8.90514C14.11 8.96795 13.9474 9.00028 13.7833 9.00028H4.28379C3.9523 9.00028 3.63439 8.8686 3.4 8.6342C3.1656 8.3998 3.03392 8.08189 3.03392 7.75041C3.03392 7.41892 3.1656 7.10101 3.4 6.86661C3.63439 6.63221 3.9523 6.50053 4.28379 6.50053V6.50053ZM6.78354 11.5H11.2835C11.6151 11.5 11.9331 11.6317 12.1675 11.8662C12.402 12.1006 12.5337 12.4186 12.5337 12.7502C12.5337 13.0817 12.402 13.3997 12.1675 13.6342C11.9331 13.8686 11.6151 14.0003 11.2835 14.0003H6.78354C6.45198 14.0003 6.134 13.8686 5.89955 13.6342C5.6651 13.3997 5.53339 13.0817 5.53339 12.7502C5.53339 12.4186 5.6651 12.1006 5.89955 11.8662C6.134 11.6317 6.45198 11.5 6.78354 11.5V11.5Z"
-                                    fill="#4C5773" />
-                            </svg>
-
-
-                            <h5 class='mb-0 mx-2'>Filtrar por</h5>
-                            </div>
-                            <div class="d-flex">
-                                <input type="checkbox" class="form-check-input me-2">
-                                <p class="mb-0">Selecciona Todas</p>
-                            </div>
-                        </div>
-                        <div class="filter-list">
-                            <?php foreach ($filtros as $filtro) {
-                    echo 
-                    "
-                    <div >
-                        <div class='mx-2 filter-row p-1'>
-
-                            <input name='filtro[]' class='form-check-input filtroNombre m-0' type='checkbox' value='{$filtro['id']}' id='{$filtro['nombre']}'>
-                            <label class='filter-label mb-0 ms-2' for='{$filtro['nombre']}'>{$filtro['nombre']}</label>
-                        
-                        </div>
-                    </div>
-                    "
-                    ;
-                }?>
-                        </div>
-                        <div class="m-2">
-                        <button type="submit" class="filter-btn"> Aplicar Filtros </button>
-                        </div>
-                    </form>
-
-        
+<!--Make sure the form has the autocomplete function switched off:-->
 
 
 
+<p> Proximo cambio :</p> <br> <p>Eston seran los filtros que apareceran en el encabezado de las columnas de cada tabla. Cada uno de los inputs 
+  tendra los valores que puede tomar cada busqueda
+</p>
 
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
+<div class ="ro" >
+
+  
+
 </div>
 
 
-<script src="<?=base_url?>js/filtros.js"></script>
+
+<form  id="formFiltros"  autocomplete="off" action="filtro_col" method="post">
+<div class="col-3">
+    SELECCIONAR TABLA:
+    <select name="" id="tabla_selection">
+      <option  value="mujeres_lideres">Mujeres Lideres</option>
+      <option selected="selected" value="jovenes">Jovenes</option>
+
+    </select>
+  </div>
+<div class="row">
+  <div id="FormOptions" class="d-flex flex-wrap justify-content-between">
+    
+
+  
+
+  </div>
+</div>
+
+  <input type="submit">
+</form>
+
+
+
+
+
+<script src="<?=base_url?>js/filtro_col.js"></script>
+
+<script>
+
+
+
+<?php $selected =(isset($_SESSION['filtro_col_selected'])? $_SESSION['filtro_col_selected'] : "LOCA"); ?>;
+const  selected = <?php echo json_encode($selected); ?>;
+
+<?php $selected_table =(isset($_SESSION['table']) ? $_SESSION['table'] : null ); ?>;
+const  selected_table = <?php echo json_encode($selected_table); ?>;
+
+
+  $(document).ready(function() {
+
+    $("#tabla_selection")
+    .change(function() {
+      tabla = this.value;
+
+    })
+   
+    var columnas = ['cuit','documento','ministerio','secr','ss','dg'];
+
+      $.each(columnas, function(i, idName) {
+
+        //Creo los div con las columnas que deseo filtrar
+        //Tal cual aparecen en la tabla cuit_reparticion
+        var $DIV = $(
+                      "<div class='col-3'>"+
+                      `<select id="${idName}" name="${idName}[]" class="form-control"  multiple>` +   
+                      "</select>"+
+                      "</div>"
+                    );
+        //Le hago append del div que cree
+        $("#FormOptions").append($DIV);
+        //Cargo los datos del selectable
+        cargar(selected_table,idName);
+        //Inicio select2 para el div creado
+        $(`#${idName}`).select2({
+            placeholder: `${idName}`,
+            minimumInputLength: 1
+         });
+      })
+
+
+});
+
+
+const arreglo=[];
+
+function cargar(tabla,idName) {
+  // console.log(selected[idName]);
+  $.ajax({
+  url:  `traer/mujeres_lideres/${idName}`,
+  dataType: 'JSON',
+  success: function (result){
+    
+    
+    $.each(result, function(i, item) {
+      arreglo.push(item[0]);
+      let selected_ ;
+      if (item[0] && selected[idName] && selected[idName].includes(item[0]) ) { 
+            selected_ = 'selected="selected"';}
+       
+     
+      
+      var $container = $(`<option ${selected_} value="${item}"> ${item} <option>`);
+      $(`#${idName}`).append($container);
+    })
+    
+  }
+  })
+ }
+
+
+
+</script>
+
+
+
+<style>
+
+
+* { box-sizing: border-box; }
+body {
+  font: 16px Arial;
+}
+.autocomplete {
+  /*the container must be positioned relative:*/
+  position: relative;
+  display: inline-block;
+}
+input {
+  border: 1px solid transparent;
+  background-color: #f1f1f1;
+  padding: 10px;
+  font-size: 16px;
+}
+input[type=text] {
+  background-color: #f1f1f1;
+  width: 100%;
+}
+input[type=submit] {
+  background-color: DodgerBlue;
+  color: #fff;
+}
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  border-bottom: 1px solid #d4d4d4;
+}
+.autocomplete-items div:hover {
+  /*when hovering an item:*/
+  background-color: #e9e9e9;
+}
+.autocomplete-active {
+  /*when navigating through the items using the arrow keys:*/
+  background-color: DodgerBlue !important;
+  color: #ffffff;
+}
+
+.pill {
+    display: inline-block;
+    margin: 20px 10px 0 0;
+    padding: 6px 12px;
+    background: #eee;
+    border-radius: 20px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    font-weight: bold;
+    color: #777;
+    cursor: pointer;
+  }
+
+</style>

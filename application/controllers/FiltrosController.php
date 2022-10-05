@@ -12,7 +12,18 @@ class FiltrosController extends CI_Controller {
         $this->load->model('filtros_model');
     }
 
+    public function traer($tabla = null, $columna=null){
+        if ( $tabla){
+            echo json_encode ( $this->filtros_model->get_("{$columna}","{$tabla}"));
+        } 
+        else 
+            echo json_encode ( ["NO DATA - Controller"] );
+    }
+
     public function cargar_vista(){
+
+        // $me = $this->filtros_model->get_("ministerio","Jefatura");
+
 
         $filtros = $this->tags_model->get_tags_list();
 
@@ -26,48 +37,85 @@ class FiltrosController extends CI_Controller {
 
     public function filtros_selected(){
         $valores = $this->input->post();
-        // $this->session->set_flashdata('filtro_busqueda',$valores);
         
-        $_SESSION['filtro_busqueda'] = $valores;
-        $this->session->set_userdata( array (
-            'filtro_busqueda' => $valores
-        ));
+        var_dump($valores);
+        $query;
+        foreach ($valores['filtro'] as $filtro){
+            $nombre = $this->tags_model->get_tag_name($filtro);
+           
+           if (isset($query))
+                $query = $query . " OR tag_list LIKE '%{$nombre[0]['nombre']}%'";
+            else
+                $query = "tag_list LIKE '%{$nombre[0]['nombre']}%'";
 
+        }
+
+        var_dump($query);
+        $_SESSION['filtro_busqueda'] = $valores;
+        $_SESSION['filtro_busqueda_query']=$query;
+        
+   
         $tabla = $this->session->table;
+
+
+        if ($_SESSION['vista_'])
+            redirect("vista/{$_SESSION['vista_']}");
+          
 
      redirect("examples/tabla_{$tabla}");
          
     }
 
-    public function filtros_columnas(){
+    public function filtros_col_selected(){
 
-        $filtro_ = [];
-        $columnas = [
-            'ministerio' , 'secr', 'ss', 'dg', 'dop', 'gop', 'sgo' , 'dept', 'divi', 'secc'
-        ];
+        $valores = $this->input->post();
+        $query = [];
 
-
-
-        // $collection = $this->filtros_model->get_("ministerio");
-
-        foreach ($columnas as $col){
+        foreach($valores as $columna => $valor){
             
-            $collection = $this->filtros_model->get_("{$col}");
-            $filtro_[$col] = array();
-
-            foreach($collection as $collect){
-                array_push($filtro_[$col], array_values($collect)[0]);
+           foreach($valor as $filtro){
+            if ($columna !== "tag"){
+                if (isset($query["{$columna}"]))
+                    $query["{$columna}"] = $query["{$columna}"] . " OR {$columna} LIKE '{$filtro}'";
+                else
+                    $query["{$columna}"] = "{$columna} LIKE '{$filtro}'";
             }
-
+            else {
+                if (isset($query["{$columna}"]))
+                    $query["{$columna}"] = $query["{$columna}"] . " OR {$columna}_list LIKE '%{$filtro}%'";
+                else
+                    $query["{$columna}"] = "{$columna}_list LIKE '%{$filtro}%'";
+            }
+            }
         }
+
+        $concat_query;
+        foreach ($query as $fild => $string){
+            if (isset($concat_query))
+                $concat_query = $concat_query . " AND ({$string})";
+            else
+                $concat_query = "({$string})";
+        }
+
+
+        $tabla = $this->session->table;
+
+        $_SESSION['filtro_col'] = $concat_query;
+        $_SESSION['filtro_col_selected'] = $valores;
         
-        foreach ($filtro_ as $filtro => $valor){
-           echo "{$filtro} - > # ". count($valor) ." <br>"  ;
-        }
-            
+        if ($_SESSION['vista_'])
+            redirect("vista/{$_SESSION['vista_']}");
+          
 
-        // var_dump( $filtro_);
+        redirect("examples/tabla_{$tabla}");
+            
+                
+        
+
+
     }
+
+ 
 
 }
 
