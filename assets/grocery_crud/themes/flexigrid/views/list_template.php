@@ -309,6 +309,9 @@ const  selected = <?php echo json_encode($selected); ?>;
 	
 ?>;
 const  selected_table = <?php echo json_encode($selected_table); ?>;
+//Cambiar aca luego en el servidor 
+const win = window.location.origin + "/codeigniter3/index.php";
+const arreglo=[];
 
   $(document).ready(function() {
    
@@ -320,28 +323,85 @@ const  selected_table = <?php echo json_encode($selected_table); ?>;
         //Tal cual aparecen en la tabla cuit_reparticion
         var $DIV = $(
                       "<div class='col-3'>"+
-                      `<select id="${idName}" name="${idName}[]" class="form-control"  multiple>` +   
+                      `<select id="${idName}" name="${idName}[]" class="js-states form-control"  multiple="multiple">` +   
                       "</select>"+
                       "</div>"
                     );
         //Le hago append del div que cree
         $("#FormOptions").append($DIV);
         //Cargo los datos del selectable
-        cargar(selected_table,idName);
+        // cargar(selected_table,idName);
         //Inicio select2 para el div creado
         $(`#${idName}`).select2({
-            placeholder: `${idName}`,
-            minimumInputLength: 1
+			ajax: {
+				url: function(params){
+					// console.log(params);
+					return `${win}/buscar/${selected_table}/${idName}/${params.term}`;},
+				dataType: 'json',
+				data: function (params) {
+					// console.log(params);
+					return {
+						q: params.term, // search term
+						
+					};
+				},
+				processResults: function (data, params) {
+				// parse the results into the format expected by Select2
+				// since we are using custom formatting functions we do not need to
+				// alter the remote JSON data, except to indicate that infinite
+				// scrolling can be used
+				// console.log(data)
+				return {
+					results: data,
+					};
+				},
+				cache: true
+			},
+            placeholder: `${idName} -> 3 letras minimo`,
+            minimumInputLength: 3, 
+			templateResult: formatRepo,
+			maximumSelectionLength: 2,
+  			templateSelection: formatRepoSelection 			
          });
+	
+
+		 function formatRepo (repo) {
+			if (repo.loading) {
+				return repo.text;
+			}
+
+			var $container = $(
+				"<div class='select2-result-repository clearfix'>" +
+				"<div class='select2-result-repository__meta'>" +
+					"<div class='select2-result-repository__title'></div>" +
+					"<div class='select2-result-repository__description'></div>" +
+					"<div class='select2-result-repository__statistics'>" +
+					"<div class='select2-result-repository__forks'><i class='fa fa-flash'></i> </div>" +
+					"<div class='select2-result-repository__stargazers'><i class='fa fa-star'></i> </div>" +
+					"<div class='select2-result-repository__watchers'><i class='fa fa-eye'></i> </div>" +
+					"</div>" +
+				"</div>" +
+				"</div>"
+			);
+
+			$container.find(".select2-result-repository__title").text(repo);
+			
+
+			return $container;
+			}
+
+			function formatRepoSelection (repo) {
+			return repo;
+			}
+
       })
 
 
 });
 
 
-const arreglo=[];
-//Cambiar aca luego en el servidor 
-const win = window.location.origin + "/codeigniter3/index.php";
+
+
 
 function cargar(tabla,idName) {
   // console.log(selected[idName]);

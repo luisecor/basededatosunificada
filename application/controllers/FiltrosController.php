@@ -20,6 +20,16 @@ class FiltrosController extends CI_Controller {
             echo json_encode ( ["NO DATA - Controller"] );
     }
 
+    public function buscar($tabla = null,$columna = null, $term = null){
+        if ($tabla){
+            // echo json_encode(["EXISTE TABLA vas al model"]);
+            echo json_encode ($this->filtros_model->buscar($tabla,$columna,$term));
+        }
+        else
+        echo json_encode(["NO EXISTE     TABLA"]);
+            // echo json_encode(["NO DATA - Controller"]);
+    }
+
     public function cargar_vista(){
 
         // $me = $this->filtros_model->get_("ministerio","Jefatura");

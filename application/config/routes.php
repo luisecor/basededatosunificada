@@ -85,6 +85,8 @@ $route['cargar_vista'] = 'filtrosController/cargar_vista';
 //FILROS DE COL
 $route['traer/(:any)/(:any)'] = 'filtrosController/traer/$1/$2';
 $route['filtro_col'] = 'filtrosController/filtros_col_selected';
+                                                // ->tabla/columna/termino
+$route['buscar/(:any)/(:any)/(:any)'] = 'filtrosController/buscar/$1/$2/$3';
 
 //CARGA MASIVA
 $route['carga_masiva/tags'] = 'cargaMasivaController/tags_main';
