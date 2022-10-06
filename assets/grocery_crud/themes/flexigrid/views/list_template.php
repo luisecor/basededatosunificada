@@ -279,13 +279,14 @@ if($success_message !== null){?>
     </div>
   </div>
 </div>
-
+<?php 
+	$selected_table =(isset($_SESSION['table']) ? $_SESSION['table'] : null ); 
+	if ($selected_table == "mujeres_lideres" || $selected_table== "sas_activo"){			
+	
+?>
 <form  id="formFiltros"  autocomplete="off" action="<?=site_url()?>filtro_col" method="post">
 						<div class="row">
 						<div id="FormOptions" class="d-flex flex-wrap justify-content-between">
-							
-
-						
 
 						</div>
 						</div>
@@ -296,22 +297,18 @@ if($success_message !== null){?>
 
 	
 
-	<script>
+<script>
 
 <?php $selected =(isset($_SESSION['filtro_col_selected']) ? $_SESSION['filtro_col_selected'] : [] ); ?>;
 const  selected = <?php echo json_encode($selected); ?>;
 
 
-<?php 
-	$selected_table =(isset($_SESSION['table']) ? $_SESSION['table'] : null ); 
-	if ($selected_table == "mujeres_lideres") {
 
-	
-?>;
 const  selected_table = <?php echo json_encode($selected_table); ?>;
 //Cambiar aca luego en el servidor 
 const win = window.location.origin + "/codeigniter3/index.php";
-const arreglo=[];
+//Cambiar aca luego en el servidor 
+// SERVIDOR ---> const win = window.location.origin + "/index.php";
 
   $(document).ready(function() {
    
@@ -330,7 +327,7 @@ const arreglo=[];
         //Le hago append del div que cree
         $("#FormOptions").append($DIV);
         //Cargo los datos del selectable
-        // cargar(selected_table,idName);
+        
         //Inicio select2 para el div creado
         $(`#${idName}`).select2({
 			ajax: {
@@ -341,7 +338,7 @@ const arreglo=[];
 				data: function (params) {
 					// console.log(params);
 					return {
-						q: params.term, // search term
+						q: params.term // search term
 						
 					};
 				},
@@ -350,18 +347,27 @@ const arreglo=[];
 				// since we are using custom formatting functions we do not need to
 				// alter the remote JSON data, except to indicate that infinite
 				// scrolling can be used
-				// console.log(data)
+				console.log("ProcessResults -> " + data)
 				return {
-					results: data,
+					
+					results: Array.from(data, x => ({"id": x, "text" : x}) ),
 					};
 				},
 				cache: true
 			},
-            placeholder: `${idName} -> 3 letras minimo`,
+            placeholder: `${idName}`,
             minimumInputLength: 3, 
 			templateResult: formatRepo,
-			maximumSelectionLength: 2,
-  			templateSelection: formatRepoSelection 			
+			
+  			templateSelection: formatRepoSelection ,
+			  language: {
+					// You can find all of the options in the language files provided in the
+					// build. They all must be functions that return the string that should be
+					// displayed.
+					inputTooShort: function () {
+						return "3 caracteres minimo";
+					}
+			}			
          });
 	
 
@@ -384,14 +390,14 @@ const arreglo=[];
 				"</div>"
 			);
 
-			$container.find(".select2-result-repository__title").text(repo);
+			$container.find(".select2-result-repository__title").text(repo.text);
 			
 
 			return $container;
 			}
 
 			function formatRepoSelection (repo) {
-			return repo;
+			return repo.text;
 			}
 
       })
@@ -401,32 +407,9 @@ const arreglo=[];
 
 
 
-
-
-function cargar(tabla,idName) {
-  // console.log(selected[idName]);
-  $.ajax({
-  url:  win + `/traer/${tabla}/${idName}`,
-  dataType: 'JSON',
-  success: function (result){
- 
-    $.each(result, function(i, item) {
-		arreglo.push(item[0]);
-		let selected_ ;
-		if (item[0] && selected[idName]!=null && selected[idName].includes(item[0]) ) { 
-				selected_ = 'selected="selected"';}
-		var $container = $(`<option ${selected_} value="${item}"> ${item} <option>`);
-		$(`#${idName}`).append($container);  
-    })
-    
-  }
-  })
- }
-
-
-
 </script>
-
 <?php } ?>
+
+
 
 <script src="<?=base_url?>js/filtros.js"></script>
