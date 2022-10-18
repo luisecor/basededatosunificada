@@ -61,6 +61,7 @@ class Examples extends CI_Controller {
 	{
 		if ($this->verifySession()){
 			$this->load->view('index/header');
+			$this->load->view('index/styles');
 			$this->load->view('index/navBar/navBarGrocery');
 			$this->load->view('example.php',(array)$output);
 			$this->load->view('index/footer');}
