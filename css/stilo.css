@@ -1,0 +1,196 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box !important;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background-color: #f9fbfc;
+}
+
+.navbar a {
+   text-decoration: none;
+   color: white !important;
+}
+
+a {
+    text-decoration: none !important;
+    color: #4c5773 !important;
+ }
+
+
+.navbar :hover {
+    text-decoration: none;
+    color: white;
+   
+ }
+
+.root-container {
+    height: 90vh;
+    background-image: url(./png/Estetita_Superbase.png);
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.navbar-bg {
+    background-color: #509ee3;
+    box-shadow: 0px 2.98256px 7.4564px rgba(0, 0, 0, 0.1) !important;
+}
+
+.shadow-box {
+    color: #4c5773;
+    background-color: white;
+    border: 1px solid rgb(237, 242, 245);
+    border-radius: 6px;
+    box-shadow: rgb(0 0 0 / 8%) 0px 7px 20px;
+    line-height: 24px;
+}
+
+.login-container {
+    width: 420px;
+    height: auto;
+    margin-top: 32px;
+}
+
+.login-container input, label {
+    margin-bottom: 1.5rem;
+}
+
+.login-container h3 {
+    font-weight: 600;
+}
+
+.table-card {
+    width: 305px;
+    height: 70px;
+}
+
+.table-card a:hover {
+    color: rgb(80, 158, 227) !important;
+}
+
+.table-card:hover {
+    box-shadow: rgb(0 0 0 / 15%) 0px 7px 20px !important;
+}
+
+.dropdown-menu a {
+    color: rgb(148, 154, 171) !important;
+    font-size: 14px !important;
+    font-weight: 500;
+}
+
+.table-link {
+    display: flex !important;
+    align-items: center;
+}
+
+.register-container {
+    width: 520px;
+    height: auto;
+    margin-top: 32px;
+}
+
+.filter-title {
+    color: #4c5773;
+    margin: .5rem;
+}
+
+.filter-list {
+    overflow-y: scroll;
+    max-height: 60vh;
+}
+
+*::-webkit-scrollbar {
+    width: 16px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #ffffff;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: rgb(166, 167, 195);
+    border-radius: 10px;
+    border: 3px solid #ffffff;
+  }
+
+.filter-row {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    width: 250px;
+}
+
+.filter-row label {
+    width: 100%;
+}
+
+.filter-row:hover {
+    color: white;
+    background-color: rgb(166, 167, 195);
+    border-radius: 5px;
+
+}
+
+.filter-container {
+    width: 40%;
+}
+
+.filter-btn {
+    background-color: #9395ca;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 25px;
+}
+
+.filter-btn:hover {
+    background-color: #7172ad;
+    
+}
+
+.cancel-btn {
+    background-color: rgb(160, 161, 171);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 25px;
+}
+
+.cancel-btn:hover {
+    background-color: rgb(105, 105, 105);
+ color: white;
+}
+
+.login-btn {
+    color: white;
+    background-color: #509ee3;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 25px;
+}
+
+.login-btn:hover {
+    background-color: rgb(32, 120, 198);
+}
+
+.dropdown-menu {
+    position: relative;
+    z-index: 10000;
+}
+
+.flexigrid table tr.hDiv th {
+    overflow: visible !important;
+}
+
+.btn:focus,.btn:active {
+    outline: none !important;
+    box-shadow: none;
+ }
+
+ .btn{
+	box-shadow: none !important
+}

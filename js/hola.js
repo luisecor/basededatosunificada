@@ -1,25 +1,35 @@
 "uses strict"
 
 document.addEventListener("DOMContentLoaded", function(event) {
+   
     document.querySelector("#formLogin").addEventListener('submit', verificarDatos); 
+    let user_name = document.querySelector('#cuit_username');
+    user_name.onchange = function () { cambiar(user_name)}
 });
 
 
 
-function verificarDatos(e){
+
+function cambiar (user_name){
+    user_name.value = user_name.value.replaceAll('-','');
+    
+}
+
+async function verificarDatos(e){
     e.preventDefault();
     let form = document.querySelector("#formLogin");
     let formData = new FormData(form);
 
-    let user_name = formData.get('user_name');
+    let user_name = formData.get('user_name').replaceAll('-','');
     let password = formData.get('password');
     let chkbox = formData.get('sesion_abierta');
 
     if (verifyCuit(user_name.replaceAll('-',''))){
         console.log("ES CUIT");
-        form.submit();
+        
     } else
         console.log("ES USER");
+    form.submit(user_name,password,chkbox? true : false);
 
     console.log(user_name.replaceAll('-',''));
     console.log(password);

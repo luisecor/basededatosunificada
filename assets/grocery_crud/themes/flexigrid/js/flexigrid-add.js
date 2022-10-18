@@ -1,4 +1,5 @@
 $(function(){
+	
 		$('.ptogtitle').click(function(){
 			if($(this).hasClass('vsble'))
 			{
@@ -52,7 +53,7 @@ $(function(){
 									if(save_and_close)
 									{
 										if ($('#save-and-go-back-button').closest('.ui-dialog').length === 0) {
-											window.location = data.success_list_url;
+											history.back();
 										} else {
 											$(".ui-dialog-content").dialog("close");
 											success_message(data.success_message);
@@ -101,7 +102,7 @@ $(function(){
 			$('#cancel-button').click(function(){
 				if( confirm( message_alert_add_form ) )
 				{
-					window.location = list_url;
+					history.back();
 				}
 
 				return false;

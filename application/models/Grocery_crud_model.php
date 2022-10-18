@@ -34,11 +34,14 @@ class Grocery_crud_model  extends CI_Model  {
 	protected $relation = array();
 	protected $relation_n_n = array();
 	protected $primary_keys = array();
+	private  $query_str = ''; 
 
 	function __construct()
     {
         parent::__construct();
     }
+
+	
 
     function db_table_exists($table_name = null)
     {
@@ -144,6 +147,11 @@ class Grocery_crud_model  extends CI_Model  {
     {
     	$this->db->where( $key, $value, $escape);
     }
+
+	function where_in($key , $value = [], $escape = TRUE)
+	{
+		$this->db->where_in($key , $value, $escape);
+	}
 
     function or_where($key, $value = NULL, $escape = TRUE)
     {

@@ -1,4 +1,5 @@
 $(function(){
+	console.log("HOLA EDIT");
 
 	var save_and_close = false;
 
@@ -54,7 +55,7 @@ $(function(){
 								if(save_and_close)
 								{
 									if ($('#save-and-go-back-button').closest('.ui-dialog').length === 0) {
-										window.location = data.success_list_url;
+										history.back();
 									} else {
 										$(".ui-dialog-content").dialog("close");
 										success_message(data.success_message);
@@ -105,7 +106,7 @@ $(function(){
 		$('#cancel-button').click(function(){
 			if( $(this).hasClass('back-to-list') || confirm( message_alert_edit_form ) )
 			{
-				window.location = list_url;
+				history.back();
 			}
 
 			return false;
