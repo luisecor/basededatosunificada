@@ -123,7 +123,6 @@ class Filtros_model  extends CI_Model {
                                                     ->distinct()
                                                     ->select("{$columna}")
                                                     ->where("{$columna} LIKE '%{$term}%'")
-                                                    // ->limit(1000)
                                                     ->get("cuit_reparticion");                
                             $records = $query->result();
 

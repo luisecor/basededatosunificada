@@ -77,6 +77,116 @@ class Examples extends CI_Controller {
 		
 	}
 
+	public function encapsulamiento_($tabla_view,$tabla_materializada,$subject,$titulo,$filtro_vista = null, $vista_ = null){
+		$crud = new grocery_CRUD;
+				$crud->set_theme('bootstrap');
+				$crud->set_language('spanish-uy');
+				$crud->set_table("{$tabla_view}");
+				$crud->set_subject("{$subject}");
+				$crud->set_primary_key('cuit',"{$tabla_view}");
+
+				$crud->set_primary_key('id','tags');
+				$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
+				$filtro_busqueda = $this->session->filtro_busqueda_query;
+				$filtro_columna = $this->session->filtro_col;
+
+				// var_dump($filtro_busqueda);
+				// var_dump($filtro_columna);
+				
+				// FILTRO DE VISTA
+				// El filtro de vistas no tiene Filtro de Session
+				if (isset($filtro_vista)){
+					$where_filtro_vista;
+					foreach ($filtro_vista as $filtros ){
+						foreach($filtros as $filtro){ 
+							
+							if (isset($where_filtro_vista))
+								$where_filtro_vista = $where_filtro_vista. " or tag_list LIKE '%{$filtro}%'";
+							else 
+								$where_filtro_vista ="tag_list LIKE '%{$filtro}%'";
+						}
+								
+					}
+					
+					if (isset($filtro_columna)){
+						if (isset($filtro_busqueda))
+							$crud->where("{$filtro_columna} AND ({$filtro_busqueda}) AND ({$where_filtro_vista})");
+						else
+							$crud->where("{$filtro_columna} AND ({$where_filtro_vista})");
+					} else { 
+						if (isset($filtro_busqueda))
+							$crud->where("({$filtro_busqueda}) AND ({$where_filtro_vista})");
+						else
+							$crud->where("{$where_filtro_vista}");
+					}
+
+					
+
+				} else {
+
+					// Filtros de SESSION-USUARIO
+					// Es neceario que la tabla tenga el conjunto listado de todos los tags como atributo "tag_list"
+					$filtro_session	= $this->session->filtro_session;
+					if (empty($filtro_session) !== true) {
+						foreach($filtro_session as $filtro){
+							$crud->or_where("tag_list LIKE '%{$filtro['nombre']}%'");
+		
+						}
+					}
+
+					//Filtros de BUSQUEDA por TAG
+					//Es neceario que la tabla tenga el conjunto listado de todos los tags como atributo "tag_list"
+					
+					if (isset($filtro_busqueda)){
+
+							$crud->where("{$filtro_busqueda}");
+					}
+
+				}
+						
+				
+				$this->session->set_flashdata('table',"{$tabla_materializada}");
+				$_SESSION['tabla'] = "{$titulo}";
+				
+				if (isset($vista_)){
+					$_SESSION['vista_'] = $vista_;
+				} else 
+					$_SESSION['vista_'] = null;
+
+				$crud
+						->unset_edit()
+						->unset_delete()
+						->unset_clone()
+						->unset_read()
+						//->unset_add(); -> Hay que modificar el route para estos
+						;
+
+				$crud	
+						//->add_action(	'Editar Datos Personales',  base_url.'assets/icons/datos_personales.png', 'examples/cambiar_datos_personales')
+						->add_action(	"Editar Atributos de {$tabla_materializada}", base_url.'assets/icons/contact_page_FILL0_wght400_GRAD0_opsz24.png','examples/editar_atributos')
+						//->add_action(	'Ver Registros completo', base_url.'assets/icons/search_FILL0_wght400_GRAD0_opsz24.png','examples/tabla_mujeres_lideres/read','ui-icon-image')
+						//->add_action(	'Observaciones', base_url.'assets/icons/more.png','examples/ver_observaciones','ui-icon-image')
+						//->callback_insert(array($this,'probando_add'))
+						;
+
+				// $crud->callback_before_delete(array($this,'action_befor_delete'));
+				// $crud->callback_after_insert(array($this, 'action_befor_insert'));
+				// $crud->callback_before_update(array($this,'action_befor_update'));
+
+				$crud->columns(['cuit','documento','apellido','nombre','genero','fecha_nacimiento','telefono_particular','mail','provincia','comuna','barrio_normalizado','regimen','tarea','ministerio','secr','tags']);
+				
+
+				
+				$crud	->display_as('secr', 'SECR')
+						->display_as('ss', 'SS')
+						->display_as('dg', 'DG')
+						;
+				
+				$output = $crud->render();
+				$this->_example_output($output);
+
+	}
+
 	protected function acceso_denegado(){
 		$user_name = strtoupper($this->session->user_name);
 				$data['message'] = " {$user_name} no tiene acceso a la tabla solicitada";
@@ -131,6 +241,7 @@ class Examples extends CI_Controller {
 		if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
 			in_array('MUJERES LIDERES', array_column($this->session->acceso,'nombre')) ){
 				$crud = new grocery_CRUD;
+				$crud->set_theme('bootstrap');
 				$crud->set_language('spanish-uy');
 				$crud->set_primary_key('cuit','mujeres_lideres_view');
 				$crud->set_table('mujeres_lideres_view');
@@ -289,6 +400,7 @@ class Examples extends CI_Controller {
 		if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
 			in_array('MUJERES LIDERES', array_column($this->session->acceso,'nombre')) ){
 				$crud = new grocery_CRUD;
+				$crud->set_theme('bootstrap');
 				$crud->set_language('spanish-uy');
 				$crud->set_primary_key('cuit','mujeres_lideres');
 				$crud->set_table('mujeres_lideres');
@@ -392,114 +504,6 @@ class Examples extends CI_Controller {
 
 	}
 
-	public function encapsulamiento_($tabla_view,$tabla_materializada,$subject,$titulo,$filtro_vista = null, $vista_ = null){
-		$crud = new grocery_CRUD;
-				$crud->set_language('spanish-uy');
-				$crud->set_table("{$tabla_view}");
-				$crud->set_subject("{$subject}");
-				$crud->set_primary_key('cuit',"{$tabla_view}");
-
-				$crud->set_primary_key('id','tags');
-				$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
-				$filtro_busqueda = $this->session->filtro_busqueda_query;
-				$filtro_columna = $this->session->filtro_col;
-
-				// var_dump($filtro_busqueda);
-				// var_dump($filtro_columna);
-				
-				// FILTRO DE VISTA
-				// El filtro de vistas no tiene Filtro de Session
-				if (isset($filtro_vista)){
-					$where_filtro_vista;
-					foreach ($filtro_vista as $filtros ){
-						foreach($filtros as $filtro){ 
-							
-							if (isset($where_filtro_vista))
-								$where_filtro_vista = $where_filtro_vista. " or tag_list LIKE '%{$filtro}%'";
-							else 
-								$where_filtro_vista ="tag_list LIKE '%{$filtro}%'";
-						}
-								
-					}
-					
-					if (isset($filtro_columna)){
-						if (isset($filtro_busqueda))
-							$crud->where("{$filtro_columna} AND ({$filtro_busqueda}) AND ({$where_filtro_vista})");
-						else
-							$crud->where("{$filtro_columna} AND ({$where_filtro_vista})");
-					} else { 
-						if (isset($filtro_busqueda))
-							$crud->where("({$filtro_busqueda}) AND ({$where_filtro_vista})");
-						else
-							$crud->where("{$where_filtro_vista}");
-					}
-
-					
-
-				} else {
-
-					// Filtros de SESSION-USUARIO
-					// Es neceario que la tabla tenga el conjunto listado de todos los tags como atributo "tag_list"
-					$filtro_session	= $this->session->filtro_session;
-					if (empty($filtro_session) !== true) {
-						foreach($filtro_session as $filtro){
-							$crud->or_where("tag_list LIKE '%{$filtro['nombre']}%'");
-		
-						}
-					}
-
-					//Filtros de BUSQUEDA por TAG
-					//Es neceario que la tabla tenga el conjunto listado de todos los tags como atributo "tag_list"
-					
-					if (isset($filtro_busqueda)){
-
-							$crud->where("{$filtro_busqueda}");
-					}
-
-				}
-						
-				
-				$this->session->set_flashdata('table',"{$tabla_materializada}");
-				$_SESSION['tabla'] = "{$titulo}";
-				
-				if (isset($vista_)){
-					$_SESSION['vista_'] = $vista_;
-				} else 
-					$_SESSION['vista_'] = null;
-
-				$crud
-						->unset_edit()
-						->unset_delete()
-						->unset_clone()
-						->unset_read()
-						//->unset_add(); -> Hay que modificar el route para estos
-						;
-
-				$crud	
-						//->add_action(	'Editar Datos Personales',  base_url.'assets/icons/datos_personales.png', 'examples/cambiar_datos_personales')
-						->add_action(	"Editar Atributos de {$tabla_materializada}", base_url.'assets/icons/contact_page_FILL0_wght400_GRAD0_opsz24.png','examples/editar_atributos')
-						//->add_action(	'Ver Registros completo', base_url.'assets/icons/search_FILL0_wght400_GRAD0_opsz24.png','examples/tabla_mujeres_lideres/read','ui-icon-image')
-						//->add_action(	'Observaciones', base_url.'assets/icons/more.png','examples/ver_observaciones','ui-icon-image')
-						//->callback_insert(array($this,'probando_add'))
-						;
-
-				// $crud->callback_before_delete(array($this,'action_befor_delete'));
-				// $crud->callback_after_insert(array($this, 'action_befor_insert'));
-				// $crud->callback_before_update(array($this,'action_befor_update'));
-
-				$crud->columns(['cuit','documento','apellido','nombre','genero','fecha_nacimiento','telefono_particular','mail','provincia','comuna','barrio_normalizado','regimen','tarea','ministerio','secr','tags']);
-				
-
-				
-				$crud	->display_as('secr', 'SECR')
-						->display_as('ss', 'SS')
-						->display_as('dg', 'DG')
-						;
-				
-				$output = $crud->render();
-				$this->_example_output($output);
-
-	}
 
 	//Modificada para el view
 	public function tabla_gabinete(){
