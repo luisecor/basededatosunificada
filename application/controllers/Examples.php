@@ -122,6 +122,7 @@ class Examples extends CI_Controller {
 
 		
 	}
+
 	public function tabla_mujeres_lideres(){
 		if (!$this->verifySession()){
 			return $this->debe_iniciar_sesion();
@@ -185,7 +186,7 @@ class Examples extends CI_Controller {
 
 				$crud	->add_action(	'Editar Datos Personales',  base_url.'assets/icons/datos_personales.png', 'examples/cambiar_datos_personales')
 						->add_action(	'Editar Atributos de Mujer Lider', base_url.'assets/icons/contact_page_FILL0_wght400_GRAD0_opsz24.png','examples/editar_atributos')
-						->add_action(	'Ver Registros completo', base_url.'assets/icons/search_FILL0_wght400_GRAD0_opsz24.png','examples/tabla_mujeres_lideres/read','ui-icon-image')
+						->add_action(	'Ver Registros completo', base_url.'assets/icons/search_FILL0_wght400_GRAD0_opsz24.png','examples/mujeres_lideres/read','ui-icon-image')
 						->add_action(	'Observaciones', base_url.'assets/icons/more.png','examples/ver_observaciones','ui-icon-image')
 						->add_action(	'Borrar registro', base_url.'assets/icons/delete_FILL0_wght400_GRAD0_opsz24.png','examples/delete','ui-icon-image')
 						// ->callback_insert(array($this,'probando_add'))

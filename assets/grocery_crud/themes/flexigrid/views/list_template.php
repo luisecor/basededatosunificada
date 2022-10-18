@@ -312,7 +312,7 @@ const win = window.location.origin + "/codeigniter3/index.php";
 
   $(document).ready(function() {
    
-    var columnas = ['cuit','documento','apellido','nombre','ministerio','tag'];
+    var columnas = ['cuit','documento','apellido','nombre','ministerio','tarea','dg','tag'];
 
       $.each(columnas, function(i, idName) {
 
