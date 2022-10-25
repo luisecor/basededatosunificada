@@ -462,6 +462,7 @@ class Examples extends CI_Controller {
 			$tabla_ = strtoupper(str_replace("_"," ",$tabla_));
 
 			$crud = new grocery_CRUD;
+			$crud->set_theme('bootstrap');
 			$crud->set_subject("observacion a {$tabla_}");
 
 			$crud	->where('tabla', $tabla)
