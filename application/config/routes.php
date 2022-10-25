@@ -105,6 +105,7 @@ $route['vista/(:any)/ajax_list'] = 'examples/vista/$1/ajax_list';
 $route['vista/(:any)/export'] = 'examples/vista/$1/export';
 
 
+
 //SERVIDOR
 
 
