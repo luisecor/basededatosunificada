@@ -61,7 +61,6 @@ class Examples extends CI_Controller {
 	{
 		if ($this->verifySession()){
 			$this->load->view('index/header');
-			$this->load->view('index/styles');
 			$this->load->view('index/navBar/navBarGrocery');
 			$this->load->view('example.php',(array)$output);
 			$this->load->view('index/footer');}
@@ -462,6 +461,7 @@ class Examples extends CI_Controller {
 			$tabla_ = strtoupper(str_replace("_"," ",$tabla_));
 
 			$crud = new grocery_CRUD;
+			$crud->set_theme('bootstrap');
 			$crud->set_subject("observacion a {$tabla_}");
 
 			$crud	->where('tabla', $tabla)
