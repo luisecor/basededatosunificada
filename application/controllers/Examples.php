@@ -1000,6 +1000,7 @@ class Examples extends CI_Controller {
 		}
 		else {	
 		$crud = new Grocery_CRUD();
+		$crud->set_theme('bootstrap');
 		$crud->set_language('spanish-uy');
 		$crud->set_table('tags');
 		$crud->columns('nombre');
