@@ -44,6 +44,7 @@ class SessionFiltroController extends CI_Controller {
     public function cuit_tag_filtro(){
 
         $crud = new grocery_CRUD;
+		// $crud->set_theme('bootstrap');
         $crud->set_language('spanish-uy');
         $crud->set_table('base_unificada_users');
         $crud->set_subject('Usuarios');

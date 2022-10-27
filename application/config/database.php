@@ -75,9 +75,9 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'phpmyadminny.sccyfp.com',
-	'username' => 'lucho',
-	'password' => 'Lucho1063!',
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => '',
 	'database' => 'bada_usuarios',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',

@@ -69,15 +69,16 @@ include(__DIR__ . '/common_javascript_vars.php');
                                         <?php echo $this->l('form_update_changes'); ?>
                                     </button>
                                     <?php 	if(!$this->unset_back_to_list) { ?>
-                                        <button class="btn btn-info b10" type="button" id="save-and-go-back-button">
-                                            <i class="fa fa-rotate-left"></i>
-                                            <?php echo $this->l('form_update_and_go_back'); ?>
-                                        </button>
-                                        <button class="btn btn-default cancel-button b10" type="button" id="cancel-button">
-                                            <i class="fa fa-warning"></i>
-                                            <?php echo $this->l('form_cancel'); ?>
-                                        </button>
-                                    <?php } ?>
+                                        <!-- <div class='form-button-box'>
+                                            <input type='button' value='<?php //echo $this->l('form_update_and_go_back'); ?>' id="save-and-go-back-button" class="btn btn-large"/>
+                                        </div> -->
+                                        <!-- <div class='form-button-box'>
+                                            <input type='button' value='Cancelar' class="btn btn-large" id="cancel-button" onclick="history.back()" />
+                                        </div> -->
+                                        <div class='form-button-box'>
+                                            <input type='button' value='Volver' class="btn btn-large" id="cancel-button" onclick="history.back()" />
+                                        </div>
+                                <?php 	} ?>
                                 </div>
                             </div>
 

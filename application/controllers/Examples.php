@@ -163,10 +163,10 @@ class Examples extends CI_Controller {
 						;
 
 				$crud	
-						//->add_action(	'Editar Datos Personales',  base_url.'assets/icons/datos_personales.png', 'examples/cambiar_datos_personales')
-						->add_action(	"Editar Atributos de {$tabla_materializada}", base_url.'assets/icons/contact_page_FILL0_wght400_GRAD0_opsz24.png','examples/editar_atributos')
-						//->add_action(	'Ver Registros completo', base_url.'assets/icons/search_FILL0_wght400_GRAD0_opsz24.png','examples/tabla_mujeres_lideres/read','ui-icon-image')
-						//->add_action(	'Observaciones', base_url.'assets/icons/more.png','examples/ver_observaciones','ui-icon-image')
+						->add_action(	'Editar Datos Personales',  base_url.'assets/icons/datos_personales.png', 'examples/cambiar_datos_personales')
+						->add_action(	"Editar Atributos de {$titulo}", base_url.'assets/icons/contact_page_FILL0_wght400_GRAD0_opsz24.png','examples/editar_atributos')
+						->add_action(	'Ver Registros completo', base_url.'assets/icons/search_FILL0_wght400_GRAD0_opsz24.png',"examples/{$tabla_view}/read','ui-icon-image")
+						->add_action(	'Observaciones', base_url.'assets/icons/more.png','examples/ver_observaciones','ui-icon-image')
 						//->callback_insert(array($this,'probando_add'))
 						;
 
@@ -209,6 +209,7 @@ class Examples extends CI_Controller {
 		if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
 			in_array('AFILIADOS', array_column($this->session->acceso,'nombre')) ){
 				$crud = new grocery_CRUD;
+				$crud->set_theme('bootstrap');
 				$crud->set_language('spanish-uy');
 				$crud->set_table('afiliados');
 				$crud->set_subject('Afiliado');
@@ -530,6 +531,7 @@ class Examples extends CI_Controller {
 		if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
 			in_array('GABINETE', array_column($this->session->acceso,'nombre')) ){
 				$crud = new grocery_CRUD;
+				$crud->set_theme('bootstrap');
 				$crud->set_language('spanish-uy');
 				$crud->set_table('gabinete');
 				$crud->set_subject('Personal');
@@ -590,6 +592,7 @@ class Examples extends CI_Controller {
 		if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
 			in_array('SECRETARIOS', array_column($this->session->acceso,'nombre')) ){
 				$crud = new grocery_CRUD;
+				$crud->set_theme('bootstrap');
 				$crud->set_language('spanish-uy');
 				$crud->set_table('secretarios');
 				$crud->set_subject('Personal');
@@ -634,6 +637,7 @@ class Examples extends CI_Controller {
 		if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
 			in_array('SUBSECRETARIOS', array_column($this->session->acceso,'nombre')) ){
 				$crud = new grocery_CRUD;
+				$crud->set_theme('bootstrap');
 				$crud->set_language('spanish-uy');
 				$crud->set_table('sub_secretarios');
 				$crud->set_subject('Personal');
@@ -678,6 +682,7 @@ class Examples extends CI_Controller {
 		if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
 			in_array('PTES. COMUNAS', array_column($this->session->acceso,'nombre')) ){
 				$crud = new grocery_CRUD;
+				$crud->set_theme('bootstrap');
 				$crud->set_language('spanish-uy');
 				$crud->set_table('ptes_comunas');
 				$crud->set_subject('Personal');
@@ -721,6 +726,7 @@ class Examples extends CI_Controller {
 		if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
 			in_array('LEGISLADORES', array_column($this->session->acceso,'nombre')) ){
 				$crud = new grocery_CRUD;
+				$crud->set_theme('bootstrap');
 				$crud->set_language('spanish-uy');
 				$crud->set_table('legisladores');
 				$crud->set_subject('Personal');
@@ -762,6 +768,7 @@ class Examples extends CI_Controller {
 		if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
 			in_array('JDG', array_column($this->session->acceso,'nombre')) ){
 				$crud = new grocery_CRUD;
+				$crud->set_theme('bootstrap');
 				$crud->set_language('spanish-uy');
 				$crud->set_table('jdg');
 				$crud->set_subject('Personal');
@@ -803,6 +810,7 @@ class Examples extends CI_Controller {
 		if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
 			in_array('DG', array_column($this->session->acceso,'nombre')) ){
 				$crud = new grocery_CRUD;
+				$crud->set_theme('bootstrap');
 				$crud->set_language('spanish-uy');
 				$crud->set_table('dg');
 				$crud->set_subject('Personal');
@@ -846,6 +854,7 @@ class Examples extends CI_Controller {
 		if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
 			in_array('GO', array_column($this->session->acceso,'nombre')) ){
 				$crud = new grocery_CRUD;
+				$crud->set_theme('bootstrap');
 				$crud->set_language('spanish-uy');
 				$crud->set_table('go');
 				$crud->set_subject('Personal');
@@ -908,6 +917,7 @@ class Examples extends CI_Controller {
 			in_array('USUARIOS BADA', array_column($this->session->acceso,'nombre')) ||
 			isset($vengo) ){
 				$crud = new grocery_CRUD;
+				$crud->set_theme('bootstrap');
 				$crud->set_language('spanish-uy');
 				$crud->set_table('bada_celulares');
 				$crud->set_subject('Usuario','Usuarios');
@@ -1073,6 +1083,7 @@ class Examples extends CI_Controller {
 			in_array('SAS ACTIVOS', array_column($this->session->acceso,'nombre')) ||
 			$vengo ){
 				$crud = new grocery_CRUD;
+				$crud->set_theme('bootstrap');
 				$crud->set_language('spanish-uy');
 				$crud->set_table('bada_celulares_view');
 				// $crud->set_subject('Activo','Activos');
