@@ -23,44 +23,44 @@
                         <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
                         in_array('GABINETE', array_column($this->session->acceso,'nombre'))) { ?>
                         <li><a class="dropdown-item"
-                                href='<?php echo site_url('examples/tabla_gabinete')?>'>Gabinete</a></li>
+                                href='<?php echo site_url('tabla/gabinete')?>'>Gabinete</a></li>
                         <?php }; ?>
                         <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || in_array('SECRETARIOS', array_column($this->session->acceso,'nombre'))) { ?>
                         <li><a class="dropdown-item"
-                                href='<?php echo site_url('examples/tabla_secretarios')?>'>Secretarios</a></li>
+                                href='<?php echo site_url('tabla/secretarios')?>'>Secretarios</a></li>
                         <?php }; ?>
                         <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
                         in_array('SUBSECRETARIOS', array_column($this->session->acceso,'nombre'))) {  ?>
                         <li><a class="dropdown-item"
-                                href='<?php echo site_url('examples/tabla_SubSecretarios')?>'>SubSecretarios</a></li>
+                                href='<?php echo site_url('tabla/subsecretarios')?>'>SubSecretarios</a></li>
                         <?php }; ?>
                         <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || in_array('PTES. COMUNAS', array_column($this->session->acceso,'nombre'))) {  ?>
-                        <li><a class="dropdown-item" href='<?php echo site_url('examples/tabla_ptesComunas')?>'>Ptes.
+                        <li><a class="dropdown-item" href='<?php echo site_url('tabla/ptes._comunas')?>'>Ptes.
                                 Comunas</a></li>
                         <?php } ?>
                         <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || in_array('LEGISLADORES', array_column($this->session->acceso,'nombre'))) {  ?>
                         <li><a class="dropdown-item"
-                                href='<?php echo site_url('examples/tabla_Legisladores')?>'>Legisladores</a></li>
+                                href='<?php echo site_url('tabla/legisladores')?>'>Legisladores</a></li>
                         <?php }; ?>
                         <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || in_array('JDG', array_column($this->session->acceso,'nombre'))) {  ?>
-                        <li><a class="dropdown-item" href='<?php echo site_url('examples/tabla_JDG')?>'>JDG</a></li>
+                        <li><a class="dropdown-item" href='<?php echo site_url('tabla/jdg')?>'>JDG</a></li>
                         <?php }; ?>
                         <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || in_array('DG', array_column($this->session->acceso,'nombre'))) {  ?>
-                        <li><a class="dropdown-item" href='<?php echo site_url('examples/tabla_DG')?>'>DG</a></li>
+                        <li><a class="dropdown-item" href='<?php echo site_url('tabla/dg')?>'>DG</a></li>
                         <?php }; ?>
                         <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || in_array('GO', array_column($this->session->acceso,'nombre'))) {  ?>
-                        <li><a class="dropdown-item" href='<?php echo site_url('examples/tabla_GO')?>'>GO</a></li>
+                        <li><a class="dropdown-item" href='<?php echo site_url('tabla/go')?>'>GO</a></li>
                         <?php }; ?>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
                         <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || in_array('SAS ACTIVOS', array_column($this->session->acceso,'nombre'))) {  ?>
-                        <li><a class="dropdown-item" href='<?php echo site_url('examples/sas_activos')?>'>SAS
+                        <li><a class="dropdown-item" href='<?php echo site_url('examples/sas_activo')?>'>SAS
                                 Activos</a></li>
                         <?php }; ?>
                         <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || in_array('MUJERES LIDERES', array_column($this->session->acceso,'nombre'))) {  ?>
                         <li><a class="dropdown-item"
-                                href='<?php echo site_url('examples/tabla_mujeres_lideres')?>'>Mujeres Lideres</a></li>
+                                href='<?php echo site_url('tabla/mujeres_lideres')?>'>Mujeres Lideres</a></li>
                         <?php }; ?>
                         <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || in_array('USUARIOS BADA', array_column($this->session->acceso,'nombre'))) {  ?>
                         <li><a class="dropdown-item" href='<?php echo site_url('examples/bada_celulares')?>'>Usuarios
@@ -68,10 +68,10 @@
                         <?php }; ?>
                         <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || in_array('AFILIADOS', array_column($this->session->acceso,'nombre'))) {  ?>
                         <li><a class="dropdown-item"
-                                href='<?php echo site_url('examples/tabla_Afiliados')?>'>Afiliados</a></li>
+                                href='<?php echo site_url('tabla/Afiliados')?>'>Afiliados</a></li>
                         <?php }?>
                         <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || in_array('TAGS', array_column($this->session->acceso,'nombre'))) {  ?>
-                        <li><a class="dropdown-item" href='<?php echo site_url('examples/tabla_tags')?>'>TAGS</a></li>
+                        <li><a class="dropdown-item" href='<?php echo site_url('tabla/tags')?>'>TAGS</a></li>
                         <?php } ?>
                     </ul>
 

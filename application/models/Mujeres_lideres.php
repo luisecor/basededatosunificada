@@ -8,5 +8,5 @@ public function get_cuit_list(){
     $query = $this->db->get('mujeres_lideres');
     return $query->result();
 }
-   
+  
 }

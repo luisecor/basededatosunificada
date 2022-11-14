@@ -15,4 +15,17 @@ class Observaciones_model extends CI_Model {
         return $this->db->affected_rows();
     }
 
+    public function get_cuit_list($tabla){
+        if ($tabla == "mujeres_lideres"){
+            $this->db   ->select('cuit , apellido_nombre')
+                    ->order_by('apellido_nombre','ASC');
+        } else {
+            $this->db   ->select('cuit , apellido, nombre')
+                    ->order_by('apellido','ASC');
+        }
+        
+        $query = $this->db->get("{$tabla}");
+        return $query->result();
+    }
+
 }

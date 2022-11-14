@@ -78,6 +78,16 @@ $route['usuarios/session/update/(:num)'] = 'sessionFiltroController/cuit_tag_fil
 
 $route['examples/tabla_mujeres_lideres/add'] = 'examples/probando_add';
 
+//Acceso a tablas
+$route['tabla/(:any)'] = 'examples/table/$1';
+$route['tabla/(:any)/(:any)'] = 'examples/table/$1/$2';
+$route['tabla/(:any)/(:any)/(:any)'] = 'examples/table/$1/$2/$3';
+
+//Acceso a materialized tables
+$route['materialized_table'] = 'examples/materialized_table';
+$route['materialized_table/(:any)'] = 'examples/materialized_table/$1';
+$route['materialized_table/(:any)/(:any)'] = 'examples/materialized_table/$1/$2';
+
 //Filtro TAGS -> Version 1
 $route['filtro_tags'] = 'filtrosController/filtros_selected';
 $route['cargar_vista'] = 'filtrosController/cargar_vista';
@@ -105,7 +115,7 @@ $route['vista/(:any)/(:any)'] = 'examples/vista/$1/$2';
 $route['vista/(:any)/export'] = 'examples/vista/$1/export';
 
 
-//SERVIDOR
+//LOCAL
 
 
 

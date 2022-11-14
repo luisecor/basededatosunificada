@@ -63,7 +63,7 @@ include(__DIR__ . '/common_javascript_vars.php');
                     <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-7">
                             <?php 	if(!$this->unset_back_to_list) { ?>
-                                <button class="btn btn-default cancel-button" type="button" onclick="window.location = '<?php echo $list_url; ?>'" >
+                                <button class="btn btn-default cancel-button" type="button" onclick="history.back()" >
                                     <i class="fa fa-arrow-left"></i>
                                     <?php echo $this->l('form_back_to_list'); ?>
                                 </button>

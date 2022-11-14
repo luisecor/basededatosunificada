@@ -1,12 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+require_once 'LoginController.php';
 
 trait UsuariosTrait   {
 
     public function __constructor(){
         parent::__construct();
         $this->load->helper(array('form', 'url'));
+        $this->load->model('login_model');
     }
 
 
@@ -25,13 +27,16 @@ trait UsuariosTrait   {
 	}
 
     public function error_($base){
+        $data = [
+            'heading' => "CUIT no encontrado en la base de datos {$base}",
+            'message' => "El cuit solicitado no se encuentra en la base de datos de {$base}" ,
+            // 'volver' => $tabla
+
+        ];
         $this->load->view('index/header');
-			$this->load->view('index/navBar/navBar');
-			show_error("El cuit solicitado no se encuentra en la base de datos de {$base}",404,"CUIT no encontrado en la base de datos {$base}");
-			$this->load->view('index/footer');
-
-        
-
+        $this->load->view('index/navBar/navBarGrocery');
+        $this->load->view('errors/html/error_general',$data);
+        $this->load->view('index/footer');
     }
 
     public function sin_acceso_tag_principal(){
@@ -53,8 +58,7 @@ trait UsuariosTrait   {
             $this->load->view('errors/html/error_general',$data);
 			//show_error("No tiene acceso para modificar el registro solicitado",500,"No tiene acceso para modificar el registro solicitado");
 			$this->load->view('index/footer');
-
-
     }
+
 
 }

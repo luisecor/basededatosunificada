@@ -15,6 +15,18 @@ class User_model extends CI_Model {
 
     }
 
+    public function get_permission_user($cuit){
+        $query = $this->db  ->select('tipo_usuario')
+                            ->from('base_unificada_users')
+                            ->where('cuit',$cuit)
+                            ->get();
+        $results = $query->result_array();
+        if (empty($results))
+            return null;
+        else
+            return $results[0]['tipo_usuario'];
+    }
+
     public function insert_new_user($cuit , $user_name, $password){
         $data = [
             'cuit' => $cuit,

@@ -14,8 +14,7 @@ class LoginController extends CI_Controller {
     }
     
 
-	public function index()
-	{
+	public function index()	{
         $this->load->view('index/header');
         $this->load->view('index/navBar/navBar');
         $this->load->view('login/login');
@@ -44,7 +43,6 @@ class LoginController extends CI_Controller {
                     'carga_masiva' => $result->carga_masiva,
                     'acceso' => $acceso,
                     'filtro_session' =>$filtros
-                    
                 ));
                
                 $this->logs_model->insert_log_ingreso($result->cuit, $result->user_name);
@@ -55,9 +53,19 @@ class LoginController extends CI_Controller {
         $this->load->view('index/navBar/navBar');
         $this->load->view('login/login',$data);
         $this->load->view('index/footer'); 
-        
-        
+    }
 
+    public function user_type(){
+        // Verifica que tipo de usuario 
+        $cuit = $_SESSION['cuit'];
+        $result = $this->login_model->get_user_type($cuit);
+        return ($result);        
+    }
+
+    public function table_permission(){
+        $cuit = $_SESSION['cuit'];
+        $result = $this->login_model->get_permisson_tables($cuit);
+        var_dump ($result);
     }
 
     public function ingreso(){
