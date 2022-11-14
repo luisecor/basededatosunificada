@@ -68,7 +68,7 @@
                         <?php }; ?>
                         <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || in_array('AFILIADOS', array_column($this->session->acceso,'nombre'))) {  ?>
                         <li><a class="dropdown-item"
-                                href='<?php echo site_url('tabla/Afiliados')?>'>Afiliados</a></li>
+                                href='<?php echo site_url('tabla/afiliados')?>'>Afiliados</a></li>
                         <?php }?>
                         <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || in_array('TAGS', array_column($this->session->acceso,'nombre'))) {  ?>
                         <li><a class="dropdown-item" href='<?php echo site_url('tabla/tags')?>'>TAGS</a></li>
