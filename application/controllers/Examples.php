@@ -1175,7 +1175,8 @@ class Examples extends CI_Controller {
 		$crud->set_table('bada_celulares');
 		$crud->set_primary_key('cuit',"bada_celulares");
 
-		$crud->fields(['provincia_bada','comuna','calle_bada','altura_bada','departamento_bada','celular_bada','mail','barrio_normalizado','celular_flota']);		
+		$crud->fields(['provincia_bada','comuna','calle_bada','altura_bada','departamento_bada','celular_bada','mail','barrio_normalizado','celular_flota']);
+		$crud->change_field_type('barrio_normalizado', 'string');		
 		$output = $crud->render();
 		$this->_example_output($output);
 		
