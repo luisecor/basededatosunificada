@@ -76,7 +76,7 @@ include(__DIR__ . '/common_javascript_vars.php');
                                             <input type='button' value='Cancelar' class="btn btn-large" id="cancel-button" onclick="history.back()" />
                                         </div> -->
                                         <div class='form-button-box'>
-                                            <?php   $table = $_SESSION['table'];?>
+                                            
                                             <input type='button' value='Volver' class="btn btn-large"  onclick="history.back()" />
                                         </div>
                                 <?php 	} ?>

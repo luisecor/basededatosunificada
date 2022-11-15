@@ -2312,7 +2312,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			$success_message = '<p>'.$this->l('update_success_message');
 			if(!$this->unset_back_to_list && !$this->_is_ajax())
 			{
-				$success_message .= " <a href='".$this->getListUrl()."'>".$this->l('form_go_back_to_list')."</a>";
+				$success_message .= " <button onclick=history.back()>".$this->l('form_go_back_to_list')."</button>";
 			}
 			$success_message .= '</p>';
 

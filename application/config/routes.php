@@ -87,6 +87,7 @@ $route['tabla/(:any)/(:any)/(:any)'] = 'examples/table/$1/$2/$3';
 $route['materialized_table'] = 'examples/materialized_table';
 $route['materialized_table/(:any)'] = 'examples/materialized_table/$1';
 $route['materialized_table/(:any)/(:any)'] = 'examples/materialized_table/$1/$2';
+$route['materialized_table/(:any)/(:any)/(:any)'] = 'examples/materialized_table/$1/$2/$3';
 
 //Filtro TAGS -> Version 1
 $route['filtro_tags'] = 'filtrosController/filtros_selected';
@@ -110,7 +111,15 @@ $route['carga_masiva/gabinete/importarCSVaDB'] = 'cargaMasivaController/importar
 //VISTAS
 $route['vista/(:any)'] = 'Examples/vista/$1';
 $route['vista/(:any)/(:any)'] = 'examples/vista/$1/$2';
+$route['vista/(:any)/(:any)/(:any)'] = 'examples/vista/$1/$2/$3';
 // $route['vista/(:any)/ajax_list'] = 'examples/vista/$1/ajax_list';
+
+//Acciones
+$route['datos_personales/(:any)/(:any)'] = 'Examples/datos_personales/$1/$2';
+$route['atributos_/(:any)/(:any)'] = 'Examples/atributos_/$1/$2';
+
+
+
 
 $route['vista/(:any)/export'] = 'examples/vista/$1/export';
 

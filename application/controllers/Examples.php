@@ -27,8 +27,7 @@ class Examples extends CI_Controller {
 	public function vista($tabla){
 
 		$vistas_disponibles= [
-			"mujeres_lideres" 	=> ['filtro_vista' 	=> ['MUJERES LIDERES'],
-									'tabla'			=> 'tabla_mujeres_lideres']
+			"mujeres_lideres" 	=> ['filtro_vista' 	=> ['MUJERES LIDERES']]
 			,
 			"jovenes"			=> ['filtro_vista'	=> ['SUB 30','SUB 33']]
 		];
@@ -40,13 +39,12 @@ class Examples extends CI_Controller {
 		}
 		else {	
 			if (isset($vistas_disponibles["{$tabla}"])){
-				
-				if (isset($vistas_disponibles["{$tabla}"]['tabla'])){
-					$accion = $vistas_disponibles[$tabla]['tabla'];
-					$_SESSION['vista_']="mujeres_lideres";
-					$this-> $accion();
+				$_SESSION['vista_']=$tabla;
+				if (isset($vistas_disponibles[$tabla])){
+					$this->encapsulamiento_("sas_activo_view",	"sas_activo",			$tabla, $tabla,	$vistas_disponibles["{$tabla}"],	"jovenes");
 				} else
-					$this->encapsulamiento_("sas_activo_view",	"sas_activo",			"Personal", "Jovenes VISTA",	$vistas_disponibles["{$tabla}"],	"jovenes");
+				echo "";
+					// $this->encapsulamiento_("sas_activo_view",	"sas_activo",			"Personal", "Jovenes VISTA",	$vistas_disponibles["{$tabla}"],	"jovenes");
 					// 	   encapsulamiento_($tabla_view,		$tabla_materializada,	$subject,	$titulo,			$filtro_vista = null, 				$vista_ = null){
 			
 			}
@@ -206,7 +204,7 @@ class Examples extends CI_Controller {
 				$permission = $this->user_model->get_permission_user($cuit);
 				if ($permission == 'SU' || $permission == "CREATE" ){
 					$crud	
-						->add_action(	'Editar Datos Personales', '', 'examples/cambiar_datos_personales')
+						->add_action(	'Editar Datos de Contacto', '', 'examples/cambiar_datos_personales')
 						->add_action(	"Editar Atributos de {$titulo}", '' ,'examples/editar_atributos')
 						->add_action(	'Ver Registros completo', '',"materialized_table/read")
 						->add_action(	'Observaciones', '','examples/ver_observaciones')
@@ -221,7 +219,7 @@ class Examples extends CI_Controller {
 
 				} else if ($permission == "UPDATE"){
 					$crud	
-						->add_action(	'Editar Datos Personales', '', 'examples/cambiar_datos_personales')
+						->add_action(	'Editar Datos de Contacto', '', 'examples/cambiar_datos_personales')
 						->add_action(	"Editar Atributos de {$titulo}", '' ,'examples/editar_atributos')
 						->add_action(	'Ver Registros completo', '',"materialized_table/read")
 						->add_action(	'Observaciones', '','examples/ver_observaciones')
@@ -357,7 +355,7 @@ class Examples extends CI_Controller {
 	// 					->add_fields('cuit','edicion')
 	// 					;
 
-	// 			$crud	->add_action(	'Editar Datos Personales',  base_url.'assets/icons/datos_personales.png', 'examples/cambiar_datos_personales')
+	// 			$crud	->add_action(	'Editar Datos de Contacto',  base_url.'assets/icons/datos_personales.png', 'examples/cambiar_datos_personales')
 	// 					->add_action(	'Editar Atributos de Mujer Lider', base_url.'assets/icons/contact_page_FILL0_wght400_GRAD0_opsz24.png','examples/editar_atributos')
 	// 					->add_action(	'Ver Registros completo', base_url.'assets/icons/search_FILL0_wght400_GRAD0_opsz24.png','examples/mujeres_lideres/read')
 	// 					->add_action(	'Observaciones', base_url.'assets/icons/more.png','examples/ver_observaciones','ui-icon-image')
@@ -423,15 +421,14 @@ class Examples extends CI_Controller {
 
 
 
+	
+
 	public function editar_atributos($pk){
 		
 		//Es necesario traer el nombre de la tabla de la cual venis para indicarle a cual tabla debe ir
 		$table = $this->session->flashdata('table');	
 		$this->session->set_flashdata('table',"{$table}");
 		
-
-		// if ($tabla !== 'mujeres_lideres')
-		// 	$tabla = "tabla_{$tabla}";
 
 		// Obtenemos el CUIT para consultar los accesos de usuario, tablas, tags que puede modificar
 		// Y sobre que registros puede accionar
@@ -447,7 +444,7 @@ class Examples extends CI_Controller {
 					$tiene_acceso = true;
 
 		if ($tiene_acceso) 
-			redirect("materialized_table/edit/{$pk}");
+			redirect("atributos_/edit/{$pk}");
 		else $this->sin_acceso_tag_principal();
 
 	}
@@ -559,7 +556,7 @@ class Examples extends CI_Controller {
 				$permission = $this->user_model->get_permission_user($cuit);
 				if ($permission == 'SU' || $permission == "CREATE" ){
 					$crud	
-						->add_action(	'Editar Datos Personales', '', 'examples/cambiar_datos_personales')
+						->add_action(	'Editar Datos de Contacto', '', 'examples/cambiar_datos_personales')
 						->add_action(	"Editar Atributos de {$tabla_materializada}", '' ,'examples/editar_atributos')
 						->add_action(	'Ver Registros completo', '',"examples/{$tabla_materializada}/read")
 						->add_action(	'Observaciones', '','examples/ver_observaciones')
@@ -574,7 +571,7 @@ class Examples extends CI_Controller {
 
 				} else if ($permission == "UPDATE"){
 					$crud	
-						->add_action(	'Editar Datos Personales', '', 'examples/cambiar_datos_personales')
+						->add_action(	'Editar Datos de Contacto', '', 'examples/cambiar_datos_personales')
 						->add_action(	"Editar Atributos de {$tabla_materializada}", '' ,'examples/editar_atributos')
 						->add_action(	'Ver Registros completo', '',"examples/{$tabla_materializada}/read")
 						->add_action(	'Observaciones', '','examples/ver_observaciones')
@@ -603,6 +600,38 @@ class Examples extends CI_Controller {
 				$output = $crud->render();
 				$this->_example_output($output);
 
+	}
+
+
+	public function atributos_(){
+		$tabla_materializada = $this->session->flashdata('table');	
+		$this->session->set_flashdata('table',"{$tabla_materializada}");
+		$crud = new grocery_CRUD;
+				$crud->set_theme('bootstrap');
+				$crud->set_language('spanish-uy');
+				$crud->set_table("{$tabla_materializada}");
+				$crud->set_primary_key('cuit',"{$tabla_materializada}");
+
+				$crud->set_primary_key('id','tags');
+				$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
+				
+						
+				//Se guarda el nombre de la tabla materializada
+				$this->session->set_flashdata('table',"{$tabla_materializada}");
+				$_SESSION['tabla'] = "{$tabla_materializada}";
+				
+				
+				$fields = ['tags'];
+
+				if ($tabla_materializada == 'mujeres_lideres')
+					array_push($fields,'edicion');
+				
+				$crud->fields($fields);
+								
+
+				
+				$output = $crud->render();
+				$this->_example_output($output);
 	}
 
 	public function eliminar($primary_key){
@@ -724,7 +753,7 @@ class Examples extends CI_Controller {
 	// 					;
 
 	// 			$crud	
-	// 					//->add_action(	'Editar Datos Personales',  base_url.'assets/icons/datos_personales.png', 'examples/cambiar_datos_personales')
+	// 					//->add_action(	'Editar Datos de Contacto',  base_url.'assets/icons/datos_personales.png', 'examples/cambiar_datos_personales')
 	// 					->add_action(	"Editar Atributos de {$table}", base_url.'assets/icons/contact_page_FILL0_wght400_GRAD0_opsz24.png','examples/editar_atributos')
 	// 					//->add_action(	'Ver Registros completo', base_url.'assets/icons/search_FILL0_wght400_GRAD0_opsz24.png','examples/tabla_mujeres_lideres/read','ui-icon-image')
 	// 					->add_action(	'Observaciones', base_url.'assets/icons/more.png','examples/ver_observaciones','ui-icon-image')
@@ -1139,6 +1168,20 @@ class Examples extends CI_Controller {
 
 	// }
 
+	public function datos_personales(){
+		$crud = new Grocery_CRUD();
+		$crud->set_theme('bootstrap');
+		$crud->set_language('spanish-uy');
+		$crud->set_table('bada_celulares');
+		$crud->set_primary_key('cuit',"bada_celulares");
+
+		$crud->fields(['provincia_bada','comuna','calle_bada','altura_bada','departamento_bada','celular_bada','mail','barrio_normalizado','celular_flota']);		
+		$output = $crud->render();
+		$this->_example_output($output);
+		
+
+	}
+
 	public function cambiar_datos_personales($id){
 
 		$this->session->set_flashdata('vengo','true');
@@ -1147,14 +1190,14 @@ class Examples extends CI_Controller {
 
 		// materialized_table/delete/{$primary_key}
 		if ($query->result()){
-			$table = $this->session->flashdata('table');	
-			$this->session->set_flashdata('table',"{$table}");
-			redirect('materialized_table/edit/'.$id.'');
+			redirect('datos_personales/edit/'.$id.'');
 		} else
 
 		$this->error_("bada_celulares");
 
 	}
+
+
 
 	public function cambiar_nombre_apellido($id = null){
 		
