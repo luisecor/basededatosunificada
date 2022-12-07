@@ -80,6 +80,7 @@ $route['examples/tabla_mujeres_lideres/add'] = 'examples/probando_add';
 
 //Acceso a tablas
 $route['tabla/(:any)'] = 'examples/table/$1';
+$route['tabla/(:any)/add'] = 'examples/nuevo_registro';
 $route['tabla/(:any)/(:any)'] = 'examples/table/$1/$2';
 $route['tabla/(:any)/(:any)/(:any)'] = 'examples/table/$1/$2/$3';
 
@@ -110,13 +111,16 @@ $route['carga_masiva/gabinete/importarCSVaDB'] = 'cargaMasivaController/importar
 
 //VISTAS
 $route['vista/(:any)'] = 'Examples/vista/$1';
+$route['vista/(:any)/add'] = 'examples/nuevo_registro';
 $route['vista/(:any)/(:any)'] = 'examples/vista/$1/$2';
 $route['vista/(:any)/(:any)/(:any)'] = 'examples/vista/$1/$2/$3';
-// $route['vista/(:any)/ajax_list'] = 'examples/vista/$1/ajax_list';
+// $route['vista/(:any)/(:any)/(:any)/(:any)'] = 'examples/vista/$1/$2/$3/$4';
 
 //Acciones
 $route['datos_personales/(:any)/(:any)'] = 'Examples/datos_personales/$1/$2';
 $route['atributos_/(:any)/(:any)'] = 'Examples/atributos_/$1/$2';
+$route['atributos_/(:any)/(:any)/(:any)'] = 'Examples/atributos_/$1/$2/$3';
+
 
 
 

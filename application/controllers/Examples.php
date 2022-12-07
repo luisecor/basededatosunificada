@@ -27,26 +27,36 @@ class Examples extends CI_Controller {
 	public function vista($tabla){
 
 		$vistas_disponibles= [
-			"mujeres_lideres" 	=> ['filtro_vista' 	=> ['MUJERES LIDERES']]
+			"mujeres_lideres" 	=> ['tabla_vista' 			=> 'mujeres_lideres_view',
+									'tabla_materializada'	=> 'mujeres_lideres',
+									'titulo' 				=> 'Mujeres Lideres'
+									]
 			,
-			"jovenes"			=> ['filtro_vista'	=> ['SUB 30','SUB 33']]
+			"jovenes"			=> ['tabla_vista'			=> 'jovenes_view',
+									'tabla_materializada'	=> 'sas_activo',
+									'titulo'				=> 'Jovenes'
+									]
 		];
 
+		
 		
 
 		if (!$this->verifySession()){
 			return $this->debe_iniciar_sesion();
 		}
 		else {	
-			if (isset($vistas_disponibles["{$tabla}"])){
+			if (isset($vistas_disponibles[$tabla])){
 				$_SESSION['vista_']=$tabla;
 				if (isset($vistas_disponibles[$tabla])){
-					$this->encapsulamiento_("sas_activo_view",	"sas_activo",			$tabla, $tabla,	$vistas_disponibles["{$tabla}"],	"jovenes");
+					$this->encapsulamiento_(/* view */			$vistas_disponibles[$tabla]['tabla_vista'] ,
+											/* materializada*/	$vistas_disponibles[$tabla]['tabla_materializada'],
+											/* subject */		$vistas_disponibles[$tabla]['titulo'],
+											/* titulo */ 		$vistas_disponibles[$tabla]['titulo'],
+											/* filtro_vista */	null,
+											/* de dnd venis */	$tabla);
 				} else
-				echo "";
-					// $this->encapsulamiento_("sas_activo_view",	"sas_activo",			"Personal", "Jovenes VISTA",	$vistas_disponibles["{$tabla}"],	"jovenes");
-					// 	   encapsulamiento_($tabla_view,		$tabla_materializada,	$subject,	$titulo,			$filtro_vista = null, 				$vista_ = null){
-			
+				echo "No existe vista";
+					
 			}
 		 else {
 				$this->acceso_denegado();				
@@ -81,7 +91,7 @@ class Examples extends CI_Controller {
 			return $this->debe_iniciar_sesion();
 		}
 		else {
-			if ($tabla != null && $tabla!= 'afiliados' && $tabla!= 'tags'){
+			if ($tabla != null && $tabla!= 'afiliados' && $tabla!= 'tags' && $tabla!= 'jovenes_view' && $tabla=! 'cuit_tag'){
 				$table_changed = strtoupper(str_replace('_',' ',$tabla));
 				
 				$result = $this->tablas_model->get_table($table_changed);
@@ -93,24 +103,29 @@ class Examples extends CI_Controller {
 				} else if ($tabla == 'subsecretarios')
 					$this->encapsulamiento_("sub_secretarios_view","sub_secretarios","SUB SECRETARIOS","Tabla Sub Secreatios");
 			} else {
-				
 				$this->outside_table($tabla);
 
 			}
 		}
 	}
 
-	public function outside_table($tabla){
+	public function outside_table($tabla = 'cuit_tag'){
 
 		$crud = new grocery_CRUD;
-		$this->session->set_flashdata('table',"{$tabla}");
 				$crud->set_theme('bootstrap');
 				$crud->set_language('spanish-uy');
 				$crud->set_table($tabla);
+				if ($tabla != 'tags')
+				$crud->set_primary_key('cuit',$tabla);
 				$crud->set_subject( strtoupper($tabla));
 				$output = $crud->render();
 				$this->_example_output($output);
 
+	}
+
+	public function nuevo_registro(){
+		$tabla = $_SESSION['table'];
+		var_dump($tabla);
 	}
 
 
@@ -134,8 +149,9 @@ class Examples extends CI_Controller {
 				if (isset($filtro_vista)){
 					$where_filtro_vista;
 					foreach ($filtro_vista as $filtros ){
+						var_dump($filtros);
 						foreach($filtros as $filtro){ 
-							
+							var_dump($filtro);
 							if (isset($where_filtro_vista))
 								$where_filtro_vista = $where_filtro_vista. " or tag_list LIKE '%{$filtro}%'";
 							else 
@@ -194,7 +210,7 @@ class Examples extends CI_Controller {
 						->unset_delete()
 						->unset_clone()
 						->unset_read()
-						->unset_add(); //-> Hay que modificar el route para estos
+						// ->unset_add(); //-> Hay que modificar el route para estos
 						;
 					
 				
@@ -204,10 +220,14 @@ class Examples extends CI_Controller {
 				$permission = $this->user_model->get_permission_user($cuit);
 				if ($permission == 'SU' || $permission == "CREATE" ){
 					$crud	
-						->add_action(	'Editar Datos de Contacto', '', 'examples/cambiar_datos_personales')
-						->add_action(	"Editar Atributos de {$titulo}", '' ,'examples/editar_atributos')
-						->add_action(	'Ver Registros completo', '',"materialized_table/read")
+						->add_action(	'Editar Datos de Contacto', '', 'examples/cambiar_datos_personales');
+						if ($tabla_materializada != 'sas_activo')
+							$crud->add_action(	"Editar Atributos de {$titulo}", '' ,'examples/editar_atributos');
+						else
+							$crud->unset_columns(['virtual']);
+						$crud->add_action(	'Ver Registros completo', '',"materialized_table/read")
 						->add_action(	'Observaciones', '','examples/ver_observaciones')
+						->add_action(	'TAGS', '',"examples/tags")
 						->add_action(	'Eliminar', '',"examples/eliminar")
 						;
 				} else if ($permission == "VIEW"){
@@ -219,10 +239,14 @@ class Examples extends CI_Controller {
 
 				} else if ($permission == "UPDATE"){
 					$crud	
-						->add_action(	'Editar Datos de Contacto', '', 'examples/cambiar_datos_personales')
-						->add_action(	"Editar Atributos de {$titulo}", '' ,'examples/editar_atributos')
-						->add_action(	'Ver Registros completo', '',"materialized_table/read")
+						->add_action(	'Editar Datos de Contacto', '', 'examples/cambiar_datos_personales');
+						if ($tabla_materializada != 'sas_activo')
+							$crud->add_action(	"Editar Atributos de {$titulo}", '' ,'examples/editar_atributos');
+						else
+							$crud->unset_columns(['virtual']);
+						$crud->add_action(	'Ver Registros completo', '',"materialized_table/read")
 						->add_action(	'Observaciones', '','examples/ver_observaciones')
+						->add_action(	'TAGS', '',"examples/tags")
 						->unset_add()
 						;
 
@@ -421,7 +445,65 @@ class Examples extends CI_Controller {
 
 
 
-	
+	public function tags($pk){
+		//Es necesario traer el nombre de la tabla de la cual venis para indicarle a cual tabla debe ir
+		$table = $this->session->flashdata('table');	
+		$this->session->set_flashdata('table',"{$table}");
+		
+
+		// Obtenemos el CUIT para consultar los accesos de usuario, tablas, tags que puede modificar
+		// Y sobre que registros puede accionar
+		$cuit_usuario = $this->session->cuit;
+		$accesos_usuario = $this->accionar_tag_mogel->get_actioned_tags($cuit_usuario);
+		$tags_registro = $this->tags_model->get_tags_by_cuit($pk);
+
+		// Verificar si alguno de los tags son los principales del usuario
+		$tiene_acceso = false;
+		foreach($tags_registro as $tag_reg)
+			foreach ($accesos_usuario as $acc_us)
+				if ($tag_reg == $acc_us)
+					$tiene_acceso = true;
+
+		$query = $this->db->query('SELECT cuit FROM bada_celulares WHERE cuit = '. $id .'');
+
+		//Si no existe el registro en bada_celulares lo crea y escribe sobre las columnas duplicadas
+		if (!$query->result()){
+			$this->db->query("INSERT INTO `bada_celulares` (`id`, `fecha`, `celular_bada`, `celular_flota`, 
+			`mail`, `ok`, `cuit`, `calle_bada`, `altura_bada`, `departamento_bada`, `piso_bada`, `provincia_bada`,
+				`edificio_laboral_bada`, `rol_bada`, `barrio`, `localidad`, `seccion`, `barrio_normalizado`, 
+				`lat`, `lon`, `comuna`, `created_at`, `updated_at`, `intereses`, `notificaciones`, `provincia_bada_bu`, 
+				`comuna_bu`, `calle_bada_bu`, `altura_bada_bu`, `departamento_bada_bu`, `celular_bada_bu`, `mail_bu`, 
+				`barrio_normalizado_bu`, `celular_flota_bu`) 
+				VALUES (NULL, CURRENT_TIMESTAMP, '', NULL, '', NULL, '{$id}', NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+				NULL, NULL, NULL, NULL, NULL, NULL, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL, NULL, NULL, NULL,
+				NULL, NULL, NULL, NULL, NULL, NULL, NULL) ");
+		}
+
+		if ($tiene_acceso) 
+			redirect("tags_/edit/{$pk}");
+		else $this->sin_acceso_tag_principal();
+
+
+	}
+
+	public function tags_(){
+		$crud = new Grocery_CRUD();
+		$crud->set_theme('bootstrap');
+		$crud->set_language('spanish-uy');
+		$crud->set_table('bada_celulares');
+		$crud->set_primary_key('cuit',"bada_celulares");
+
+		$crud->set_primary_key('id','tags');
+		$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
+
+		$crud->fields(['tags']);
+
+		// $crud->fields(['provincia_bada','comuna','calle_bada','altura_bada','departamento_bada','celular_bada','mail','barrio_normalizado','celular_flota']);
+		$crud->change_field_type('barrio_normalizado', 'string');		
+		$output = $crud->render();
+		$this->_example_output($output);
+
+	}
 
 	public function editar_atributos($pk){
 		
@@ -604,24 +686,26 @@ class Examples extends CI_Controller {
 
 
 	public function atributos_(){
-		$tabla_materializada = $this->session->flashdata('table');	
+		
+		$tabla_materializada = $this->session->flashdata('table');		
 		$this->session->set_flashdata('table',"{$tabla_materializada}");
+		var_dump($tabla_materializada);
+		
 		$crud = new grocery_CRUD;
 				$crud->set_theme('bootstrap');
 				$crud->set_language('spanish-uy');
-				$crud->set_table("{$tabla_materializada}");
-				$crud->set_primary_key('cuit',"{$tabla_materializada}");
+				$crud->set_table($tabla_materializada);
+				$crud->set_primary_key('cuit',$tabla_materializada);
 
-				$crud->set_primary_key('id','tags');
-				$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
+				
 				
 						
 				//Se guarda el nombre de la tabla materializada
-				$this->session->set_flashdata('table',"{$tabla_materializada}");
-				$_SESSION['tabla'] = "{$tabla_materializada}";
+				$this->session->set_flashdata('table',$tabla_materializada);
+				$_SESSION['tabla'] = $tabla_materializada;
 				
 				
-				$fields = ['tags'];
+				$fields = [];
 
 				if ($tabla_materializada == 'mujeres_lideres')
 					array_push($fields,'edicion');
@@ -661,12 +745,15 @@ class Examples extends CI_Controller {
 			$cuit_user = $this->session->cuit;
 			$user_name = $this->session->user_name;
 
-			$tabla_ = $tabla;
-			$tabla_ = strtoupper(str_replace("_"," ",$tabla_));
+			
+			$titulo = strtoupper(str_replace("_"," ",$tabla));
+
+			var_dump($tabla);
+			var_dump($titulo);
 
 			$crud = new grocery_CRUD;
 			$crud->set_theme('bootstrap');
-			$crud->set_subject("observacion a {$tabla_}");
+			$crud->set_subject("observacion a {$titulo}");
 
 			$crud	->where('tabla', $tabla)
 					->where('deleted_at =' , null);
@@ -687,24 +774,23 @@ class Examples extends CI_Controller {
 					->order_by('created_at','desc');
 
 			$crud->field_type('resuelto','dropdown',array('1' => 'SI' , '0' => 'NO'));
-			var_dump($tabla);
-			var_dump($this->observaciones_model->get_cuit_list($tabla));
-			// $cuit_list_model = $this->$tabla->get_cuit_list();
-			// $cuit_list = [];
 			
-			// foreach ($cuit_list_model as $cuit_model)
-			// 	array_push($cuit_list, "{$cuit_model->cuit} - {$cuit_model->apellido_nombre}");
+			$cuit_list_model = $this->$tabla->get_cuit_list();
+			$cuit_list = [];
 			
-			// $crud->field_type('cuit_tabla', 'dropdown', array_combine($cuit_list,$cuit_list));
+			foreach ($cuit_list_model as $cuit_model)
+				array_push($cuit_list, "{$cuit_model->cuit} - {$cuit_model->apellido_nombre}");
+			
+			$crud->field_type('cuit_tabla', 'dropdown', array_combine($cuit_list,$cuit_list));
 
 
 			// $crud->fields('cuit_tabla','observacion','resuelto','tabla','cuit_user','user_name');
-			// $crud->field_type('tabla','hidden',$tabla);
-			// $crud->field_type('cuit_user','hidden',$this->session->cuit);
-			// $crud->field_type('user_name','hidden',$this->session->user_name);
-			// $crud->change_field_type('observacion','string');
-			// $output = $crud->render();
-			// $this->_example_output($output);
+			$crud->field_type('tabla','hidden',$tabla);
+			$crud->field_type('cuit_user','hidden',$this->session->cuit);
+			$crud->field_type('user_name','hidden',$this->session->user_name);
+			$crud->change_field_type('observacion','string');
+			$output = $crud->render();
+			$this->_example_output($output);
 			
 		}		
 
@@ -1175,6 +1261,9 @@ class Examples extends CI_Controller {
 		$crud->set_table('bada_celulares');
 		$crud->set_primary_key('cuit',"bada_celulares");
 
+		$crud->set_primary_key('id','tags');
+		$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
+
 		$crud->fields(['provincia_bada_bu','comuna_bu','calle_bada_bu','altura_bada_bu','departamento_bada_bu','celular_bada_bu','mail_bu','barrio_normalizado_bu','celular_flota_bu']);
 
 		// $crud->fields(['provincia_bada','comuna','calle_bada','altura_bada','departamento_bada','celular_bada','mail','barrio_normalizado','celular_flota']);
@@ -1191,12 +1280,20 @@ class Examples extends CI_Controller {
 
 		$query = $this->db->query('SELECT cuit FROM bada_celulares WHERE cuit = '. $id .'');
 
-		// materialized_table/delete/{$primary_key}
-		if ($query->result()){
-			redirect('datos_personales/edit/'.$id.'');
-		} else
+		//Si no existe el registro en bada_celulares lo crea y escribe sobre las columnas duplicadas
+		if (!$query->result()){
+			$this->db->query("INSERT INTO `bada_celulares` (`id`, `fecha`, `celular_bada`, `celular_flota`, 
+			`mail`, `ok`, `cuit`, `calle_bada`, `altura_bada`, `departamento_bada`, `piso_bada`, `provincia_bada`,
+			 `edificio_laboral_bada`, `rol_bada`, `barrio`, `localidad`, `seccion`, `barrio_normalizado`, 
+			 `lat`, `lon`, `comuna`, `created_at`, `updated_at`, `intereses`, `notificaciones`, `provincia_bada_bu`, 
+			 `comuna_bu`, `calle_bada_bu`, `altura_bada_bu`, `departamento_bada_bu`, `celular_bada_bu`, `mail_bu`, 
+			 `barrio_normalizado_bu`, `celular_flota_bu`) 
+			 VALUES (NULL, CURRENT_TIMESTAMP, '', NULL, '', NULL, '{$id}', NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+			  NULL, NULL, NULL, NULL, NULL, NULL, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL, NULL, NULL, NULL,
+			   NULL, NULL, NULL, NULL, NULL, NULL, NULL) ");
+		}
 
-		$this->error_("bada_celulares");
+		redirect('datos_personales/edit/'.$id.'');;
 
 	}
 
