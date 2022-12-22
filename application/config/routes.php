@@ -121,7 +121,10 @@ $route['datos_personales/(:any)/(:any)'] = 'Examples/datos_personales/$1/$2';
 $route['atributos_/(:any)/(:any)'] = 'Examples/atributos_/$1/$2';
 $route['atributos_/(:any)/(:any)/(:any)'] = 'Examples/atributos_/$1/$2/$3';
 
-
+//TAGS
+$route['tags_/(:any)'] = 'examples/tags_/$1';
+$route['tags_/(:any)/(:any)'] = 'examples/tags_/$1/$2';
+$route['tags_/(:any)/(:any)/(:any)'] = 'examples/tags_/$1/$2/$3';
 
 
 

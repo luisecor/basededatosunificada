@@ -86,12 +86,13 @@ class Examples extends CI_Controller {
 		
 	}
 
-	public function table($tabla){
+	public function table($tabla){	
 		if (!$this->verifySession()){
 			return $this->debe_iniciar_sesion();
 		}
 		else {
-			if ($tabla != null && $tabla!= 'afiliados' && $tabla!= 'tags' && $tabla!= 'jovenes_view' && $tabla=! 'cuit_tag'){
+			if ($tabla != null && $tabla!= 'afiliados' && $tabla!= 'tags' && $tabla!= 'jovenes_view' && $tabla=! 'cuit_tag' && $tabla!= 'sas_activo_view_mat'){
+				echo "POR ARRIBA";
 				$table_changed = strtoupper(str_replace('_',' ',$tabla));
 				
 				$result = $this->tablas_model->get_table($table_changed);
@@ -104,12 +105,25 @@ class Examples extends CI_Controller {
 					$this->encapsulamiento_("sub_secretarios_view","sub_secretarios","SUB SECRETARIOS","Tabla Sub Secreatios");
 			} else {
 				$this->outside_table($tabla);
-
 			}
 		}
 	}
 
+	public function sas_activo_mat (){
+		$crud = new grocery_CRUD;
+				$crud->set_theme('bootstrap');
+				$crud->set_language('spanish-uy');
+				$crud->set_table("sas_activo_view_mat");
+				$crud->set_primary_key('cuit',"sas_activo_view_mat");
+				$crud->set_subject( strtoupper("sas_activo_view_mat"));
+				$output = $crud->render();
+				$this->_example_output($output);
+
+	}
+
 	public function outside_table($tabla = 'cuit_tag'){
+
+		var_dump($tabla);
 
 		$crud = new grocery_CRUD;
 				$crud->set_theme('bootstrap');
@@ -464,7 +478,7 @@ class Examples extends CI_Controller {
 				if ($tag_reg == $acc_us)
 					$tiene_acceso = true;
 
-		$query = $this->db->query('SELECT cuit FROM bada_celulares WHERE cuit = '. $id .'');
+		$query = $this->db->query('SELECT cuit FROM bada_celulares WHERE cuit = '. $pk .'');
 
 		//Si no existe el registro en bada_celulares lo crea y escribe sobre las columnas duplicadas
 		if (!$query->result()){
@@ -474,10 +488,12 @@ class Examples extends CI_Controller {
 				`lat`, `lon`, `comuna`, `created_at`, `updated_at`, `intereses`, `notificaciones`, `provincia_bada_bu`, 
 				`comuna_bu`, `calle_bada_bu`, `altura_bada_bu`, `departamento_bada_bu`, `celular_bada_bu`, `mail_bu`, 
 				`barrio_normalizado_bu`, `celular_flota_bu`) 
-				VALUES (NULL, CURRENT_TIMESTAMP, '', NULL, '', NULL, '{$id}', NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+				VALUES (NULL, CURRENT_TIMESTAMP, '', NULL, '', NULL, '{$pk}', NULL, NULL, NULL, NULL, NULL, NULL, NULL,
 				NULL, NULL, NULL, NULL, NULL, NULL, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL, NULL, NULL, NULL,
 				NULL, NULL, NULL, NULL, NULL, NULL, NULL) ");
 		}
+
+		
 
 		if ($tiene_acceso) 
 			redirect("tags_/edit/{$pk}");
@@ -496,10 +512,12 @@ class Examples extends CI_Controller {
 		$crud->set_primary_key('id','tags');
 		$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
 
-		$crud->fields(['tags']);
+		$crud->fields(['provincia_bada','tags']);
+
+		$crud->field_type('provincia_bada','hidden');
 
 		// $crud->fields(['provincia_bada','comuna','calle_bada','altura_bada','departamento_bada','celular_bada','mail','barrio_normalizado','celular_flota']);
-		$crud->change_field_type('barrio_normalizado', 'string');		
+				
 		$output = $crud->render();
 		$this->_example_output($output);
 
@@ -748,8 +766,6 @@ class Examples extends CI_Controller {
 			
 			$titulo = strtoupper(str_replace("_"," ",$tabla));
 
-			var_dump($tabla);
-			var_dump($titulo);
 
 			$crud = new grocery_CRUD;
 			$crud->set_theme('bootstrap');
@@ -1261,8 +1277,6 @@ class Examples extends CI_Controller {
 		$crud->set_table('bada_celulares');
 		$crud->set_primary_key('cuit',"bada_celulares");
 
-		$crud->set_primary_key('id','tags');
-		$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
 
 		$crud->fields(['provincia_bada_bu','comuna_bu','calle_bada_bu','altura_bada_bu','departamento_bada_bu','celular_bada_bu','mail_bu','barrio_normalizado_bu','celular_flota_bu']);
 

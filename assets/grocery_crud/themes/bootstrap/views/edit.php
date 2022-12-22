@@ -38,13 +38,12 @@ include(__DIR__ . '/common_javascript_vars.php');
                         <?php echo form_open( $update_url, 'method="post" id="crudForm"  enctype="multipart/form-data" class="form-horizontal"'); ?>
 
                             <?php foreach($fields as $field) { ?>
-                                <div class="form-group <?php echo $field->field_name; ?>_form_group">
-                                    <label class="col-sm-3 control-label">
+                                <div class="form-group <?php echo $field->field_name; ?>_form_group row g-3 align-items-center">
+                                    <label class="col-form-label control-label align-items-center"  >
                                         <?php echo $input_fields[$field->field_name]->display_as?><?php echo ($input_fields[$field->field_name]->required)? "<span class='required'>*</span> " : ""?>
-                                    </label>
-                                    <div class="col-sm-9">
                                         <?php echo $input_fields[$field->field_name]->input; ?>
-                                    </div>
+                                    </label>
+                                    
                                 </div>
                             <?php }?>
 
