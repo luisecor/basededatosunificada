@@ -36,6 +36,11 @@ class Examples extends CI_Controller {
 									'tabla_materializada'	=> 'sas_activo',
 									'titulo'				=> 'Jovenes'
 									]
+			,
+			"coordinacion"		=> ['tabla_vista' 			=> 'coordinacion_planemiento_view',
+									'tabla_materializada'	=> 'sas_activo',
+									'titulo' 				=> 'Coordinacion y Planeamiento'
+									]
 		];
 
 		
