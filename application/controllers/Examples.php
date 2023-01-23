@@ -96,8 +96,9 @@ class Examples extends CI_Controller {
 			return $this->debe_iniciar_sesion();
 		}
 		else {
+			var_dump($tabla);
 			if ($tabla != null && $tabla!= 'afiliados' && $tabla!= 'tags' && $tabla!= 'jovenes_view' && $tabla=! 'cuit_tag' && $tabla!= 'sas_activo_view_mat'){
-				echo "POR ARRIBA";
+				var_dump($tabla);
 				$table_changed = strtoupper(str_replace('_',' ',$tabla));
 				
 				$result = $this->tablas_model->get_table($table_changed);
@@ -109,7 +110,10 @@ class Examples extends CI_Controller {
 				} else if ($tabla == 'subsecretarios')
 					$this->encapsulamiento_("sub_secretarios_view","sub_secretarios","SUB SECRETARIOS","Tabla Sub Secreatios");
 			} else {
+				var_dump($tabla);
+				if ($tabla == 'tags' || $tabla == 'afiliados') 
 				$this->outside_table($tabla);
+				var_dump($tabla);
 			}
 		}
 	}
@@ -128,14 +132,16 @@ class Examples extends CI_Controller {
 
 	public function outside_table($tabla = 'cuit_tag'){
 
-		var_dump($tabla);
-
 		$crud = new grocery_CRUD;
 				$crud->set_theme('bootstrap');
 				$crud->set_language('spanish-uy');
 				$crud->set_table($tabla);
-				if ($tabla != 'tags')
-				$crud->set_primary_key('cuit',$tabla);
+				if ($tabla != 'tags' && $tabla != 'afiliados')
+					$crud->set_primary_key('cuit',$tabla);
+				else {
+					$_SESSION['table'] = $tabla;
+					// $crud->set_primary_key('id',$tabla);
+				}
 				$crud->set_subject( strtoupper($tabla));
 				$output = $crud->render();
 				$this->_example_output($output);
@@ -275,7 +281,7 @@ class Examples extends CI_Controller {
 				// $crud->callback_after_insert(array($this, 'action_befor_insert'));
 				// $crud->callback_before_update(array($this,'action_befor_update'));
 
-				$fields = ['cuit','documento','apellido','nombre','genero','fecha_nacimiento','telefono_particular','mail','provincia','comuna','barrio_normalizado','regimen','tarea','ministerio','secr'];
+				$fields = ['cuit','documento','apellido','nombre','genero','fecha_nacimiento','telefono_particular','mail','provincia','comuna','barrio_normalizado','regimen','tarea','ministerio','secr','ss','dg'];
 				if ($tabla_view == 'mujeres_lideres_view'){
 					array_push($fields, "edicion");
 				}

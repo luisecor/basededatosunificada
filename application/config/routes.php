@@ -80,7 +80,9 @@ $route['examples/tabla_mujeres_lideres/add'] = 'examples/probando_add';
 
 //Acceso a tablas
 $route['tabla/(:any)'] = 'examples/table/$1';
-$route['tabla/(:any)/add'] = 'examples/nuevo_registro';
+//$route['tabla/(:any)/add'] = 'examples/nuevo_registro';
+//ajax_list
+// $route['tabla/(:any)/ajax_list'] = 'examples/table/$1/ajax_list';
 $route['tabla/(:any)/(:any)'] = 'examples/table/$1/$2';
 $route['tabla/(:any)/(:any)/(:any)'] = 'examples/table/$1/$2/$3';
 
