@@ -7,6 +7,7 @@ class CargaMasivaController extends CI_Controller {
     public function __construct()	{
 		parent::__construct();
         $this->load->model('tags_model');
+        $this->load->model('tablas_model');
     }
 
     public function index(){
@@ -17,10 +18,11 @@ class CargaMasivaController extends CI_Controller {
     }
 
     public function form_tabla(){
-        $data['tabla'] = "GABINETE";
+        $tableList = $this->tablas_model->get_tables();
+        $data['tableList'] = $tableList;
         $this->load->view('index/header');
         $this->load->view('index/navBar/navBarGrocery');
-        $this->load->view('cargaMasiva/gabinete',$data);
+        $this->load->view('cargaMasiva/tablas',$data);
         $this->load->view('index/footer');
     }
 
@@ -45,8 +47,10 @@ class CargaMasivaController extends CI_Controller {
         if ( !$this->upload->do_upload('file'))
                 {   
                         echo "HAY ERRORES";
+                        $valueSelected = $this->input->get(array('importData'), TRUE);
+                        var_dump($valueSelected);
                         $data['error'] = $this->upload->display_errors();
-                        $data['tabla'] = $_REQUEST['tabla'];
+                        $data['tabla'] = $valueSelected;
                         return print_r( $data['error']);
                         // $this->load->view('index/header');
                         // $this->load->view('index/navBar/navBarGrocery');
@@ -56,7 +60,9 @@ class CargaMasivaController extends CI_Controller {
                 else
                 {
                     echo "NO HAY ERRORES";
-                        $data['tabla'] = $_REQUEST['tabla'];
+                    $valueSelected = $this->input->post(array('importData'));
+                        $data['tabla'] = $valueSelected;
+                        var_dump($valueSelected['importData']);
                         $data['input'] = $this->upload->data();
 
                         $file = fopen($data['input']['full_path'],"r");
@@ -80,60 +86,62 @@ class CargaMasivaController extends CI_Controller {
 
                         fclose($file);
 
-                        $tabla = strtolower( $_REQUEST['tabla']);
+                        $tabla = $valueSelected['importData'];
                         $existe = false;
                         $models = [
                             'gabinete' => 'gabinete_model'
                         ];
+                        $existe = $this->tablas_model->existe_tabla_nombre("Lucho");
+                        var_dump($existe);
 
-                        foreach($models as $k=>$v){
-                            if ($k === $tabla){
-                                $model = $v ; $this->load->model($v);
-                                $existe = true;
-                                break;
-                            }
-                        }
+                        // foreach($models as $k=>$v){
+                        //     if ($k === $tabla){
+                        //         $model = $v ; $this->load->model($v);
+                        //         $existe = true;
+                        //         break;
+                        //     }
+                        // }
 
-                        if ($existe){
+                        // if ($existe){
 
-                            $count = 0;
-                            $udpdated = 0;
-                            $errors = array();
+                        //     $count = 0;
+                        //     $udpdated = 0;
+                        //     $errors = array();
     
-                            foreach($csvArr as $registro){
-                                $registroDB = $this->$model->get($registro , $tabla);
-                                echo " Existe?  <br>";
-                                var_dump($registroDB);
+                        //     foreach($csvArr as $registro){
+                        //         $registroDB = $this->$model->get($registro , $tabla);
+                        //         echo " Existe?  <br>";
+                        //         var_dump($registroDB);
 
-                                if (isset($registroDB)){
-                                    //El regisstro existe en la tabla -> Se modifica
-                                    if ( ($query = $this->$model->update($registro, $tabla)))
-                                        $udpdated++;
-                                    else
-                                        $error = $query->error(); // Error al Updatear
-                                } else {
-                                    //El registro NO EXISTE en la tabla -> se agrega
-                                    if ( ($query = $this->$model->insert($registro, $tabla))) 
-                                        $count++;
-                                    else
-                                        $error = $query->error(); // Error al Insertar
-                                }
+                        //         if (isset($registroDB)){
+                        //             //El regisstro existe en la tabla -> Se modifica
+                        //             if ( ($query = $this->$model->update($registro, $tabla)))
+                        //                 $udpdated++;
+                        //             else
+                        //                 $error = $query->error(); // Error al Updatear
+                        //         } else {
+                        //             //El registro NO EXISTE en la tabla -> se agrega
+                        //             if ( ($query = $this->$model->insert($registro, $tabla))) 
+                        //                 $count++;
+                        //             else
+                        //                 $error = $query->error(); // Error al Insertar
+                        //         }
 
-                            }
+                        //     }
 
-                            if (isset($errors) && count($errors) > 0){
-                                echo "ERROR DE QUERY <br>";
-                                foreach ($error as $error) {
-                                    echo "{$error} <br>";
-                                }
-                            }
+                        //     if (isset($errors) && count($errors) > 0){
+                        //         echo "ERROR DE QUERY <br>";
+                        //         foreach ($error as $error) {
+                        //             echo "{$error} <br>";
+                        //         }
+                        //     }
                                 
 
 
 
-                        } else {
-                            $data['error'] = 'No existe el MODELO para la tabla solicitada.';
-                        }
+                        // } else {
+                        //     $data['error'] = 'No existe el MODELO para la tabla solicitada.';
+                        // }
 
                        
 

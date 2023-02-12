@@ -44,7 +44,7 @@ class SessionFiltroController extends CI_Controller {
     public function cuit_tag_filtro(){
 
         $crud = new grocery_CRUD;
-		// $crud->set_theme('bootstrap');
+		$crud->set_theme('bootstrap');
         $crud->set_language('spanish-uy');
         $crud->set_table('base_unificada_users');
         $crud->set_subject('Usuarios');
@@ -53,13 +53,20 @@ class SessionFiltroController extends CI_Controller {
         $crud   ->set_relation_n_n('filtros','cuit_filtro_tag','tags','cuit','id_tag','nombre')
                 ->set_relation_n_n('tablas','acceso_tabla','tablas','cuit','id_tabla','nombre')
 				->set_relation_n_n('tag_principal','accionar_tag','tags','cuit','id_tag','nombre')
-                ->fields('cuit','user_name','tipo_usuario','tag_principal','carga_masiva','tablas','filtros')
-                ->columns('cuit','user_name','tipo_usuario','tag_principal','carga_masiva','tablas','filtros');
+                ->fields('cuit','user_name','tipo_usuario','tag_principal','carga_masiva','tablas')
+                ->columns('cuit','user_name','tipo_usuario','tag_principal','carga_masiva','tablas')
+				->display_as('user_name','Nombre de Usuario')
+				->display_as('tablas','Tablas que el usuario puede ver')
+				->display_as('tag_principal','Tags sobre los que pueda accionar el usuario')
+				->unset_columns(array('password'))
+				->unset_fields('password')
+				;
 
         $crud   ->field_type('tipo_usuario','enum',array('SU','CREAT','UPDATE','VIEW'))
                 ->field_type('carga_masiva','enum',array('SI','NO'))
-				->field_type('tablas','set',array('TODAS','GABINETE','SECRETARIO','SUBSECRETARIO','PTES. COMUNAS','LEGISLADORES','JDG','DG','GO','SAS ACTIVOS',
-								'USUARIOS BADA','AFILIADOS','MUJERES LIDERES',));
+				// ->field_type('tablas','set',array('TODAS','LIDERES','GABINETE','SECRETARIO','SUBSECRETARIO','PTES. COMUNAS','LEGISLADORES','JDG','DG','GO','SAS ACTIVOS',
+								// 'USUARIOS BADA','AFILIADOS','MUJERES LIDERES','TODAS'))
+								;
 		
 		
 				//->callback_after_insert(array($this,'action_after_insert'))

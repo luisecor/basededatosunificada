@@ -14,7 +14,7 @@ class Examples extends CI_Controller {
 		$this->load->model('mujeres_lideres');
 		$this->load->model('sas_activo_model');
 		$this->load->model('bada_celulares_model');
-		$this->load->model('tags_model');
+		// $this->load->model('tags_model');
 		$this->load->model('accionar_tag_mogel');
 		$this->load->model('tags_model');
 		$this->load->model('tablas_model');
@@ -92,59 +92,131 @@ class Examples extends CI_Controller {
 	}
 
 	public function table($tabla){	
+
+		$tablas_activas = [
+			'gabinete' 		=> [	'base' 		=> 'gabinete',
+									'vista' 	=> 'gabinete_view',
+									'titulo'	=> 'Gabinete',
+									'subject'	=> 'Gabinete']
+			,
+			'secretarios' 	=> [	'base' 		=> 'secretarios',
+									'vista' 	=> 'secretarios_view',
+									'titulo'	=> 'Secretarios',
+									'subject'	=> 'Secretario']
+			,
+			'subsecretarios' => [	'base' 		=> 'sub_secretarios',
+									'vista' 	=> 'sub_secretarios_view',
+									'titulo'	=> 'Sub Secretarios',
+									'subject'	=> 'Sub Secretario']
+			,
+			'ptes._comunas' => [	'base' 		=> 'ptes_comunas',
+									'vista' 	=> 'ptes_comunas_view',
+									'titulo'	=> 'Ptes. Comunas',
+									'subject'	=> 'Pte. comuna']
+							,
+			'legisladores' 	=> [	'base' 		=> 'legisladores',
+									'vista' 	=> 'legisladores_view',
+									'titulo'	=> 'Legisladores',
+									'subject'	=> 'Legislador']
+							,
+			'jdg'			 => [	'base' 		=> 'jdg',
+									'vista' 	=> 'jdg_view',
+									'titulo'	=> 'JDG',
+									'subject'	=> 'JDG']
+							,
+			'dg' 			=> [	'base' 		=> 'dg',
+									'vista' 	=> 'dg_view',
+									'titulo'	=> 'DG',
+									'subject'	=> 'DG']
+							,
+			'go' 			=> [	'base' 		=> 'go',
+									'vista' 	=> 'go_view',
+									'titulo'	=> 'GO',
+									'subject'	=> 'GO']
+							,
+			'sas_activo' 	=> [	'base' 		=> 'sas_activo',
+									'vista' 	=> 'sas_activo_view',
+									'titulo'	=> 'SAS Activos',
+									'subject'	=> 'Personal']
+							,
+			'mujeres_lideres' => [	'base' 		=> 'mujeres_lideres',
+									'vista' 	=> 'mujeres_lideres_view',
+									'titulo'	=> 'Mujeres Lideres',
+									'subject'	=> 'Mujer Lider']
+							,
+			'bada_celulares' => [	'base' 		=> 'bada_celulares',
+									'vista' 	=> 'bada_celulares_view',
+									'titulo'	=> 'Usuarios Bada',
+									'subject'	=> 'Usuario Bada']
+							,
+			'lideres_gcba' => 	[	'base' 		=> 'lideres_gcba',
+									'vista' 	=> 'lideres_gcba_view',
+									'titulo'	=> 'Lideres GCBA',
+									'subject'	=> 'Lideres GCBA']						
+							,
+			'lideres_gcba_hacienda' 
+							=> 	[	'base' 		=> 'lideres_gcba',
+									'vista' 	=> 'lideres_gcba_hacienda_view',
+									'titulo'	=> 'Lideres GCBA',
+									'subject'	=> 'Lideres GCBA']
+								
+			// lideres_gcba_hacienda
+		];
+
+		
 		if (!$this->verifySession()){
 			return $this->debe_iniciar_sesion();
 		}
 		else {
-			var_dump($tabla);
-			if ($tabla != null && $tabla!= 'afiliados' && $tabla!= 'tags' && $tabla!= 'jovenes_view' && $tabla=! 'cuit_tag' && $tabla!= 'sas_activo_view_mat'){
-				var_dump($tabla);
-				$table_changed = strtoupper(str_replace('_',' ',$tabla));
+
+			// var_dump($tablas_activas[$tabla]['vista_mat']);
+			if (isset($tablas_activas[$tabla])){
+				$this->encapsulamiento_($tablas_activas[$tabla]['vista'],
+										$tablas_activas[$tabla]['base'],
+										$tablas_activas[$tabla]['subject'],
+										$tablas_activas[$tabla]['titulo']);
+			}
+
+			else {
 				
-				$result = $this->tablas_model->get_table($table_changed);
+				if ($tabla == 'tags'){
+					$this->tags_();
+				} elseif($tabla == 'afiliados') 
+					$this->outside_table($tabla);
 				
-				if((!empty($result) || $tabla == 'sas_activo' || $tabla == 'bada_celulares') && $tabla != 'subsecretarios'){
-					$tabla = str_replace('.','',$tabla);
-					
-					$this->encapsulamiento_("{$tabla}_view",$tabla,$table_changed,"Tabla {$table_changed}");
-				} else if ($tabla == 'subsecretarios')
-					$this->encapsulamiento_("sub_secretarios_view","sub_secretarios","SUB SECRETARIOS","Tabla Sub Secreatios");
-			} else {
-				var_dump($tabla);
-				if ($tabla == 'tags' || $tabla == 'afiliados') 
-				$this->outside_table($tabla);
-				var_dump($tabla);
 			}
 		}
 	}
 
-	public function sas_activo_mat (){
-		$crud = new grocery_CRUD;
-				$crud->set_theme('bootstrap');
-				$crud->set_language('spanish-uy');
-				$crud->set_table("sas_activo_view_mat");
-				$crud->set_primary_key('cuit',"sas_activo_view_mat");
-				$crud->set_subject( strtoupper("sas_activo_view_mat"));
-				$output = $crud->render();
-				$this->_example_output($output);
+	public function outside_table($tabla = 'cuit_tag'){
+
+		$crud = $crud = new Grocery_CRUD();						
+		$crud->set_language('spanish-uy');
+		$crud->set_table($tabla);
+		if ($tabla != 'tags' && $tabla != 'afiliados')
+			$crud->set_primary_key('cuit',$tabla);
+		else {
+			$_SESSION['table'] = $tabla;
+			// $crud->set_primary_key('id',$tabla);
+		}
+		if ($tabla == 'tags') $this->tags_();
+		else {
+			$crud->set_subject( strtoupper($tabla));
+			$output = $crud->render();
+			$this->_example_output($output);
+		}
+				
 
 	}
 
-	public function outside_table($tabla = 'cuit_tag'){
-
-		$crud = new grocery_CRUD;
-				$crud->set_theme('bootstrap');
-				$crud->set_language('spanish-uy');
-				$crud->set_table($tabla);
-				if ($tabla != 'tags' && $tabla != 'afiliados')
-					$crud->set_primary_key('cuit',$tabla);
-				else {
-					$_SESSION['table'] = $tabla;
-					// $crud->set_primary_key('id',$tabla);
-				}
-				$crud->set_subject( strtoupper($tabla));
-				$output = $crud->render();
-				$this->_example_output($output);
+	public function tags_(){
+		$crud = new Grocery_CRUD();
+		$crud->set_theme('bootstrap');
+		$crud->set_language('spanish-uy');
+		$crud->set_table('tags');
+		$crud->set_subject( 'TAGS');		
+		$output = $crud->render();
+		$this->_example_output($output);
 
 	}
 
@@ -165,61 +237,61 @@ class Examples extends CI_Controller {
 
 				$crud->set_primary_key('id','tags');
 				$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
-				$filtro_busqueda = $this->session->filtro_busqueda_query;
-				$filtro_columna = $this->session->filtro_col;
+				// $filtro_busqueda = $this->session->filtro_busqueda_query;
+				// $filtro_columna = $this->session->filtro_col;
 
 				
-				// FILTRO DE VISTA
-				// El filtro de vistas no tiene Filtro de Session
-				if (isset($filtro_vista)){
-					$where_filtro_vista;
-					foreach ($filtro_vista as $filtros ){
-						var_dump($filtros);
-						foreach($filtros as $filtro){ 
-							var_dump($filtro);
-							if (isset($where_filtro_vista))
-								$where_filtro_vista = $where_filtro_vista. " or tag_list LIKE '%{$filtro}%'";
-							else 
-								$where_filtro_vista ="tag_list LIKE '%{$filtro}%'";
-						}
+				// // FILTRO DE VISTA
+				// // El filtro de vistas no tiene Filtro de Session
+				// if (isset($filtro_vista)){
+				// 	$where_filtro_vista;
+				// 	foreach ($filtro_vista as $filtros ){
+				// 		var_dump($filtros);
+				// 		foreach($filtros as $filtro){ 
+				// 			var_dump($filtro);
+				// 			if (isset($where_filtro_vista))
+				// 				$where_filtro_vista = $where_filtro_vista. " or tag_list LIKE '%{$filtro}%'";
+				// 			else 
+				// 				$where_filtro_vista ="tag_list LIKE '%{$filtro}%'";
+				// 		}
 								
-					}
+				// 	}
 					
-					if (isset($filtro_columna)){
-						if (isset($filtro_busqueda))
-							$crud->where("{$filtro_columna} AND ({$filtro_busqueda}) AND ({$where_filtro_vista})");
-						else
-							$crud->where("{$filtro_columna} AND ({$where_filtro_vista})");
-					} else { 
-						if (isset($filtro_busqueda))
-							$crud->where("({$filtro_busqueda}) AND ({$where_filtro_vista})");
-						else
-							$crud->where("{$where_filtro_vista}");
-					}
+				// 	if (isset($filtro_columna)){
+				// 		if (isset($filtro_busqueda))
+				// 			$crud->where("{$filtro_columna} AND ({$filtro_busqueda}) AND ({$where_filtro_vista})");
+				// 		else
+				// 			$crud->where("{$filtro_columna} AND ({$where_filtro_vista})");
+				// 	} else { 
+				// 		if (isset($filtro_busqueda))
+				// 			$crud->where("({$filtro_busqueda}) AND ({$where_filtro_vista})");
+				// 		else
+				// 			$crud->where("{$where_filtro_vista}");
+				// 	}
 
 					
 
-				} else {
+				// } else {
 
-					// Filtros de SESSION-USUARIO
-					// Es neceario que la tabla tenga el conjunto listado de todos los tags como atributo "tag_list"
-					$filtro_session	= $this->session->filtro_session;
-					if (empty($filtro_session) !== true) {
-						foreach($filtro_session as $filtro){
-							$crud->or_where("tag_list LIKE '%{$filtro['nombre']}%'");
+				// 	// Filtros de SESSION-USUARIO
+				// 	// Es neceario que la tabla tenga el conjunto listado de todos los tags como atributo "tag_list"
+				// 	$filtro_session	= $this->session->filtro_session;
+				// 	if (empty($filtro_session) !== true) {
+				// 		foreach($filtro_session as $filtro){
+				// 			$crud->or_where("tag_list LIKE '%{$filtro['nombre']}%'");
 		
-						}
-					}
+				// 		}
+				// 	}
 
-					//Filtros de BUSQUEDA por TAG
-					//Es neceario que la tabla tenga el conjunto listado de todos los tags como atributo "tag_list"
+				// 	//Filtros de BUSQUEDA por TAG
+				// 	//Es neceario que la tabla tenga el conjunto listado de todos los tags como atributo "tag_list"
 					
-					if (isset($filtro_busqueda)){
+				// 	if (isset($filtro_busqueda)){
 
-							$crud->where("{$filtro_busqueda}");
-					}
+				// 			$crud->where("{$filtro_busqueda}");
+				// 	}
 
-				}
+				// }
 						
 				//Se guarda el nombre de la tabla materializada
 				$this->session->set_flashdata('table',"{$tabla_materializada}");
@@ -281,10 +353,21 @@ class Examples extends CI_Controller {
 				// $crud->callback_after_insert(array($this, 'action_befor_insert'));
 				// $crud->callback_before_update(array($this,'action_befor_update'));
 
+				$campos_extra = [
+					'mujeres_lideres' 	=> ['campos_extra' 	=> ['edicion']],
+					'lideres_gcba'		=> ['campos_extra'	=> ['hacienda','chisme','equivalente','gabinete']]
+				];
+
 				$fields = ['cuit','documento','apellido','nombre','genero','fecha_nacimiento','telefono_particular','mail','provincia','comuna','barrio_normalizado','regimen','tarea','ministerio','secr','ss','dg'];
-				if ($tabla_view == 'mujeres_lideres_view'){
-					array_push($fields, "edicion");
+				
+				if (isset($campos_extra[$tabla_materializada])){
+					foreach ($campos_extra[$tabla_materializada]['campos_extra'] as $campo_extra){
+						array_push($fields, $campo_extra);
+					}
 				}
+				// if ($tabla_view == 'mujeres_lideres_view'){
+				// 	array_push($fields, "edicion");
+				// }
 				array_push($fields,'tags');
 				$crud->columns($fields);
 
@@ -513,26 +596,6 @@ class Examples extends CI_Controller {
 
 	}
 
-	public function tags_(){
-		$crud = new Grocery_CRUD();
-		$crud->set_theme('bootstrap');
-		$crud->set_language('spanish-uy');
-		$crud->set_table('bada_celulares');
-		$crud->set_primary_key('cuit',"bada_celulares");
-
-		$crud->set_primary_key('id','tags');
-		$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
-
-		$crud->fields(['provincia_bada','tags']);
-
-		$crud->field_type('provincia_bada','hidden');
-
-		// $crud->fields(['provincia_bada','comuna','calle_bada','altura_bada','departamento_bada','celular_bada','mail','barrio_normalizado','celular_flota']);
-				
-		$output = $crud->render();
-		$this->_example_output($output);
-
-	}
 
 	public function editar_atributos($pk){
 		
@@ -623,27 +686,27 @@ class Examples extends CI_Controller {
 
 				$crud->set_primary_key('id','tags');
 				$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
-				$filtro_busqueda = $this->session->filtro_busqueda_query;
-				$filtro_columna = $this->session->filtro_col;
+				// $filtro_busqueda = $this->session->filtro_busqueda_query;
+				// $filtro_columna = $this->session->filtro_col;
 
 				
-				$filtro_session	= $this->session->filtro_session;
-				if (empty($filtro_session) !== true) {
-					foreach($filtro_session as $filtro){
-						$crud->or_where("tag_list LIKE '%{$filtro['nombre']}%'");
+				// $filtro_session	= $this->session->filtro_session;
+				// if (empty($filtro_session) !== true) {
+				// 	foreach($filtro_session as $filtro){
+				// 		$crud->or_where("tag_list LIKE '%{$filtro['nombre']}%'");
 	
-					}
-				}
-
-				//Filtros de BUSQUEDA por TAG
-				//Es neceario que la tabla tenga el conjunto listado de todos los tags como atributo "tag_list"
-					
-				if (isset($filtro_busqueda)){
-
-						$crud->where("{$filtro_busqueda}");
-				}
-
+				// 	}
 				// }
+
+				// //Filtros de BUSQUEDA por TAG
+				// //Es neceario que la tabla tenga el conjunto listado de todos los tags como atributo "tag_list"
+					
+				// if (isset($filtro_busqueda)){
+
+				// 		$crud->where("{$filtro_busqueda}");
+				// }
+
+				// // }
 						
 				//Se guarda el nombre de la tabla materializada
 				$this->session->set_flashdata('table',"{$tabla_materializada}");

@@ -23,8 +23,10 @@
 
                             <?php 
 				$tableList = ['mujeres' ,
-				'jovenes','lideres' ,
-				'secretaria','go' ,
+				'jovenes',
+                'lideres' ,
+				'secretaria',
+                'go' ,
 				'dg'];
 				
 				foreach ($tableList as $importData) {
