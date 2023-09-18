@@ -85,8 +85,8 @@
 
                     </a>
                     <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href='<?=site_url('usuario/datos_ingreso')?>'>Datos de acceso</a>
-                        </li>
+                        <!-- <li><a class="dropdown-item" href='<?=site_url('usuario/datos_ingreso')?>'>Datos de acceso</a>
+                        </li> -->
 
                         <?php if (('SU' === $this->session->tipo_usuario))  {  ?>
                         <li><a class="dropdown-item" href='<?php echo site_url('registrarUsuario')?>'>Registrar Nuevo

@@ -6,9 +6,9 @@
         <div class="card-body mt-2 mx-1">
             <div class="mt-2">
                 <div class="mt-2">
-                    <?php if (isset($error)){ ?>
+                    <?php if (isset($mensaje)){ ?>
                     <div class="alert alert-class">
-                        <?=$error?>
+                        <?=$mensaje?>
                     </div>
                     <?php } ?>
 
@@ -22,11 +22,7 @@
                         <select class="form-control" name='importData'>
 
                             <?php 
-				// $tableList = ['gabinete' ,
-				// 'jdg', 'mujeres' ,
-				// 'jovenes','lideres' ,
-				// 'secretaria','go' ,
-				// 'dg'];
+				
 				
 				foreach ($tableList as $importData) {
                     echo 
@@ -46,7 +42,7 @@
                 <div class="d-grid">
                     <input type="submit" name="submit" value="IMPORTAR" class="filter-btn" />
                 </div>
-                <!-- <input type="input" name="tabla" value="<?=strtolower($tabla)?>" hidden> -->
+              
             </form>
         </div>
     </div>

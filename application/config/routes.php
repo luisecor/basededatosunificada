@@ -81,9 +81,7 @@ $route['examples/tabla_mujeres_lideres/add'] = 'examples/probando_add';
 
 //Acceso a tablas
 $route['tabla/(:any)'] = 'examples/table/$1';
-//$route['tabla/(:any)/add'] = 'examples/nuevo_registro';
-//ajax_list
-// $route['tabla/(:any)/ajax_list'] = 'examples/table/$1/ajax_list';
+$route['tabla/tags/add'] = 'examples/tags_/add';
 $route['tabla/(:any)/add'] = 'examples/materialized_table/add';
 $route['tabla/(:any)/(:any)'] = 'examples/table/$1/$2';
 $route['tabla/(:any)/(:any)/(:any)'] = 'examples/table/$1/$2/$3';
@@ -111,6 +109,7 @@ $route['carga_masiva/guia_uso'] = 'cargaMasivaController/index';
 $route['carga_masiva/form_tabla'] = 'cargaMasivaController/form_tabla';
 $route['carga_masiva/form_tag'] = 'cargaMasivaController/form_tag';
 $route['carga_masiva/tabla/importarCSVaDB'] = 'cargaMasivaController/importarCSVaDB';
+$route['carga_masiva/tag/importarCSVaDB'] = 'cargaMasivaController/importarTAGCSVaDB';
 
 
 
@@ -130,6 +129,21 @@ $route['atributos_/(:any)/(:any)/(:any)'] = 'Examples/atributos_/$1/$2/$3';
 $route['tags_/(:any)'] = 'examples/tags_/$1';
 $route['tags_/(:any)/(:any)'] = 'examples/tags_/$1/$2';
 $route['tags_/(:any)/(:any)/(:any)'] = 'examples/tags_/$1/$2/$3';
+//TAGS Contacto
+$route['tag_contacto/(:any)'] = 'examples/tag_contacto/$1';
+$route['tag_contacto/(:any)/(:any)'] = 'examples/tag_contacto/$1/$2';
+$route['tag_contacto/(:any)/(:any)/(:any)'] = 'examples/tag_contacto/$1/$2/$3';
+$route['tag_contacto/(:any)/(:any)/(:any)/(:any)'] = 'examples/tag_contacto/$1/$2/$3/$4';
+
+
+//ANALITICS
+$route['analiticas/dashboard'] = 'examples/Analitica_dashboard';
+
+//MEta
+$route['meta/jovenes'] = 'metacontroller/jovenes';
+
+//meta/jovenes
+
 
 
 

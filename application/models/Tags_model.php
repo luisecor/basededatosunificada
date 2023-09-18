@@ -35,4 +35,12 @@ class Tags_model  extends CI_Model {
         return $query->result_array();
     }
 
+    public function get_tags_name(){
+        $query = $this->db
+                        ->select('nombre , id')
+                        ->get('tags')
+                        ;
+        return $query->result_array();
+    }
+
 }

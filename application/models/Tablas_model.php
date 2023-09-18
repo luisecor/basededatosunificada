@@ -27,4 +27,27 @@ class Tablas_model extends CI_Model {
         return isset($result);
     }
 
+    public function get($registro, $tabla){
+        $query = $this->db->query("SELECT * FROM {$tabla} WHERE cuit = '{$registro['cuit']}' ");
+        return $query->row();
+    }
+
+    public function update($registro , $tabla){
+        try {
+           $returnable = $this->db->update($tabla,$registro, array('cuit' => $registro['cuit']));
+        } catch (\Throwable $th) {
+           $returnable = $this->db->_error_message();
+        }
+       return $returnable ;
+    }
+
+    public function insert($registro, $tabla){
+        try {
+            $returnable = $this->db->insert($tabla, $registro);
+        } catch (\Throwable $th) {
+            $returnable = $this->db->_error_message();
+        }
+        return $returnable;
+    }
+
 }
