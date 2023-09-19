@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     user_name.onchange = function () { cambiar(user_name)};
 });
 
-document.querySelector("#cancelar").addEventListener('click',volver);
+document.querySelector("#cancelar") !=null ? addEventListener('click',volver): null;
 
 function volver(){
     location.assign(window.location.href.replace('/registrarUsuario','/examples'));

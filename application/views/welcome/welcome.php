@@ -4,20 +4,20 @@
         <img src="<?=base_url?>css/png/robot.png" alt='robotito' />
         <p class="mb-0">Hola, <strong><?php echo $this->session->user_name; ?></strong></p>
     </div>
-
+<?php  if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
+                        in_array('META', array_column($this->session->acceso,'nombre'))) { ?>
     <div class="d-flex flex-column justify-content-center">
         <p class=" mb-0">META:</p>
         <div class='d-flex flex-wrap justify-content-between'>
 
-            <!-- <?php  //if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
-                       // in_array('LIDERES GCBA', array_column($this->session->acceso,'nombre'))) { ?> -->
+            
             <div class='table-card shadow-box d-flex justify-content-center align-items-center my-3'>
                 <a href='<?php echo site_url('meta/jovenes')?>' class="d-flex align-items-center w-100 h-100">
                     <img src="<?=base_url?>css/svg/table.svg" alt="Icono de base de datos" class="ms-4 me-2">
                     Jovenes
                 </a>
             </div>
-            <!-- <?php //}; ?>    -->
+            
 
            
 
@@ -26,30 +26,31 @@
 
 
     </div>
+    <?php }; ?> 
 
     <div class="d-flex flex-column justify-content-center">
         <p class=" mb-0">Vistas:</p>
         <div class='d-flex flex-wrap justify-content-between'>
 
-            <!-- <?php  //if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
-                       // in_array('LIDERES GCBA', array_column($this->session->acceso,'nombre'))) { ?> -->
+            <?php  if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
+                        in_array('LIDERES GCBA', array_column($this->session->acceso,'nombre'))) { ?>
             <div class='table-card shadow-box d-flex justify-content-center align-items-center my-3'>
                 <a href='<?php echo site_url('tabla/lideres_gcba')?>' class="d-flex align-items-center w-100 h-100">
                     <img src="<?=base_url?>css/svg/table.svg" alt="Icono de base de datos" class="ms-4 me-2">
                     Lideres GCBA
                 </a>
             </div>
-            <!-- <?php //}; ?>    -->
+            <?php }; ?>  
 
-            <!-- <?php // if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
-                       // in_array('LIDERES GCBA', array_column($this->session->acceso,'nombre'))) { ?> -->
+            <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
+                        in_array('LIDERES GCBA', array_column($this->session->acceso,'nombre'))) { ?>
             <div class='table-card shadow-box d-flex justify-content-center align-items-center my-3'>
                 <a href='<?php echo site_url('tabla/lideres_gcba_hacienda')?>' class="d-flex align-items-center w-100 h-100">
                     <img src="<?=base_url?>css/svg/table.svg" alt="Icono de base de datos" class="ms-4 me-2">
                     Lideres GCBA - Hacienda
                 </a>
             </div>
-            <!-- <?php //}; ?>  -->
+            <?php }; ?>
 
             <div class='table-card shadow-box d-flex justify-content-center align-items-center my-3'>
                 <a href='<?php echo site_url('vista/mujeres_lideres')?>' class="d-flex align-items-center w-100 h-100">
@@ -79,6 +80,8 @@
 
     </div>
 
+    <?php  if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
+                        in_array('ANALITICAS', array_column($this->session->acceso,'nombre'))) { ?>
 
     <div class="d-flex flex-column justify-content-center">
         <p class=" mb-0">Analíticas:</p>
@@ -90,6 +93,8 @@
         </div>
     
     </div>
+
+    <?php }; ?>
 
     <div class="d-flex flex-column justify-content-center">
         <p class=" mb-0">Nuestros datos:</p>

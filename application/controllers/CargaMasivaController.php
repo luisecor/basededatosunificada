@@ -202,9 +202,9 @@ class CargaMasivaController extends CI_Controller {
     //             else
     //             {
     //                 // echo "NO HAY ERRORES";
-    //                 $valueSelected = $this->input->post(array('importData'));
+    //                 $valueSelected = $this->input->post(array('valueSeleted'));
     //                     $data['tabla'] = $valueSelected;
-    //                     // var_dump($valueSelected['importData']);
+    //                     // var_dump($valueSelected['valueSeleted']);
     //                     $data['input'] = $this->upload->data();
 
     //                     $file = fopen($data['input']['full_path'],"r");

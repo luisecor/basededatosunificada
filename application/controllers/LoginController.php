@@ -90,7 +90,7 @@ class LoginController extends CI_Controller {
     }
 
     public function registroVerificar(){
-        echo "HOLA";
+      //  echo "HOLA";
         $cuit = str_replace("-", "", $_REQUEST['cuit']);
         $user_name = $_REQUEST['user_name'];
         $password = password_hash( $_REQUEST['password'], PASSWORD_BCRYPT);

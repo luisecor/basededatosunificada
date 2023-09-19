@@ -51,7 +51,7 @@
                 minlength="8" maxlenght="10" required>
         </div>
         <button type="submit" class="btn btn-success">Registrar</button>
-        <button type="button" class="btn btn-secondary" onclick="window.location.href ='<?=site_url('ingreso')?>'" >Cancelar</button>
+        <button type="button" class="cancelar btn btn-secondary" onclick="window.location.href ='<?=site_url('ingreso')?>'" >Cancelar</button>
     </form>
 </div>
 </div>

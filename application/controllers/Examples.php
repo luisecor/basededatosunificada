@@ -288,6 +288,12 @@ class Examples extends CI_Controller {
 				
 				if (isset($vista_)){
 					$_SESSION['vista_'] = $vista_;
+					$crud
+						->unset_edit()
+						->unset_delete()
+						->unset_clone()
+						->unset_read()
+						->unset_add(); //-> Hay que modificar el route para estos
 				} else 
 					$_SESSION['vista_'] = null;
 				
@@ -296,7 +302,7 @@ class Examples extends CI_Controller {
 						->unset_delete()
 						->unset_clone()
 						->unset_read()
-						// ->unset_add(); //-> Hay que modificar el route para estos
+						//->unset_add(); //-> Hay que modificar el route para estos
 						;
 					
 				
