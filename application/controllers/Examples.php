@@ -888,8 +888,6 @@ class Examples extends CI_Controller {
 				$crud->set_table($tabla_materializada);
 				$crud->set_primary_key('cuit',$tabla_materializada);
 
-				
-				
 						
 				//Se guarda el nombre de la tabla materializada
 				$this->session->set_flashdata('table',$tabla_materializada);
@@ -902,6 +900,16 @@ class Examples extends CI_Controller {
 					array_push($fields,'edicion');
 				
 				$crud->fields($fields);
+
+				$crud->field_type('cuit','integer');
+
+				//Si es hacienda ---> hay que relevar el tipo de datos de cada 
+				$crud->field_type('hacienda','string');
+				$crud->field_type('chisme','string');
+				$crud->field_type('equivalente','string');
+				$crud->field_type('gabinete','string');
+				$crud->field_type('ministerio','string');
+				$crud->field_type('strong','string');
 								
 
 				
