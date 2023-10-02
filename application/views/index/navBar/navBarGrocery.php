@@ -111,47 +111,20 @@
 
                     </a>
                     <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
-                        
+                   
                         <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/guia_uso')?>'>Guia de
                                 uso</a></li>
+                <?php if (('SI' === $this->session->carga_masiva))  {  ?>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
+                        
                         <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/form_tabla')?>'>Importar datos</a>
                         </li>
                         <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/form_tag')?>'>Importar tags</a>
                         </li>
-
-                        <!-- 
-                        
-                        <li><a class="dropdown-item"
-                                href='<?php echo site_url('carga_masiva/tabla_secretarios')?>'>Secretarios</a></li>
-                        <li><a class="dropdown-item"
-                                href='<?php echo site_url('carga_masiva/tabla_SubSecretarios')?>'>SubSecretarios</a>
-                        </li>
-                        <li><a class="dropdown-item"
-                                href='<?php echo site_url('carga_masiva/tabla_ptesComunas')?>'>Ptes. Comunas</a></li>
-                        <li><a class="dropdown-item"
-                                href='<?php echo site_url('carga_masiva/tabla_Legisladores')?>'>Legisladores</a></li>
-                        <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/tabla_JDG')?>'>JDG</a></li>
-                        <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/tabla_DG')?>'>DG</a></li>
-                        <li><a class="dropdown-item"
-                                href='<?php echo site_url('excarga_masivaamples/tabla_GO')?>'>GO</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/sas_activos')?>'>SAS
-                                Activos</a></li>
-                        <li><a class="dropdown-item"
-                                href='<?php echo site_url('carga_masiva/tabla_mujeres_lideres')?>'>Mujeres Lideres</a>
-                        </li>
-                        <li><a class="dropdown-item"
-                                href='<?php echo site_url('carga_masiva/bada_celulares')?>'>Usuarios Bada</a></li>
-                        <li><a class="dropdown-item"
-                                href='<?php echo site_url('carga_masiva/tabla_Afiliados')?>'>Afiliados</a></li>
-                        <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/tabla_tags')?>'>TAGS</a>
-                        </li>
-                         -->
+                
+                   <?php } ?>
 
                     </ul>
 

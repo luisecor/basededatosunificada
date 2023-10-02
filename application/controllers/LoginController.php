@@ -46,7 +46,7 @@ class LoginController extends CI_Controller {
                 ));
                
                 $this->logs_model->insert_log_ingreso($result->cuit, $result->user_name);
-                return $this->ingreso();  
+                return redirect('/ingreso');  
             } 
         $data = [ 'error' => 'Verifique usuario, contraseña y vuelva a intentar'];
         $this->load->view('index/header');
@@ -128,15 +128,17 @@ class LoginController extends CI_Controller {
             $data['usuario'] = $usuario;
             $data['tipo'] = $tipo;
             $this->load->view('index/header');
-            $this->load->view('index/navBar/navBar');
+            $this->load->view('index/navBar/navBarGrocery');
             $this->load->view('registro/nuevo_usuario',$data);
             $this->load->view('index/footer');
         } else {
             // $result = $this->login_model->insert_new_user($cuit , $user_name, $password, $acceso_tabla, $rol);
             $result = $this->login_model->insert_new_user($cuit , $user_name, $password);
             if ($result > 0){
+                $data['mensaje'] = 'Usuario registrado correctamente';
                 $this->load->view('index/header');
                 $this->load->view('index/navBar/navBarGrocery');
+                $this->load->view('registro/nuevo_usuario',$data);
                 $this->load->view('index/footer');
 
             }
@@ -145,7 +147,7 @@ class LoginController extends CI_Controller {
                 array_push($error, "Hubo un error al registrar usuario. Por favor vuelva a intentarlo mas tarde.");
                 array_push($tipo, 3);
                 $this->load->view('index/header');
-                $this->load->view('index/navBar/navBar');
+                $this->load->view('index/navBar/navBarGrocery');
                 $this->load->view('registro/nuevo_usuario',$data);
                 $this->load->view('index/footer');
 

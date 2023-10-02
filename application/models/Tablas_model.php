@@ -4,9 +4,9 @@ class Tablas_model extends CI_Model {
 
 
 
-    public function get_table($table){
+    public function get_table_name($table){
         
-        $this->db   ->select('nombre')
+        $this->db   ->select('nombre_tabla')
                     ->where('nombre',$table);
         $query = $this->db->get("tablas");
         return $query->result();
@@ -21,10 +21,10 @@ class Tablas_model extends CI_Model {
 
     public function existe_tabla_nombre($nombre){        
         $this->db   ->select('nombre_tabla')
-                    ->where('nombre_tabla',$nombre);
+                    ->where('nombre',$nombre);
         $query = $this->db->get("tablas");
         $result = $query->result_array();
-        return isset($result);
+        return empty( !$result);
     }
 
     public function get($registro, $tabla){
@@ -49,5 +49,6 @@ class Tablas_model extends CI_Model {
         }
         return $returnable;
     }
+
 
 }

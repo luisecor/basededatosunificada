@@ -74,6 +74,7 @@ $route['usuarios/session/ajax_list'] = 'sessionFiltroController/cuit_tag_filtro/
 $route['usuarios/session/edit/(:num)'] = 'sessionFiltroController/cuit_tag_filtro/edit/$id';
 $route['usuarios/session/update_validation/(:num)'] = 'sessionFiltroController/cuit_tag_filtro/update_validation/$id';
 $route['usuarios/session/update/(:num)'] = 'sessionFiltroController/cuit_tag_filtro/update/$id';
+$route['session/delete_multiple/(:any)'] = 'sessionFiltroController/cuit_tag_filtro/delete_multiple/$id';
 $route['usuarios/session/(:any)/(:any)'] = 'sessionFiltroController/cuit_tag_filtro/$1/$2';
 $route['usuarios/session/(:any)/(:any)/(:any)'] = 'sessionFiltroController/cuit_tag_filtro/$1/$2/$3';
 
@@ -83,6 +84,7 @@ $route['examples/tabla_mujeres_lideres/add'] = 'examples/probando_add';
 $route['tabla/(:any)'] = 'examples/table/$1';
 $route['tabla/tags/add'] = 'examples/tags_/add';
 $route['tabla/(:any)/add'] = 'examples/materialized_table/add';
+$route['tabla/(:any)/insert'] = 'examples/materialized_table/insert';
 $route['tabla/(:any)/(:any)'] = 'examples/table/$1/$2';
 $route['tabla/(:any)/(:any)/(:any)'] = 'examples/table/$1/$2/$3';
 
@@ -104,7 +106,7 @@ $route['buscar/(:any)/(:any)/(:any)'] = 'filtrosController/buscar/$1/$2/$3';
 
 //CARGA MASIVA
 // 'carga_masiva/tabla/importarCSVaDB'
-$route['carga_masiva/tags'] = 'cargaMasivaController/tags_main';
+// $route['carga_masiva/tags'] = 'cargaMasivaController/tags_main';
 $route['carga_masiva/guia_uso'] = 'cargaMasivaController/index';
 $route['carga_masiva/form_tabla'] = 'cargaMasivaController/form_tabla';
 $route['carga_masiva/form_tag'] = 'cargaMasivaController/form_tag';
@@ -138,6 +140,10 @@ $route['tag_contacto/(:any)/(:any)/(:any)/(:any)'] = 'examples/tag_contacto/$1/$
 
 //ANALITICS
 $route['analiticas/dashboard'] = 'examples/Analitica_dashboard';
+$route['analiticas/dashboard/(:any)'] = 'examples/Analitica_dashboard/$1';
+$route['analiticas/dashboard/(:any)/(:any)'] = 'examples/Analitica_dashboard/$1/$2';
+$route['analiticas/dashboard/(:any)/(:any)/(:any)'] = 'examples/Analitica_dashboard/$1/$2/$3';
+$route['analiticas/dashboard/(:any)/(:any)/(:any)/(:any)'] = 'examples/Analitica_dashboard/$1/$2/$3/$4';
 
 //MEta
 $route['meta/jovenes'] = 'metacontroller/jovenes';

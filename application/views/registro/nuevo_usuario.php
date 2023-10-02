@@ -19,17 +19,33 @@
     </div>
     <form action="<?=base_url('registroVerificar')?>" method="post" id="formRegistro" class="needs-validation">
         <?php if(isset($error)) { 
-    echo 
-    '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-    
-    <ul class="list-group">';
+                echo 
+                '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                
+                <ul class="list-group">';
 
-    foreach ($error as $err) 
-    echo  '<li class="list-group-item list-group-item-danger"> <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>' . $err . "</li>";
-    echo '
-    </ul>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>'; } ?>
+                foreach ($error as $err) 
+                echo  '<li class="list-group-item list-group-item-danger"> <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>' . $err . "</li>";
+                echo '
+                </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>'; 
+        } ?>
+        <?php if(isset($mensaje)) { 
+                echo 
+                '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                
+                <ul class="list-group">';
+
+                echo  '<li class="list-group-item list-group-item-success"> 
+                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="success:">
+                <use xlink:href="#exclamation-triangle-fill"/></svg>' . $mensaje . 
+                "</li>";
+                echo '
+                </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>'; 
+        } ?>
         <div class="mb-3">
             <label for="cuit_username" class="form-label">CUIT</label>
             <input type="text" placeholder="Ingrese nuevo CUIT" name="cuit"

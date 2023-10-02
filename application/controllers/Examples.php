@@ -3,6 +3,7 @@
 require_once "UsuariosTrait.php";
 require_once "LoginController.php";
 
+$tags_to_delet = [null];
 
 class Examples extends CI_Controller {
 
@@ -29,17 +30,21 @@ class Examples extends CI_Controller {
 		$vistas_disponibles= [
 			"mujeres_lideres" 	=> ['tabla_vista' 			=> 'mujeres_lideres_view',
 									'tabla_materializada'	=> 'mujeres_lideres',
-									'titulo' 				=> 'Mujeres Lideres'
+									'titulo' 				=> 'Mujeres Lideres',
+									'tags'					=> ['MUJERES LIDERES'] 
+									//SE UTILZA PARA ELIMINER DE LA VISTA
 									]
 			,
-			"jovenes"			=> ['tabla_vista'			=> 'jovenes_view',
+			"jovenes"			=> ['tabla_vista'			=> 'jovenes_bada_celulares_view',
 									'tabla_materializada'	=> 'sas_activo',
-									'titulo'				=> 'Jovenes'
+									'titulo'				=> 'Jovenes',
+									'tags'					=> ['SUB 30','SUB 33']
 									]
 			,
 			"coordinacion"		=> ['tabla_vista' 			=> 'coordinacion_planemiento_view',
 									'tabla_materializada'	=> 'sas_activo',
-									'titulo' 				=> 'Coordinacion y Planeamiento'
+									'titulo' 				=> 'Coordinacion y Planeamiento',
+									'tags'					=> null
 									]
 		];
 
@@ -58,7 +63,8 @@ class Examples extends CI_Controller {
 											/* subject */		$vistas_disponibles[$tabla]['titulo'],
 											/* titulo */ 		$vistas_disponibles[$tabla]['titulo'],
 											/* filtro_vista */	null,
-											/* de dnd venis */	$tabla);
+											/* de dnd venis */	$tabla,
+											/* tgs de vista */  $vistas_disponibles[$tabla]['tags']);
 				} else
 				echo "No existe vista";
 					
@@ -84,8 +90,7 @@ class Examples extends CI_Controller {
 			
 	}
 
-	public function index()
-	{
+	public function index()	{
 		$this->_example_output((object)array('output' => '' , 'js_files' => array() , 'css_files' => array()));	
 	}
 
@@ -106,74 +111,90 @@ class Examples extends CI_Controller {
 			'gabinete' 		=> [	'base' 		=> 'gabinete',
 									'vista' 	=> 'gabinete_view',
 									'titulo'	=> 'Gabinete',
-									'subject'	=> 'Gabinete']
+									'subject'	=> 'Gabinete',
+									'tags'					=> ['GABINETE']]
 			,
 			'secretarios' 	=> [	'base' 		=> 'secretarios',
 									'vista' 	=> 'secretarios_view',
 									'titulo'	=> 'Secretarios',
-									'subject'	=> 'Secretario']
+									'subject'	=> 'Secretario',
+									'tags'					=> ['S']]
 			,
 			'subsecretarios' => [	'base' 		=> 'sub_secretarios',
 									'vista' 	=> 'sub_secretarios_view',
 									'titulo'	=> 'Sub Secretarios',
-									'subject'	=> 'Sub Secretario']
+									'subject'	=> 'Sub Secretario',
+									'tags'					=> ['SS']]
 			,
 			'ptes._comunas' => [	'base' 		=> 'ptes_comunas',
 									'vista' 	=> 'ptes_comunas_view',
 									'titulo'	=> 'Ptes. Comunas',
-									'subject'	=> 'Pte. comuna']
+									'subject'	=> 'Pte. comuna',
+									'tags'					=> ['PTES. COMUNAS']]
 							,
 			'legisladores' 	=> [	'base' 		=> 'legisladores',
 									'vista' 	=> 'legisladores_view',
 									'titulo'	=> 'Legisladores',
-									'subject'	=> 'Legislador']
+									'subject'	=> 'Legislador',
+									'tags'					=> ['LEGISLADORES']]
 							,
 			'jdg'			 => [	'base' 		=> 'jdg',
 									'vista' 	=> 'jdg_view',
 									'titulo'	=> 'JDG',
-									'subject'	=> 'JDG']
+									'subject'	=> 'JDG',
+									'tags'					=> ['JDG']]
 							,
 			'dg' 			=> [	'base' 		=> 'dg',
 									'vista' 	=> 'dg_view',
 									'titulo'	=> 'DG',
-									'subject'	=> 'DG']
+									'subject'	=> 'DG',
+									'tags'					=> ['DG']]
 							,
 			'go' 			=> [	'base' 		=> 'go',
 									'vista' 	=> 'go_view',
 									'titulo'	=> 'GO',
-									'subject'	=> 'GO']
+									'subject'	=> 'GO',
+									'tags'					=> ['GO']]
 							,
 			'sas_activo' 	=> [	'base' 		=> 'sas_activo',
 									'vista' 	=> 'sas_activo_view',
 									'titulo'	=> 'SAS Activos',
-									'subject'	=> 'Personal']
+									'subject'	=> 'Personal',
+									'tags'					=> null]
 							,
 			'mujeres_lideres' => [	'base' 		=> 'mujeres_lideres',
 									'vista' 	=> 'mujeres_lideres_view',
 									'titulo'	=> 'Mujeres Lideres',
-									'subject'	=> 'Mujer Lider']
+									'subject'	=> 'Mujer Lider',
+									'tags'		=> ['MUJERES LIDERES'] ]
+									//Se utiliza para agregar el tag cuando se crea]								]
+									
 							,
 			'bada_celulares' => [	'base' 		=> 'bada_celulares',
 									'vista' 	=> 'bada_celulares_view',
 									'titulo'	=> 'Usuarios Bada',
-									'subject'	=> 'Usuario Bada']
+									'subject'	=> 'Usuario Bada',
+									'tags'					=> null]
 							,
 			'lideres_gcba' => 	[	'base' 		=> 'lideres_gcba',
 									'vista' 	=> 'lideres_gcba_view',
 									'titulo'	=> 'Lideres GCBA',
-									'subject'	=> 'Lideres GCBA']						
+									'subject'	=> 'Lideres GCBA',
+									'tags'					=> null]						
 							,
 			'lideres_gcba_hacienda' 
 							=> 	[	'base' 		=> 'lideres_gcba',
 									'vista' 	=> 'lideres_gcba_hacienda_view',
 									'titulo'	=> 'Lideres GCBA - Hacienda',
-									'subject'	=> 'Lideres GCBA - Hacienda']
+									'subject'	=> 'Lideres GCBA - Hacienda',
+									'tags'					=> null]
 									,
 			'secretarias_particular' 
 							=> 	[	'base' 		=> 'secretarias_particular',
 									'vista' 	=> 'secretarias_particular_view',
 									'titulo'	=> 'Secretarias Particular',
-									'subject'	=> 'Secretarias Particular']
+									'subject'	=> 'Secretarias Particular',
+									'tags'					=> null]
 								
 			// lideres_gcba_hacienda
 		];
@@ -186,11 +207,16 @@ class Examples extends CI_Controller {
 
 			// var_dump($tablas_activas[$tabla]['vista_mat']);
 			if (isset($tablas_activas[$tabla])){
-				$this->encapsulamiento_($tablas_activas[$tabla]['vista'],
-										$tablas_activas[$tabla]['base'],
-										$tablas_activas[$tabla]['subject'],
-										$tablas_activas[$tabla]['titulo']);
+				$this->encapsulamiento_($tablas_activas[$tabla]['vista'],  	//1
+										$tablas_activas[$tabla]['base'],	//2
+										$tablas_activas[$tabla]['subject'],	//3
+										$tablas_activas[$tabla]['titulo'],	//4
+										null,								//5
+										null,								//6
+										$tablas_activas[$tabla]['tags']);	//7
+										
 			}
+			
 
 			else {
 				
@@ -268,8 +294,9 @@ class Examples extends CI_Controller {
 	}
 
 
-
-	public function encapsulamiento_($tabla_view,$tabla_materializada,$subject,$titulo,$filtro_vista = null, $vista_ = null){
+									// 1			2					3			4	5						6				7
+	public function encapsulamiento_($tabla_view,$tabla_materializada,$subject,$titulo,$filtro_vista = null, $vista_ = null, $tags = null){
+			
 		$crud = new grocery_CRUD;
 		
 				$crud->set_theme('bootstrap');
@@ -285,6 +312,9 @@ class Examples extends CI_Controller {
 				//Se guarda el nombre de la tabla materializada
 				$this->session->set_flashdata('table',"{$tabla_materializada}");
 				$_SESSION['tabla'] = "{$tabla_materializada}";
+			
+
+				$this->session->set_flashdata('tags_to_delete',$tags);
 				
 				if (isset($vista_)){
 					$_SESSION['vista_'] = $vista_;
@@ -293,7 +323,9 @@ class Examples extends CI_Controller {
 						->unset_delete()
 						->unset_clone()
 						->unset_read()
-						->unset_add(); //-> Hay que modificar el route para estos
+						->unset_add(); 
+						
+						
 				} else 
 					$_SESSION['vista_'] = null;
 				
@@ -302,7 +334,7 @@ class Examples extends CI_Controller {
 						->unset_delete()
 						->unset_clone()
 						->unset_read()
-						//->unset_add(); //-> Hay que modificar el route para estos
+						//->unset_add(); 
 						;
 					
 				
@@ -383,6 +415,25 @@ class Examples extends CI_Controller {
 				// --------
 				$this->_example_output($output);
 
+	}
+
+	public function crud_to_delete_without_tags(){
+		//Se va a utilizar solo para eliminar los registros de las tablas materializadas, para que no se eliminen todos los tags asignados
+
+		$tabla = $_SESSION['tabla'];
+
+		$crud = new grocery_CRUD;
+		$crud->set_theme('bootstrap');
+		$crud->set_language('spanish-uy');
+		$crud->set_table($tabla);
+		$crud->set_primary_key('cuit',$tabla);
+
+		$crud->callback_before_delete(array($this,'action_befor_delete'));
+		$crud->callback_after_insert(array($this, 'action_befor_insert'));
+		$crud->callback_before_update(array($this,'action_befor_update'));
+
+		$output = $crud->render();
+		$this->_example_output($output);
 	}
 
 	protected function acceso_denegado(){
@@ -583,17 +634,17 @@ class Examples extends CI_Controller {
 		$query = $this->db->query('SELECT cuit FROM bada_celulares WHERE cuit = '. $pk .'');
 
 		//Si no existe el registro en bada_celulares lo crea y escribe sobre las columnas duplicadas
-		if (!$query->result()){
-			$this->db->query("INSERT INTO `bada_celulares` (`id`, `fecha`, `celular_bada`, `celular_flota`, 
-			`mail`, `ok`, `cuit`, `calle_bada`, `altura_bada`, `departamento_bada`, `piso_bada`, `provincia_bada`,
-				`edificio_laboral_bada`, `rol_bada`, `barrio`, `localidad`, `seccion`, `barrio_normalizado`, 
-				`lat`, `lon`, `comuna`, `created_at`, `updated_at`, `intereses`, `notificaciones`, `provincia_bada_bu`, 
-				`comuna_bu`, `calle_bada_bu`, `altura_bada_bu`, `departamento_bada_bu`, `celular_bada_bu`, `mail_bu`, 
-				`barrio_normalizado_bu`, `celular_flota_bu`) 
-				VALUES (NULL, CURRENT_TIMESTAMP, '', NULL, '', NULL, '{$pk}', NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-				NULL, NULL, NULL, NULL, NULL, NULL, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL, NULL, NULL, NULL,
-				NULL, NULL, NULL, NULL, NULL, NULL, NULL) ");
-		}
+		// if (!$query->result()){
+		// 	$this->db->query("INSERT INTO `bada_celulares` (`id`, `fecha`, `celular_bada`, `celular_flota`, 
+		// 	`mail`, `ok`, `cuit`, `calle_bada`, `altura_bada`, `departamento_bada`, `piso_bada`, `provincia_bada`,
+		// 		`edificio_laboral_bada`, `rol_bada`, `barrio`, `localidad`, `seccion`, `barrio_normalizado`, 
+		// 		`lat`, `lon`, `comuna`, `created_at`, `updated_at`, `intereses`, `notificaciones`, `provincia_bada_bu`, 
+		// 		`comuna_bu`, `calle_bada_bu`, `altura_bada_bu`, `departamento_bada_bu`, `celular_bada_bu`, `mail_bu`, 
+		// 		`barrio_normalizado_bu`, `celular_flota_bu`) 
+		// 		VALUES (NULL, CURRENT_TIMESTAMP, '', NULL, '', NULL, '{$pk}', NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+		// 		NULL, NULL, NULL, NULL, NULL, NULL, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL, NULL, NULL, NULL,
+		// 		NULL, NULL, NULL, NULL, NULL, NULL, NULL) ");
+		// }
 
 		
 
@@ -606,10 +657,14 @@ class Examples extends CI_Controller {
 
 	}
 
-	public function tag_contacto($pk) {
+	public function tag_contacto($pk = null) {
 		$crud = new grocery_CRUD;
 		$crud->set_theme('bootstrap');
 		$crud->set_language('spanish-uy');
+		// $crud->set_table('tags');
+
+		// $crud->set_relation_n_n('tagsss','cuit_tag','bada_celulares','id_tag','cuit','cuit');
+		
 		$crud->set_table('bada_celulares');
 
 		$crud->set_primary_key('cuit','bada_celulares');
@@ -617,21 +672,16 @@ class Examples extends CI_Controller {
 		$crud->set_primary_key('id','tags');
 		$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
 
-		$crud->unset_edit_fields('cuit');
-		$crud->edit_fields('cuit','tags');
-		$crud->unset_edit_fields('cuit'); 
+		 $crud->change_field_type('cuit','hidden');
+
+		// $crud->unset_edit_fields('cuit');
+		 $crud->edit_fields('cuit','tags');
+		//	$crud->unset_edit_fields('cuit'); 
 		$output = $crud->render();
 		$this->_example_output($output);
 	}
 
-
-	public function editar_atributos($pk){
-		
-		//Es necesario traer el nombre de la tabla de la cual venis para indicarle a cual tabla debe ir
-		$table = $this->session->flashdata('table');	
-		$this->session->set_flashdata('table',"{$table}");
-		
-
+	public function tiene_acceso_a_tag($pk){
 		// Obtenemos el CUIT para consultar los accesos de usuario, tablas, tags que puede modificar
 		// Y sobre que registros puede accionar
 		$cuit_usuario = $this->session->cuit;
@@ -645,7 +695,22 @@ class Examples extends CI_Controller {
 				if ($tag_reg == $acc_us)
 					$tiene_acceso = true;
 
-		if ($tiene_acceso) 
+		
+		return $tiene_acceso;
+
+
+	}
+
+
+	public function editar_atributos($pk){
+		
+		//Es necesario traer el nombre de la tabla de la cual venis para indicarle a cual tabla debe ir
+		$table = $this->session->flashdata('table');	
+		$this->session->set_flashdata('table',"{$table}");
+		
+
+
+		if ($this->tiene_acceso_a_tag($pk)) 
 			redirect("atributos_/edit/{$pk}");
 		else $this->sin_acceso_tag_principal();
 
@@ -703,8 +768,19 @@ class Examples extends CI_Controller {
 	}
 
 	public function materialized_table(){
+
+		$tags = $this->session->flashdata('tags_to_delete');
+		$this->session->set_flashdata('tags_to_delete',$tags);
+
 		$tabla_materializada = $this->session->flashdata('table');	
 		$this->session->set_flashdata('table',"{$tabla_materializada}");
+
+		//Se guarda el nombre de la tabla materializada
+		$this->session->set_flashdata('table',"{$tabla_materializada}");
+		$_SESSION['tabla'] = "{$tabla_materializada}";
+
+
+	
 		$crud = new grocery_CRUD;
 				$crud->set_theme('bootstrap');
 				$crud->set_language('spanish-uy');
@@ -714,36 +790,15 @@ class Examples extends CI_Controller {
 
 				$crud->set_primary_key('id','tags');
 				$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
-				// $filtro_busqueda = $this->session->filtro_busqueda_query;
-				// $filtro_columna = $this->session->filtro_col;
 
 				
-				// $filtro_session	= $this->session->filtro_session;
-				// if (empty($filtro_session) !== true) {
-				// 	foreach($filtro_session as $filtro){
-				// 		$crud->or_where("tag_list LIKE '%{$filtro['nombre']}%'");
-	
-				// 	}
-				// }
 
-				// //Filtros de BUSQUEDA por TAG
-				// //Es neceario que la tabla tenga el conjunto listado de todos los tags como atributo "tag_list"
-					
-				// if (isset($filtro_busqueda)){
-
-				// 		$crud->where("{$filtro_busqueda}");
-				// }
-
-				// // }
-						
-				//Se guarda el nombre de la tabla materializada
-				$this->session->set_flashdata('table',"{$tabla_materializada}");
-				$_SESSION['tabla'] = "{$tabla_materializada}";
+				if ($tabla_materializada == 'sas_activo'){
+					$crud->unset_add_fields('tags','virtual','virtual2','virtual3','virtual4');
+				}
+				else
 				
-				if (isset($vista_)){
-					$_SESSION['vista_'] = $vista_;
-				} else 
-					$_SESSION['vista_'] = null;
+				$crud->unset_add_fields('tags');			
 				
 				$crud
 						// ->unset_edit()
@@ -781,10 +836,16 @@ class Examples extends CI_Controller {
 						;
 
 				}
+
+				
 				
 				// $crud->callback_before_delete(array($this,'action_befor_delete'));
+
+				
+				
 				$crud->callback_after_insert(array($this, 'action_befor_insert'));
 				$crud->callback_before_update(array($this,'action_befor_update'));
+				
 
 				$fields = ['cuit','documento','apellido','nombre','genero','fecha_nacimiento','telefono_particular','mail','provincia','comuna','barrio_normalizado','regimen','tarea','ministerio','secr'];
 				if ($tabla_materializada == 'mujeres_lideres_view'){
@@ -793,6 +854,16 @@ class Examples extends CI_Controller {
 				array_push($fields,'tags');
 				
 				$crud->columns($fields);
+				$crud->field_type('cuit','integer');
+
+				//Si es hacienda ---> hay que relevar el tipo de datos de cada 
+					$crud->field_type('hacienda','string');
+					$crud->field_type('chisme','string');
+					$crud->field_type('equivalente','string');
+					$crud->field_type('gabinete','string');
+					$crud->field_type('ministerio','string');
+					$crud->field_type('strong','string');
+				
 								
 				$crud	->display_as('secr', 'SECR')
 						->display_as('ss', 'SS')
@@ -809,7 +880,7 @@ class Examples extends CI_Controller {
 		
 		$tabla_materializada = $this->session->flashdata('table');		
 		$this->session->set_flashdata('table',"{$tabla_materializada}");
-		var_dump($tabla_materializada);
+		
 		
 		$crud = new grocery_CRUD;
 				$crud->set_theme('bootstrap');
@@ -838,19 +909,85 @@ class Examples extends CI_Controller {
 				$this->_example_output($output);
 	}
 
-	public function eliminar($primary_key){
+	
+	public function eliminar($pk){
 		if (!$this->verifySession()){
 			return $this->debe_iniciar_sesion();
 		}
 		else {	
-			$table = $this->session->flashdata('table');	
+
+			if ($this->tiene_acceso_a_tag($pk)) {
+				$table = $this->session->flashdata('table');	
 			$this->session->set_flashdata('table',"{$table}");
 			// $this->materialized_table($table,$table,$table);
-			$variable = file_get_contents("materialized_table/delete/{$primary_key}" , true);
-			var_dump(site_url($variable));
+			//$variable = file_get_contents("materialized_table/delete/{$primary_key}" , true);
+			//var_dump(site_url($variable));
+			$tags = $this->session->flashdata('tags_to_delete');
+
+			//Tengo que saber si es vista, solo elimino los TAGS
+			//Si es tabla materializada -> Eliminar CUIT de la tabla [Materializada y TAGS]
+			if (isset( $_SESSION['vista_'])){
+				///ES VISTA
+				if (!is_null($tags)){
+					//echo "aca hay que seguir y enviar a funcion para sacar los tags del cuit" ;
+					$this->sacar_tags_del_cuit($pk,$tags);
+					redirect('/ingreso');
+
+				}
+				else
+					{ //echo "NO HAY TAGS";
+						redirect('/ingreso'); 
+					};
+
+			}
+			else{
+				///ES MATERIALIZADA
+				//$this->eliminar_cuit_de_tags($pk);
+				(!is_null($tags)) ? $this->sacar_tags_del_cuit($pk,$tags) : false;
+				//Tengo que eliminar el registrod e la materializada
+				//Tengo que eliminar solo el tag que le corresponde a la materializada --> Es el script que tengo en el echo
+				echo "<script>
+					
+				async function getData() {
+					let url  = 'http://' + window.location.hostname + '/codeigniter3/index.php/ingreso'
+					let respuesta = await fetch('http://wamp-viejo/codeigniter3/index.php/examples/crud_to_delete_without_tags/delete/{$pk}')
+					let resp = await respuesta.json()
+					if (resp.success == true) {
+						console.log('fue true')
+						window.location.href  = url }
+					else {
+					 console.log('falso')
+				
+					};
+					
+				}
+				document.addEventListener('DOMContentLoaded', function(event) {
+					getData();
+					
+						
+				})
+					
+				</script>";
+
+			}
+
+			}
+			
+		else $this->sin_acceso_tag_principal();
+			
+
+
+			
 		}	
 	}
 
+	public function sacar_tags_del_cuit($cuit,$tags){
+		$this->tags_model->delete_tags_from_cuit($cuit,$tags);
+	}
+
+	public function eliminar_cuit_de_tags($cuit){
+		$this->tags_model->delete_cuit_from_tags($cuit);
+	}
 	
 
 	public function tabla_observaciones(){
@@ -1414,22 +1551,50 @@ class Examples extends CI_Controller {
 
 		$this->session->set_flashdata('vengo','true');
 
-		$query = $this->db->query('SELECT cuit FROM bada_celulares WHERE cuit = '. $id .'');
+			//Es necesario traer el nombre de la tabla de la cual venis para indicarle a cual tabla debe ir
+			$table = $this->session->flashdata('table');	
+			$this->session->set_flashdata('table',"{$table}");
+			
+	
+			// Obtenemos el CUIT para consultar los accesos de usuario, tablas, tags que puede modificar
+			// Y sobre que registros puede accionar
+			$cuit_usuario = $this->session->cuit;
+			$accesos_usuario = $this->accionar_tag_mogel->get_actioned_tags($cuit_usuario);
+			$tags_registro = $this->tags_model->get_tags_by_cuit($id);
+	
+			// Verificar si alguno de los tags son los principales del usuario
+			$tiene_acceso = false;
+			foreach($tags_registro as $tag_reg)
+				foreach ($accesos_usuario as $acc_us)
+					if ($tag_reg == $acc_us)
+						$tiene_acceso = true;
+	
+			$query = $this->db->query('SELECT cuit FROM bada_celulares WHERE cuit = '. $id .'');
+	
+			//Si no existe el registro en bada_celulares lo crea y escribe sobre las columnas duplicadas
+			if (!$query->result()){
+				$this->db->query("INSERT INTO `bada_celulares` (`id`, `fecha`, `celular_bada`, `celular_flota`, 
+				`mail`, `ok`, `cuit`, `calle_bada`, `altura_bada`, `departamento_bada`, `piso_bada`, `provincia_bada`,
+					`edificio_laboral_bada`, `rol_bada`, `barrio`, `localidad`, `seccion`, `barrio_normalizado`, 
+					`lat`, `lon`, `comuna`, `created_at`, `updated_at`, `intereses`, `notificaciones`, `provincia_bada_bu`, 
+					`comuna_bu`, `calle_bada_bu`, `altura_bada_bu`, `departamento_bada_bu`, `celular_bada_bu`, `mail_bu`, 
+					`barrio_normalizado_bu`, `celular_flota_bu`) 
+					VALUES (NULL, CURRENT_TIMESTAMP, '', NULL, '', NULL, '{$id}', NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+					NULL, NULL, NULL, NULL, NULL, NULL, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL, NULL, NULL, NULL,
+					NULL, NULL, NULL, NULL, NULL, NULL, NULL) ");
+			}
+	
+			
+			if ($tiene_acceso) {
+				redirect('datos_personales/edit/'.$id.'');
+			}
+			
+				
+			else $this->sin_acceso_tag_principal();
 
-		//Si no existe el registro en bada_celulares lo crea y escribe sobre las columnas duplicadas
-		if (!$query->result()){
-			$this->db->query("INSERT INTO `bada_celulares` (`id`, `fecha`, `celular_bada`, `celular_flota`, 
-			`mail`, `ok`, `cuit`, `calle_bada`, `altura_bada`, `departamento_bada`, `piso_bada`, `provincia_bada`,
-			 `edificio_laboral_bada`, `rol_bada`, `barrio`, `localidad`, `seccion`, `barrio_normalizado`, 
-			 `lat`, `lon`, `comuna`, `created_at`, `updated_at`, `intereses`, `notificaciones`, `provincia_bada_bu`, 
-			 `comuna_bu`, `calle_bada_bu`, `altura_bada_bu`, `departamento_bada_bu`, `celular_bada_bu`, `mail_bu`, 
-			 `barrio_normalizado_bu`, `celular_flota_bu`) 
-			 VALUES (NULL, CURRENT_TIMESTAMP, '', NULL, '', NULL, '{$id}', NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-			  NULL, NULL, NULL, NULL, NULL, NULL, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL, NULL, NULL, NULL,
-			   NULL, NULL, NULL, NULL, NULL, NULL, NULL) ");
-		}
+		
 
-		redirect('datos_personales/edit/'.$id.'');;
+		
 
 	}
 
@@ -1497,7 +1662,7 @@ class Examples extends CI_Controller {
 
 
 
-	// public function tabla_sas_activos(){
+// public function tabla_sas_activos(){
 
 	// 	if (!$this->verifySession()){
 	// 		return $this->debe_iniciar_sesion();
@@ -1597,7 +1762,8 @@ class Examples extends CI_Controller {
 
 
 
-	public function action_befor_update($post_array, $primary_key){
+
+public function action_befor_update($post_array, $primary_key){
 		$data = [
 			'cuit_usuario' => $this->session->cuit,
 			'accion' => 'UPDATE'
@@ -1605,12 +1771,18 @@ class Examples extends CI_Controller {
 		foreach ($post_array as $k=>$v){
 			if ($k !== 'tags')
 				$data[$k] = $v;
-		}	
-		return $this->db->insert('log_'.$this->session->flashdata('table'), $data);
+		}
+		
+		try {
+			return $this->db->insert('log_'.$this->session->flashdata('table'), $data);
+		} catch (\Throwable $th) {
+			//throw $th;
+		}
+		
 	}
 
-	public function action_befor_insert($post_array, $primary_key){
 
+public function action_befor_insert($post_array, $primary_key){
 	$data = [
 		'cuit_usuario' => $this->session->cuit,
 		'accion' => 'INSERT',
@@ -1620,40 +1792,39 @@ class Examples extends CI_Controller {
 		$data[$k] = $v;
 	}
 
-    return $this->db->insert('log_'.$this->session->flashdata('table'), $data);
-}
+	$tags = $this->session->flashdata('tags_to_delete');
+	$cuit = $post_array['cuit'];
 
-public function action_befor_delete($post_array,$primary_key){
+	var_dump($cuit);
+	var_dump(is_null($tags));
+	if (!is_null($tags))
+	 $this->tags_model->add_tags_to_cuit($cuit,$tags);
 
+	 try {
+		$this->db->insert('log_'.$this->session->flashdata('table'), $data);
+	 } catch (\Throwable $th) {
+		//throw $th;
+	 }
+	
+ }
 
+public function action_befor_delete($primary_key = null){
+
+	
 	$data = [
 		'cuit_usuario' => $this->session->cuit,
 		'accion' => 'DELETE',
 	];
+
+	$this->db->where('cuit', $primary_key);
+	$post_array = $this->db->get($_SESSION['tabla'])->row();
 
 	foreach ($post_array as $k=>$v){
 		$data[$k] = $v;
 	}
 
     return $this->db->insert('log_'.$this->session->flashdata('table'), $data);
-	//Hay que verificar de que tabla viene y segun sea 
-	// $this->db->where('cuit',$primary_key);
-	// $registro = $this->db->get($this->session->flashdata('table'),$primary_key)->row();
-
-	// if (empty($registro)){
-	// 	return false;
-	// }
-
-	// $data = [
-	// 	'cuit_usuario' => $this->session->cuit,
-	// 	'accion' => 'DELETE'
-	// ];
-
-	// foreach ($registro as $k=>$v){
-	// 	$data[$k] = $v;
-	// }
-
-    // return $this->db->insert('log_'.$this->session->flashdata('table'), $data);
+	
 }
  
 

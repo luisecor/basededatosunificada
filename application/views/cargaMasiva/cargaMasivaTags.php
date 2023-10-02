@@ -32,7 +32,7 @@
                 </div>
 
             </div>
-            <form action="<?=site_url('carga_masiva/tag/importarCSVaDB') ?>" method="get"
+            <form action="<?=site_url('carga_masiva/tag/importarCSVaDB') ?>" method="post"
                 enctype="multipart/form-data">
                 <div class="form-group mb-3">
                     <div class="mb-3">
