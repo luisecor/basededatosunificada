@@ -4,11 +4,22 @@ class User_model extends CI_Model {
 
 
 
-    public function get_access($cuit){ 
+    public function get_access_table($cuit){ 
         $query = $this->db  ->select('nombre')
                             ->from('acceso_tabla')
                             ->where("acceso_tabla.cuit = {$cuit}")
                             ->join('tablas','tablas.id = acceso_tabla.id_tabla')
+                            ->get();
+        $results = $query->result_array();
+        return $results;
+
+    }
+
+    public function get_access_view($cuit){ 
+        $query = $this->db  ->select('nombre')
+                            ->from('acceso_vista')
+                            ->where("acceso_vista.cuit = {$cuit}")
+                            ->join('vistas','vistas.id = acceso_vista.id_vista')
                             ->get();
         $results = $query->result_array();
         return $results;
@@ -37,11 +48,11 @@ class User_model extends CI_Model {
         return $this->db->affected_rows();
     }
 
-    public function update_user_data($cuit , $user_name = NULL, $password = NULL){
+    public function update_user_data($cuit ,  $password = NULL){
         
         $data = [];
-        if (isset($user_name)) $data['user_name'] = $user_name;
-        if (isset($password)) $data['password'] = $user_name;
+      
+        if (isset($password)) $data['password'] = $password;
 
         $this->db->update('base_unificada_users', $data , "cuit = {$cuit}");
         return $this->db->affected_rows();

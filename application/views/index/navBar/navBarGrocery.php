@@ -10,6 +10,9 @@
                 <li class="nav-item">
                     <!-- <a class="nav-link active" href='<?php echo site_url('examples/bada_celulares')?>'>Usuarios Bada</a> -->
                 </li>
+
+
+                <?php  if ($this->session->tipo_usuario == 'SU') { ?>
                 <li class="nav-item dropdown">
 
                     <a class="nav-link  table-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
@@ -74,9 +77,9 @@
                         <li><a class="dropdown-item" href='<?php echo site_url('tabla/tags')?>'>TAGS</a></li>
                         <?php } ?>
                     </ul>
+            <?php }; ?>
 
-
-
+                
                 <li class="nav-item dropdown justify-content-end">
                     <a class="nav-link " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
@@ -85,8 +88,8 @@
 
                     </a>
                     <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
-                        <!-- <li><a class="dropdown-item" href='<?=site_url('usuario/datos_ingreso')?>'>Datos de acceso</a>
-                        </li> -->
+                        <li><a class="dropdown-item" href='<?=site_url('usuario/datos_ingreso')?>'>Datos de acceso</a>
+                        </li>
 
                         <?php if (('SU' === $this->session->tipo_usuario))  {  ?>
                         <li><a class="dropdown-item" href='<?php echo site_url('registrarUsuario')?>'>Registrar Nuevo

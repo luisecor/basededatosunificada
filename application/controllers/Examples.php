@@ -306,8 +306,9 @@ class Examples extends CI_Controller {
 				$crud->set_primary_key('cuit',"{$tabla_view}");
 
 				$crud->set_primary_key('id','tags');
-				$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre');
+				$crud->set_relation_n_n('tags','cuit_tag','tags','cuit','id_tag','nombre',null,array('id',1));
 				
+				// $crud->where('tags','1');
 						
 				//Se guarda el nombre de la tabla materializada
 				$this->session->set_flashdata('table',"{$tabla_materializada}");

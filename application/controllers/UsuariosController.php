@@ -8,9 +8,13 @@ class UsuariosController extends CI_Controller  {
 
     use UsuariosTrait;
 
-    public function __constructor(){
+    public function __construct() {
         parent::__construct();
-        $this->load->helper(array('form', 'url'));
+        $this->load->helper('url');
+        $this->load->model('login_model');
+        $this->load->model('logs_model');
+        $this->load->model('user_model');
+        $this->load->model('filtros_session_model');
     }
 
 
@@ -29,14 +33,27 @@ class UsuariosController extends CI_Controller  {
 
     public function verificarCambios(){
         $cuit = $this->session->cuit;
-        $user_name = $this->input->post('user_name');
         $password = $this->input->post('password');
+        $password =  password_hash( $_REQUEST['password'], PASSWORD_BCRYPT);
 
-        //password_hash( $_REQUEST['password'], PASSWORD_BCRYPT)
 
-        var_dump($user_name);
-        echo "<br>";
-        var_dump($password);
+        $respuesta = $this->user_model->update_user_data($cuit,$password);
+
+        if ($respuesta == 1){
+            $data['mensaje'] = "Cambio de contraseña exitosa";
+            $this->load->view('index/header');
+            $this->load->view('index/navBar/navBarGrocery');
+            $this->load->view('registro/datos_acceso', $data);
+            $this->load->view('index/footer');
+
+        } else {
+            $data['error'] = "No se pudocambiar la contraseña";
+            $this->load->view('index/header');
+            $this->load->view('index/navBar/navBarGrocery');
+            $this->load->view('registro/datos_acceso', $data);
+            $this->load->view('index/footer');
+
+        }
     }
 
 

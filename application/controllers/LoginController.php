@@ -34,14 +34,16 @@ class LoginController extends CI_Controller {
 
         if ( isset($result))
             if ($result && password_verify($password,$result->password)){
-                $acceso = $this->user_model->get_access($result->cuit);
+                $acceso_tablas = $this->user_model->get_access_table($result->cuit);
+                $acceso_vistas = $this->user_model->get_access_view($result->cuit);
                 $filtros = $this->filtros_session_model->get_filters($result->cuit);
                 $this->session->set_userdata(array(
                     'user_name' => $result->user_name,
                     'cuit' => $result->cuit,
                     'tipo_usuario' => $result->tipo_usuario,
                     'carga_masiva' => $result->carga_masiva,
-                    'acceso' => $acceso,
+                    'acceso' => $acceso_tablas,
+                    'acceso_vistas' => $acceso_vistas,
                     'filtro_session' =>$filtros
                 ));
                

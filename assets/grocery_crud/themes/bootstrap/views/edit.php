@@ -59,7 +59,39 @@ include(__DIR__ . '/common_javascript_vars.php');
                             <?php if ($is_ajax) { ?><input type="hidden" name="is_ajax" value="true" /><?php }?>
                             <div class="form-group">
                                 <div id='report-error' class='report-div error bg-danger' style="display:none"></div>
-                                <div id='report-success' class='report-div success bg-success' style="display:none"></div>
+                                <div id='report-success' class='report-div success bg-success' style="display:none">
+                                <script>
+                                   // Select the node that will be observed for mutations
+                                    const targetNode = document.querySelector('#report-success');
+
+
+                                    // Options for the observer (which mutations to observe)
+                                    const config = { attributes: true, childList: true, subtree: true };
+
+                                    // Callback function to execute when mutations are observed
+                                    const callback = (mutationList, observer) => {
+                                    for (const mutation of mutationList) {
+                                        if (mutation.type === "childList") {
+                                        console.log("A child node has been added or removed.");
+                                        history.back();
+                                        } else if (mutation.type === "attributes") {
+                                        console.log(`The ${mutation.attributeName} attribute was modified.`);
+                                        }
+                                    }
+                                    };
+
+                                    document.addEventListener("DOMContentLoaded", function(event) {
+                                         // Start observing the target node for configured mutations
+                                    observer.observe(targetNode, config);
+                                    
+                                    })
+
+                                    // Create an observer instance linked to the callback function
+                                    const observer = new MutationObserver(callback);
+
+                                   
+                                </script>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-7">
@@ -94,4 +126,6 @@ include(__DIR__ . '/common_javascript_vars.php');
 
 	var message_alert_edit_form = "<?php echo $this->l('alert_edit_form')?>";
 	var message_update_error = "<?php echo $this->l('update_error')?>";
+
+
 </script>
