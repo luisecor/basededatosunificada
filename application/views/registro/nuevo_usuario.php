@@ -1,3 +1,11 @@
+<br>
+<a href="<?=site_url('ingreso')?>" id="backbutton"> < Volver</a>
+
+<hr>
+
+
+
+
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
         <path
@@ -19,35 +27,19 @@
     </div>
     <form action="<?=base_url('registroVerificar')?>" method="post" id="formRegistro" class="needs-validation">
         <?php if(isset($error)) { 
-                echo 
-                '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                
-                <ul class="list-group">';
+    echo 
+    '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    
+    <ul class="list-group">';
 
-                foreach ($error as $err) 
-                echo  '<li class="list-group-item list-group-item-danger"> <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>' . $err . "</li>";
-                echo '
-                </ul>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>'; 
-        } ?>
-        <?php if(isset($mensaje)) { 
-                echo 
-                '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                
-                <ul class="list-group">';
-
-                echo  '<li class="list-group-item list-group-item-success"> 
-                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="success:">
-                <use xlink:href="#exclamation-triangle-fill"/></svg>' . $mensaje . 
-                "</li>";
-                echo '
-                </ul>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>'; 
-        } ?>
+    foreach ($error as $err) 
+    echo  '<li class="list-group-item list-group-item-danger"> <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>' . $err . "</li>";
+    echo '
+    </ul>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>'; } ?>
         <div class="mb-3">
-            <label for="cuit_username" class="form-label">CUIT</label>
+            <label for="cuit_username" class="form-label">CUIT LUCHO</label>
             <input type="text" placeholder="Ingrese nuevo CUIT" name="cuit"
                 class="form-control <?php if(isset($tipo) && in_array("1", $tipo)) echo "is-invalid"?>" id="cuit"
                 aria-describedby="emailHelp" required <?php if(isset($usuario)) echo "placeholder=".$usuario['cuit'] ?>>
@@ -67,7 +59,7 @@
                 minlength="8" maxlenght="10" required>
         </div>
         <button type="submit" class="btn btn-success">Registrar</button>
-        <button type="button" class="cancelar btn btn-secondary" onclick="window.location.href ='<?=site_url('ingreso')?>'" >Cancelar</button>
+        <button type="button" class="btn btn-secondary" onclick="window.location.href ='<?=site_url('ingreso')?>'" >Cancelar</button>
     </form>
 </div>
 </div>

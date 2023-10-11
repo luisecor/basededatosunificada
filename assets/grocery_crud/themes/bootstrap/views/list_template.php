@@ -1,3 +1,8 @@
+
+<a href="<?=site_url('ingreso')?>" id="backbutton"> < Volver</a>
+
+<hr>
+
 <?php
 //    $this->set_css($this->default_theme_path.'/bootstrap/css/bootstrap/bootstrap.min.css');
 //    $this->set_css($this->default_theme_path.'/bootstrap/css/font-awesome/css/font-awesome.min.css');    
