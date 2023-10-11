@@ -66,9 +66,9 @@ include(__DIR__ . '/common_javascript_vars.php');
 
 
 
-                                //prueba
-                                //     // Options for the observer (which mutations to observe)
-                                //     const config = { attributes: true, childList: true, subtree: true };
+                                // //prueba
+                                // //     // Options for the observer (which mutations to observe)
+                                // //     const config = { attributes: true, childList: true, subtree: true };
 
                                 //     // Callback function to execute when mutations are observed
                                 //     const callback = (mutationList, observer) => {
