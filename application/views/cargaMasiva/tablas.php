@@ -1,3 +1,11 @@
+
+
+<br>
+<a href="<?=site_url('ingreso')?>" id="backbutton"> < Volver</a>
+
+<hr>
+
+
 <div class="container mt-5 d-flex flex-column align-items-center">
     <div class="card w-50">
         <div class="card-header text-center d-flex flex-colum justify-content-center">
