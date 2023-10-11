@@ -65,6 +65,8 @@ include(__DIR__ . '/common_javascript_vars.php');
                                 //     const targetNode = document.querySelector('#report-success');
 
 
+
+                                //prueba
                                 //     // Options for the observer (which mutations to observe)
                                 //     const config = { attributes: true, childList: true, subtree: true };
 
