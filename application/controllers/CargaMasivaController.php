@@ -36,6 +36,22 @@ class CargaMasivaController extends CI_Controller {
         $this->load->view('index/footer');
     }
 
+    public function campos_extra($tabla ){
+        
+        $c_extra = [
+                    'mujeres_lideres' 			=> ['campos_extra' 	=> ['edicion']],
+					'lideres_gcba'				=> ['campos_extra'	=> ['hacienda','chisme','equivalente','gabinete']],
+					'secretarias_particular'	=> ['campos_extra'	=> ['antiguedad','edificio']],
+					'embajadores'				=> ['campos_extra'	=> ['lugar_de_trabajo','recidencia','ya_fue_embajador','puesto','tarea_de_contratacion']],
+                    'eci'                       =>['campos_extra'   => ['area_de_enlace','lugar_de_trabajo']]
+        ];
+
+        if (isset($c_extra[$tabla['importData']]['campos_extra'])) {
+             return $c_extra[$tabla['importData']]['campos_extra'];}
+        return false;
+        
+    }
+
     public function importarCSVaDB(){
 
         $config['upload_path']          = './assets/uploads/files';
@@ -69,6 +85,8 @@ class CargaMasivaController extends CI_Controller {
                         $data['tabla'] = $valueSelected;
                         $data['input'] = $this->upload->data();
 
+                        $columnas_extra = $this->campos_extra($valueSelected);
+                        
                         $file = fopen($data['input']['full_path'],"r");
 
                         $i = 1;             // Comienzo de lectura->fila = 1
@@ -82,7 +100,12 @@ class CargaMasivaController extends CI_Controller {
                                 $csvArr[$i]['cuit'] = $filedata[0];
                                 $csvArr[$i]['apellido'] = $filedata[1];
                                 $csvArr[$i]['nombre'] = $filedata[2];
-                                // $csvArr[$i]['direccion'] = $filedata[3];
+                                if (isset($columnas_extra) && $columnas_extra){
+                                   foreach ($columnas_extra as $k => $v) {
+                                    $csvArr[$i][$v] = $filedata[$k + 3];
+                                   }
+                                }
+                                
                             }
                             $i++;
                         }
@@ -90,7 +113,9 @@ class CargaMasivaController extends CI_Controller {
 
                         fclose($file);
 
-                        $tabla = $this->tablas_model->get_table_name($valueSelected['importData'])[0]->nombre_tabla;
+                        //$tabla = $this->tablas_model->get_table_name($valueSelected['importData'])[0]->nombre_tabla;
+                        $tabla = $this->tablas_model->get_table_name($valueSelected['importData'])[0]->nombre;
+
                         
                         $existe = false;
                         $models = [
@@ -99,7 +124,11 @@ class CargaMasivaController extends CI_Controller {
                         ];
                         $existe = $this->tablas_model->existe_tabla_nombre($tabla);
 
+
+                        
+
                         if ($existe){
+                            $tabla = $valueSelected['importData'];
 
                            // echo "existe tabla";
 
@@ -144,7 +173,7 @@ class CargaMasivaController extends CI_Controller {
                                 
                             $data['mensaje'] = 'Registros nuevos : ' . $count . '<br>
                                                 Registros actualizados : ' . $udpdated . '<br>
-                                                Registos totales : ' . $count + $udpdated . '<br>
+                                                Registos totales : ' . ($count + $udpdated) . '<br>
                                                 Tabla actualizada : ' .$tabla;
 
 
@@ -262,7 +291,7 @@ class CargaMasivaController extends CI_Controller {
                                 
                             $data['error'] = 'Registros nuevos : ' . $count . '<br>
                                                 Registros actualizados : ' . $udpdated . '<br>
-                                                Registos totales : ' . $count + $udpdated . '<br>';
+                                                Registos totales : ' . ($count + $udpdated) . '<br>';
                             
 
 

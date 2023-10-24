@@ -27,8 +27,65 @@
         <p class=" mb-0"></p>
         <div class='d-flex flex-wrap justify-content-between'>
 
-            <!-- <?php  //if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
-                       // in_array('LIDERES GCBA', array_column($this->session->acceso,'nombre'))) { ?> -->
+            <?php if (in_array('TODAS', array_column($this->session->acceso_vistas,'nombre')) || 
+                        in_array('COORDINACION Y PLANEAMIENTO', array_column($this->session->acceso_vistas,'nombre'))) { ?>
+            <div class='table-card shadow-box d-flex justify-content-center align-items-center my-3'>
+                <a href='<?php echo site_url('vista/coordinacion')?>' class="d-flex align-items-center w-100 h-100">
+                    <img src="<?=base_url?>css/svg/table.svg" alt="Icono de base de datos" class="ms-4 me-2">
+                   Coordinacion y Planeamiento</a>
+            </div>
+            <?php }; ?>
+
+            <?php if (in_array('TODAS', array_column($this->session->acceso_vistas,'nombre')) || 
+                        in_array('COACHES', array_column($this->session->acceso_vistas,'nombre'))) { ?>
+            <div class='table-card shadow-box d-flex justify-content-center align-items-center my-3'>
+                <a href='<?php echo site_url('vista/coaches')?>' class="d-flex align-items-center w-100 h-100">
+                    <img src="<?=base_url?>css/svg/table.svg" alt="Icono de base de datos" class="ms-4 me-2">
+                   Coaches</a>
+            </div>
+            <?php }; ?>
+
+            <?php if (in_array('TODAS', array_column($this->session->acceso_vistas,'nombre')) || 
+                        in_array('ECH', array_column($this->session->acceso_vistas,'nombre'))) { ?>
+            <div class='table-card shadow-box d-flex justify-content-center align-items-center my-3'>
+                <a href='<?php echo site_url('vista/ech')?>' class="d-flex align-items-center w-100 h-100">
+                    <img src="<?=base_url?>css/svg/table.svg" alt="Icono de base de datos" class="ms-4 me-2">
+                   ECH</a>
+            </div>
+            <?php }; ?>
+
+            <?php if (in_array('TODAS', array_column($this->session->acceso_vistas,'nombre')) || 
+                        in_array('ECI', array_column($this->session->acceso_vistas,'nombre'))) { ?>
+            <div class='table-card shadow-box d-flex justify-content-center align-items-center my-3'>
+                <a href='<?php echo site_url('vista/eci')?>' class="d-flex align-items-center w-100 h-100">
+                    <img src="<?=base_url?>css/svg/table.svg" alt="Icono de base de datos" class="ms-4 me-2">
+                   ECI</a>
+            </div>
+            <?php }; ?>
+
+
+            <?php if (in_array('TODAS', array_column($this->session->acceso_vistas,'nombre')) || 
+                        in_array('EMBAJADORES', array_column($this->session->acceso_vistas,'nombre'))) { ?>
+            <div class='table-card shadow-box d-flex justify-content-center align-items-center my-3'>
+                <a href='<?php echo site_url('vista/embajadores')?>' class="d-flex align-items-center w-100 h-100">
+                    <img src="<?=base_url?>css/svg/table.svg" alt="Icono de base de datos" class="ms-4 me-2">
+                   Embajadores</a>
+            </div>
+            <?php }; ?>
+
+
+            <?php if (in_array('TODAS', array_column($this->session->acceso_vistas,'nombre')) || 
+                        in_array('JOVENES', array_column($this->session->acceso_vistas,'nombre'))) { ?>
+            <div class='table-card shadow-box d-flex justify-content-center align-items-center my-3'>
+                <a href='<?php echo site_url('vista/jovenes')?>' class="d-flex align-items-center w-100 h-100">
+                    <img src="<?=base_url?>css/svg/table.svg" alt="Icono de base de datos" class="ms-4 me-2">
+                   Jóvenes</a>
+            </div>
+            <?php }; ?>
+
+
+            <?php  if (in_array('TODAS', array_column($this->session->acceso_vistas,'nombre')) || 
+                        in_array('LIDERES GCBA', array_column($this->session->acceso_vistas,'nombre'))) { ?>
             <div class='table-card shadow-box d-flex justify-content-center align-items-center my-3'>
                 <a href='<?php echo site_url('tabla/lideres_gcba')?>' class="d-flex align-items-center w-100 h-100">
                     <img src="<?=base_url?>css/png/Tablas.png" alt="Icono de base de datos" class="ms-4 me-2">
@@ -47,24 +104,42 @@
             </div>
             <!-- <?php //}; ?>  -->
 
+            <?php if (in_array('TODAS', array_column($this->session->acceso_vistas,'nombre')) || 
+                        in_array('MARCA EMPLEADORA', array_column($this->session->acceso_vistas,'nombre'))) { ?>
+            <div class='table-card shadow-box d-flex justify-content-center align-items-center my-3'>
+                <a href='<?php echo site_url('vista/marca_empleadora')?>' class="d-flex align-items-center w-100 h-100">
+                    <img src="<?=base_url?>css/svg/table.svg" alt="Icono de base de datos" class="ms-4 me-2">
+                   Marca Empleadora</a>
+            </div>
+            <?php }; ?>
+
+            <?php if (in_array('TODAS', array_column($this->session->acceso_vistas,'nombre')) || 
+                        in_array('MUJERES LIDERES', array_column($this->session->acceso_vistas,'nombre'))) { ?>
             <div class='table-card shadow-box d-flex justify-content-center align-items-center my-3'>
                 <a href='<?php echo site_url('vista/mujeres_lideres')?>' class="d-flex align-items-center w-100 h-100">
                     <img src="<?=base_url?>css/png/Tablas.png" alt="Icono de base de datos" class="ms-4 me-2">
                     Mujeres Lideres</a>
             </div>
+            <?php }; ?>
             
 
             
+
+            <?php if (in_array('TODAS', array_column($this->session->acceso_vistas,'nombre')) || 
+                        in_array('SECRETARIAS PARTICULAR', array_column($this->session->acceso_vistas,'nombre'))) { ?>
             <div class='table-card shadow-box d-flex justify-content-center align-items-center my-3'>
-                <a href='<?php echo site_url('vista/jovenes')?>' class="d-flex align-items-center w-100 h-100">
-                    <img src="<?=base_url?>css/png/Tablas.png" alt="Icono de base de datos" class="ms-4 me-2">
-                   Jóvenes</a>
+                <a href='<?php echo site_url('vista/secretarias_particular')?>' class="d-flex align-items-center w-100 h-100">
+                    <img src="<?=base_url?>css/svg/table.svg" alt="Icono de base de datos" class="ms-4 me-2">
+                    Secretarias Particular</a>
             </div>
+            <?php }; ?>
+
+            
 
             <div class='table-card shadow-box d-flex justify-content-center align-items-center my-3'>
-                <a href='<?php echo site_url('vista/coordinacion')?>' class="d-flex align-items-center w-100 h-100">
-                    <img src="<?=base_url?>css/png/Tablas.png" alt="Icono de base de datos" class="ms-4 me-2">
-                   Coordinación y Planeamiento</a>
+                <a href='<?php echo site_url('tabla/tags')?>' class="d-flex align-items-center w-100 h-100">
+                    <img src="<?=base_url?>css/svg/table.svg" alt="Icono de base de datos" class="ms-4 me-2">
+                    TAGS</a>
             </div>
 
            
@@ -257,4 +332,4 @@
         </div>
     </div> -->
 
-    
+    <?php }; ?>

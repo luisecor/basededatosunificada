@@ -6,15 +6,15 @@ class Tablas_model extends CI_Model {
 
     public function get_table_name($table){
         
-        $this->db   ->select('nombre_tabla')
-                    ->where('nombre',$table);
+        $this->db   ->select('nombre')
+                    ->where('nombre_tabla',$table);
         $query = $this->db->get("tablas");
         return $query->result();
     }
 
     public function get_tables(){
         
-        $this->db   ->select('nombre , nombre_tabla');
+        $this->db   ->select('nombre , nombre_tabla')->order_by('nombre','ASC');
         $query = $this->db->get("tablas");
         return $query->result_array();
     }
