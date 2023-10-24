@@ -22,12 +22,12 @@
             <div class="mt-2">
                 <div class="mt-2">
                 <?php if(isset($error)) 
-    echo 
-    '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-    '. $error . '
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>' ?> 
+                echo 
+                '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                    '. $error . '
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>' ?> 
 
                 </div>
 

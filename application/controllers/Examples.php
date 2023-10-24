@@ -28,24 +28,61 @@ class Examples extends CI_Controller {
 	public function vista($tabla){
 
 		$vistas_disponibles= [
-			"mujeres_lideres" 	=> ['tabla_vista' 			=> 'mujeres_lideres_view',
-									'tabla_materializada'	=> 'mujeres_lideres',
-									'titulo' 				=> 'Mujeres Lideres',
-									'tags'					=> ['MUJERES LIDERES'] 
-									//SE UTILZA PARA ELIMINER DE LA VISTA
-									]
+			"mujeres_lideres" 			=> ['tabla_vista' 			=> 'mujeres_lideres_view',
+											'tabla_materializada'	=> 'mujeres_lideres',
+											'titulo' 				=> 'Mujeres Lideres',
+											'tags'					=> ['MUJERES LIDERES'] 
+											//SE UTILZA PARA ELIMINER DE LA VISTA
+											]
 			,
-			"jovenes"			=> ['tabla_vista'			=> 'jovenes_bada_celulares_view',
-									'tabla_materializada'	=> 'sas_activo',
-									'titulo'				=> 'Jovenes',
-									'tags'					=> ['SUB 30','SUB 33']
-									]
+			"jovenes"					=> ['tabla_vista'			=> 'jovenes_bada_celulares_view',
+											'tabla_materializada'	=> 'sas_activo',
+											'titulo'				=> 'Jovenes',
+											'tags'					=> ['SUB 30','SUB 33']
+											]
 			,
-			"coordinacion"		=> ['tabla_vista' 			=> 'coordinacion_planemiento_view',
-									'tabla_materializada'	=> 'sas_activo',
-									'titulo' 				=> 'Coordinacion y Planeamiento',
-									'tags'					=> null
-									]
+			"coordinacion"				=> ['tabla_vista' 			=> 'coordinacion_planemiento_view',
+											'tabla_materializada'	=> 'sas_activo',
+											'titulo' 				=> 'Coordinacion y Planeamiento',
+											'tags'					=> null
+											]
+			,
+			"secretarias_particular" 	=> ['tabla_vista' 			=> 'secretarias_particular_view',
+											'tabla_materializada'	=> 'secretarias_particular',
+											'titulo' 				=> 'Secretarias Particular',
+											'tags'					=> ['SECRETARIA PARTICULAR']
+											]
+			,
+			"embajadores"				=> ['tabla_vista' 			=> 'embajadores_view',
+											'tabla_materializada'	=> 'embajadores',
+											'titulo' 				=> 'Embajadores',
+											'tags'					=> ['EMBAJADOR']
+											]
+			,
+			"eci"						=> ['tabla_vista' 			=> 'eci_view',
+											'tabla_materializada'	=> 'eci',
+											'titulo' 				=> 'ECI',
+											'tags'					=> ['ECI']
+											]
+			,
+			"ech"						=> ['tabla_vista' 			=> 'ech_view',
+											'tabla_materializada'	=> 'ech',
+											'titulo' 				=> 'ECH',
+											'tags'					=> ['ECH']
+											]
+			
+			,
+			"coaches"					=> ['tabla_vista' 			=> 'coaches_view',
+											'tabla_materializada'	=> 'coaches',
+											'titulo' 				=> 'Coaches',
+											'tags'					=> ['COACH']
+											]
+			,
+			"marca_empleadora"			=> ['tabla_vista' 			=> 'marca_empleadora_view',
+											'tabla_materializada'	=> 'marca_empleadora',
+											'titulo' 				=> 'Marca Empleadora',
+											'tags'					=> ['MARCA EMPLEADORA']
+											]
 		];
 
 		
@@ -194,7 +231,44 @@ class Examples extends CI_Controller {
 									'vista' 	=> 'secretarias_particular_view',
 									'titulo'	=> 'Secretarias Particular',
 									'subject'	=> 'Secretarias Particular',
-									'tags'					=> null]
+									'tags'					=> ['SECRETARIA PARTICULAR']]
+									,
+			'embajadores'
+						    =>	[	'base' 		=> 'embajadores',
+									'vista' 	=> 'embajadores_view',
+									'titulo'	=> 'Embajadores',
+									'subject'	=> 'Embajador/a',
+									'tags'					=> ['EMBAJADOR']]
+							
+			,
+			"eci"
+							=>	[	'base' 		=> 'eci',
+									'vista' 	=> 'eci_view',
+									'titulo'	=> 'ECI',
+									'subject'	=> 'ECI',
+									'tags'					=> ['ECI']]
+			,
+			"ech"
+							=>	[	'base' 		=> 'ech',
+									'vista' 	=> 'ech_view',
+									'titulo'	=> 'ECH',
+									'subject'	=> 'ECH',
+									'tags'					=> ['ECH']]
+			
+			,
+			"coaches"
+							=>	[	'base' 		=> 'coaches',
+									'vista' 	=> 'coaches_view',
+									'titulo'	=> 'Coaches',
+									'subject'	=> 'Coach',
+									'tags'					=> ['COACH']]
+			,
+			"marca_empleadora"
+							=>	[	'base' 		=> 'marca_empleadora',
+									'vista' 	=> 'marca_empleadora_view',
+									'titulo'	=> 'Marca Empleadora',
+									'subject'	=> 'Marca',
+									'tags'					=> ['MARCA EMPLEADORA']]
 								
 			// lideres_gcba_hacienda
 		];
@@ -382,8 +456,11 @@ class Examples extends CI_Controller {
 				$crud->callback_before_update(array($this,'action_befor_update'));
 
 				$campos_extra = [
-					'mujeres_lideres' 	=> ['campos_extra' 	=> ['edicion']],
-					'lideres_gcba'		=> ['campos_extra'	=> ['hacienda','chisme','equivalente','gabinete']]
+					'mujeres_lideres' 			=> ['campos_extra' 	=> ['edicion']],
+					'lideres_gcba'				=> ['campos_extra'	=> ['hacienda','chisme','equivalente','gabinete']],
+					'secretarias_particular'	=> ['campos_extra'	=> ['antiguedad','edificio']],
+					'embajadores'				=> ['campos_extra'	=> ['lugar_de_trabajo','recidencia','ya_fue_embajador','puesto','tarea_de_contratacion']],
+                    'eci'                       => ['campos_extra'  => ['area_de_enlace','lugar_de_trabajo']]
 				];
 
 				$fields = ['cuit','documento','apellido','nombre','genero','fecha_nacimiento','telefono_particular','mail','provincia','comuna','barrio_normalizado','regimen','tarea','ministerio','secr','ss','dg'];
