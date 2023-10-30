@@ -126,8 +126,7 @@
                     Mujeres Lideres</a>
             </div>
             <?php }; ?>
-
-            
+           
 
             <?php if (in_array('TODAS', array_column($this->session->acceso_vistas,'nombre')) || 
                         in_array('SECRETARIAS PARTICULAR', array_column($this->session->acceso_vistas,'nombre'))) { ?>
