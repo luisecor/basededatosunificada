@@ -178,15 +178,15 @@ class Examples extends CI_Controller {
 							,
 			'lideres_gcba' => 	[	'base' 		=> 'lideres_gcba',
 									'vista' 	=> 'lideres_gcba_view',
-									'titulo'	=> 'Lideres GCBA',
-									'subject'	=> 'Lideres GCBA',
+									'titulo'	=> 'Líderes GCBA',
+									'subject'	=> 'Líderes GCBA',
 									'tags'					=> null]						
 							,
 			'lideres_gcba_hacienda' 
 							=> 	[	'base' 		=> 'lideres_gcba',
 									'vista' 	=> 'lideres_gcba_hacienda_view',
-									'titulo'	=> 'Lideres GCBA - Hacienda',
-									'subject'	=> 'Lideres GCBA - Hacienda',
+									'titulo'	=> 'Líderes GCBA - Hacienda',
+									'subject'	=> 'Líderes GCBA - Hacienda',
 									'tags'					=> null]
 									,
 			'secretarias_particular' 
@@ -345,31 +345,31 @@ class Examples extends CI_Controller {
 				$permission = $this->user_model->get_permission_user($cuit);
 				if ($permission == 'SU' || $permission == "CREATE" ){
 					$crud	
-						->add_action(	'Editar Datos de Contacto', '', 'examples/cambiar_datos_personales');
+						->add_action(	'Editar datos de contacto', '', 'examples/cambiar_datos_personales');
 						if ($tabla_materializada != 'sas_activo')
-							$crud->add_action(	"Editar Atributos de {$titulo}", '' ,'examples/editar_atributos');
+							$crud->add_action(	"Editar atributos de {$titulo}", '' ,'examples/editar_atributos');
 						else
 							$crud->unset_columns(['virtual']);
-						$crud->add_action(	'Ver Registros completo', '',"materialized_table/read")
+						$crud->add_action(	'Ver registro completos', '',"materialized_table/read")
 						//->add_action(	'Observaciones', '','examples/ver_observaciones')
 						->add_action(	'TAGS', '',"examples/tags")
 						->add_action(	'Eliminar', '',"examples/eliminar")
 						;
 				} else if ($permission == "VIEW"){
 					$crud	
-						->add_action(	'Ver Registros completo', '',"materialized_table/read")
+						->add_action(	'Ver registros completo', '',"materialized_table/read")
 						//->add_action(	'Observaciones', '','examples/ver_observaciones')
 						->unset_add()
 						;
 
 				} else if ($permission == "UPDATE"){
 					$crud	
-						->add_action(	'Editar Datos de Contacto', '', 'examples/cambiar_datos_personales');
+						->add_action(	'Editar datos de contacto', '', 'examples/cambiar_datos_personales');
 						if ($tabla_materializada != 'sas_activo')
-							$crud->add_action(	"Editar Atributos de {$titulo}", '' ,'examples/editar_atributos');
+							$crud->add_action(	"Editar atributos de {$titulo}", '' ,'examples/editar_atributos');
 						else
 							$crud->unset_columns(['virtual']);
-						$crud->add_action(	'Ver Registros completo', '',"materialized_table/read")
+						$crud->add_action(	'Ver registro completo', '',"materialized_table/read")
 						//->add_action(	'Observaciones', '','examples/ver_observaciones')
 						->add_action(	'TAGS', '',"examples/tags")
 						->unset_add()
@@ -402,6 +402,15 @@ class Examples extends CI_Controller {
 				$crud	->display_as('secr', 'SECR')
 						->display_as('ss', 'SS')
 						->display_as('dg', 'DG')
+
+						
+						// AGREGADOS POR MATHI
+						->display_as('genero', 'Género')
+						->display_as('cuit', 'CUIT')
+						->display_as('fecha_nacimiento', 'Fecha de nacimiento')
+						->display_as('telefono_particular', 'Teléfono particular')
+						->display_as('regimen', 'Régimen')
+						
 						;
 				
 				$output = $crud->render();

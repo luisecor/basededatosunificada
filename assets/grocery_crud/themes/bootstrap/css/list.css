@@ -59,15 +59,17 @@
   width: 0px;
   border: none !important;
   background: transparent;
+  display: none;
 }
 .gc-container .search-button input.search-input-big {
   width: 140px;
+  display: inline-block;
 }
 .gc-container .search-button-big {
   width: 180px;
   background: white;
 }
-.gc-container .search-button-big:hover, .gc-container .search-button-big:focus, .gc-container .search-button-big:active {
+.gc-container .search-button-big:focus, .gc-container .search-button-big:active {
   background: white !important;
 }
 .gc-container .header-tools {

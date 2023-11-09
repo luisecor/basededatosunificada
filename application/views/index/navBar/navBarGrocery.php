@@ -25,7 +25,7 @@
 
                     </a>
                     <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
-                        <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
+                        <!-- <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || 
                         in_array('GABINETE', array_column($this->session->acceso,'nombre'))) { ?>
                         <li><a class="dropdown-item"
                                 href='<?php echo site_url('tabla/gabinete')?>'>Gabinete</a></li>
@@ -58,7 +58,8 @@
                         <?php }; ?>
                         <li>
                             <hr class="dropdown-divider">
-                        </li>
+                        </li> -->
+                        
                         <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || in_array('SAS ACTIVOS', array_column($this->session->acceso,'nombre'))) {  ?>
                         <li><a class="dropdown-item" href='<?php echo site_url('examples/sas_activo')?>'>SAS
                                 Activos</a></li>
@@ -78,6 +79,7 @@
                         <?php if (in_array('TODAS', array_column($this->session->acceso,'nombre')) || in_array('TAGS', array_column($this->session->acceso,'nombre'))) {  ?>
                         <li><a class="dropdown-item" href='<?php echo site_url('tabla/tags')?>'>TAGS</a></li>
                         <?php } ?>
+                        
                     </ul>
                     <?php } ?>
 
@@ -148,10 +150,10 @@
                         </li>
 
                         <?php if (('SU' === $this->session->tipo_usuario))  {  ?>
-                        <li><a class="dropdown-item" href='<?php echo site_url('registrarUsuario')?>'>Registrar Nuevo
-                                Usuario</a></li>
+                        <li><a class="dropdown-item" href='<?php echo site_url('registrarUsuario')?>'>Registrar nuevo
+                                usuario</a></li>
                         <li><a class="dropdown-item" href='<?php echo site_url('usuarios/session')?>'>Permisos de
-                                Usuarios</a></li>
+                                usuarios</a></li>
                         <?php } ?>
                         <?php if (('SU' === $this->session->tipo_usuario))  {  ?>
                         <li>
@@ -168,7 +170,7 @@
                         </a>
                         <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
                                                 
-                        <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/guia_uso')?>'>Guia de
+                        <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/guia_uso')?>'>Guía de
                                 uso</a></li>
                        
                         </ul>

@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-define("base_url" ,"http://wamp-viejo/codeigniter3/" );
+define("base_url" ,"http://localhost/codeigniter3/" );
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +24,7 @@ define("base_url" ,"http://wamp-viejo/codeigniter3/" );
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://wamp-viejo/codeigniter3/index.php';
+$config['base_url'] = 'http://localhost/codeigniter3/index.php';
 
 /*
 |--------------------------------------------------------------------------

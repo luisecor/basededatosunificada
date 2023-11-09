@@ -91,20 +91,32 @@
  		<div class="row">
                     <h1><?php echo $subject_plural; ?></h1>
         	<div class="table-section">
-                <div class="table-label">
+                <!-- <div class="table-label">
 
-                </div>
+                </div> -->
                 <div class="table-container">
+                    
                     <?php echo form_open("", 'method="post" autocomplete="off" id="gcrud-search-form"'); ?>
+                    
                         <div class="header-tools">
+                            
                             <?php if(!$unset_add){?>
                                 <div class="floatL t5">
-                                    <a class="btn btn-default" href="<?php echo $add_url?>"><i class="fa fa-plus"></i> &nbsp; <?php echo $this->l('list_add'); ?> <?php echo $subject?></a>
+                                    <a class="btn btn-default btnestabla" href="<?php echo $add_url?>"><i class="fa fa-plus"> 
+
+
+                                    <!-- EDITÉ ESTO, VER CON LUCHO DESPUES -->
+                                    
+                                    </i> Agregar registro en
+
+                                    <!-- &nbsp; <?php echo $this->l('list_add'); ?> -->
+                                    
+                                    <?php echo $subject?></a>
                                 </div>
                             <?php } ?>
                             <div class="floatR">
                                 <?php if(!$unset_export) { ?>
-                                    <a class="btn btn-default t5 gc-export" data-url="<?php echo $export_url; ?>">
+                                    <a class="btn btn-default t5 gc-export btnestabla" data-url="<?php echo $export_url; ?>">
                                         <i class="fa fa-cloud-download floatL t3"></i>
                                         <span class="hidden-xs floatL l5">
                                             <?php echo $this->l('list_export');?>
@@ -113,7 +125,7 @@
                                     </a>
                                 <?php } ?>
                                 <?php if(!$unset_print) { ?>
-                                    <a class="btn btn-default t5 gc-print" data-url="<?php echo $print_url; ?>">
+                                    <a class="btn btn-default t5 gc-print btnestabla" data-url="<?php echo $print_url; ?>">
                                         <i class="fa fa-print floatL t3"></i>
                                         <span class="hidden-xs floatL l5">
                                             <?php echo $this->l('list_print');?>
@@ -123,8 +135,9 @@
                                 <?php }?>
 
                                 <a class="btn btn-primary search-button t5">
-                                    <i class="fa fa-search"></i>
+                                    <i class="fa fa-search"> </i>
                                     <input type="text" name="search" class="search-input" />
+                                    <span><img src="<?=base_url?>css/png/Lupapng.png" alt="lupa" class="guia-iconos"></span>
                                 </a>
                             </div>
                             <div class="clear"></div>
@@ -157,16 +170,16 @@
                                             </a>
                                         </div>
                                         <div class="floatR l5">
-                                            <a href="javascript:void(0);" class="btn btn-default gc-refresh">
+                                            <!-- <a href="javascript:void(0);" class="btn btn-default gc-refresh">
                                                 <i class="fa fa-refresh"></i>
-                                            </a>
+                                            </a> -->
                                         </div>
                                         </div>
                                         <div class="clear"></div>
                                     </td>
                                     <?php foreach($columns as $column){?>
                                         <td>
-                                            <input type="text" class="form-control searchable-input floatL" placeholder="Search <?php echo $column->display_as; ?>" name="<?php echo $column->field_name; ?>" />
+                                            <input type="text" class="form-control searchable-input floatL" placeholder="Buscar <?php echo $column->display_as; ?>" name="<?php echo $column->field_name; ?>" />
                                         </td>
                                     <?php }?>
         						</tr>
@@ -223,7 +236,7 @@
 
                                                 <!-- Start of: Settings button -->
                                                 <div class="btn-group floatR t20 l10 settings-button-container">
-                                                    <button type="button" class="btn btn-default gc-bootstrap-dropdown settings-button dropdown-toggle">
+                                                    <!-- <button type="button" class="btn btn-default gc-bootstrap-dropdown settings-button dropdown-toggle"> -->
                                                         <i class="fa fa-cog r5"></i>
                                                         <span class="caret"></span>
                                                     </button>
