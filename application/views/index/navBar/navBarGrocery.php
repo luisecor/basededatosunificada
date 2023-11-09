@@ -126,6 +126,9 @@
                         </li>
                         <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/form_tag')?>'>Importar tags</a>
                         </li>
+
+                        <li><a class="dropdown-item" href='<?php echo site_url('carga_masiva/datos_personales')?>'>Importar datos personales</a>
+                        </li>
                 
                    <?php } ?>
 

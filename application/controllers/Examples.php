@@ -83,6 +83,12 @@ class Examples extends CI_Controller {
 											'titulo' 				=> 'Marca Empleadora',
 											'tags'					=> ['MARCA EMPLEADORA']
 											]
+											,
+			"consolidado"				=> ['tabla_vista' 			=> 'consolidado_tag_mat',
+											'tabla_materializada'	=> 'bada_celulares',
+											'titulo' 				=> 'Consolidado',
+											'tags'					=> null
+											]
 		];
 
 		

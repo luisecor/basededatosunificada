@@ -112,6 +112,11 @@ $route['carga_masiva/form_tabla'] = 'cargaMasivaController/form_tabla';
 $route['carga_masiva/form_tag'] = 'cargaMasivaController/form_tag';
 $route['carga_masiva/tabla/importarCSVaDB'] = 'cargaMasivaController/importarCSVaDB';
 $route['carga_masiva/tag/importarCSVaDB'] = 'cargaMasivaController/importarTAGCSVaDB';
+$route['carga_masiva/datos_personales'] = 'cargaMasivaController/form_datos_personales';
+$route['carga_masiva/datosPersonales/importarCSVaDB'] = 'cargaMasivaController/importarDatosPersonalesCSVaDB';
+
+//importarCSVDatosPersonales
+//datos_personales
 
 
 

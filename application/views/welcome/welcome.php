@@ -33,6 +33,25 @@
         <div class='d-flex flex-wrap justify-content-between'>
 
             <?php if (in_array('TODAS', array_column($this->session->acceso_vistas,'nombre')) || 
+                        in_array('COACHES', array_column($this->session->acceso_vistas,'nombre'))) { ?>
+            <div class='table-card shadow-box d-flex justify-content-center align-items-center my-3'>
+                <a href='<?php echo site_url('vista/coaches')?>' class="d-flex align-items-center w-100 h-100">
+                    <img src="<?=base_url?>css/svg/table.svg" alt="Icono de base de datos" class="ms-4 me-2">
+                   Coaches</a>
+            </div>
+            <?php }; ?>
+
+            <?php if (in_array('TODAS', array_column($this->session->acceso_vistas,'nombre')) || 
+                        in_array('CONSOLIDADO', array_column($this->session->acceso_vistas,'nombre'))) { ?>
+            <div class='table-card shadow-box d-flex justify-content-center align-items-center my-3'>
+                <a href='<?php echo site_url('vista/consolidado')?>' class="d-flex align-items-center w-100 h-100">
+                    <img src="<?=base_url?>css/svg/table.svg" alt="Icono de base de datos" class="ms-4 me-2">
+                   Consolidado</a>
+            </div>
+            <?php }; ?>
+
+
+            <?php if (in_array('TODAS', array_column($this->session->acceso_vistas,'nombre')) || 
                         in_array('COORDINACION Y PLANEAMIENTO', array_column($this->session->acceso_vistas,'nombre'))) { ?>
             <div class='table-card shadow-box d-flex justify-content-center align-items-center my-3'>
                 <a href='<?php echo site_url('vista/coordinacion')?>' class="d-flex align-items-center w-100 h-100">
@@ -41,14 +60,7 @@
             </div>
             <?php }; ?>
 
-            <?php if (in_array('TODAS', array_column($this->session->acceso_vistas,'nombre')) || 
-                        in_array('COACHES', array_column($this->session->acceso_vistas,'nombre'))) { ?>
-            <div class='table-card shadow-box d-flex justify-content-center align-items-center my-3'>
-                <a href='<?php echo site_url('vista/coaches')?>' class="d-flex align-items-center w-100 h-100">
-                    <img src="<?=base_url?>css/svg/table.svg" alt="Icono de base de datos" class="ms-4 me-2">
-                   Coaches</a>
-            </div>
-            <?php }; ?>
+            
 
             <?php if (in_array('TODAS', array_column($this->session->acceso_vistas,'nombre')) || 
                         in_array('ECH', array_column($this->session->acceso_vistas,'nombre'))) { ?>

@@ -9,6 +9,7 @@ class CargaMasivaController extends CI_Controller {
         $this->load->model('tags_model');
         $this->load->model('tablas_model');
         $this->load->model('tags_model');
+        $this->load->model('bada_celulares_model');
     }
 
     public function index(){
@@ -16,6 +17,114 @@ class CargaMasivaController extends CI_Controller {
         $this->load->view('index/navBar/navBarGrocery');
         $this->load->view('cargaMasiva/guia');
         $this->load->view('index/footer');
+    }
+
+    public function form_datos_personales(){
+        $data = null;
+        $this->load->view('index/header');
+        $this->load->view('index/navBar/navBarGrocery');
+        $this->load->view('cargaMasiva/datos_personales',$data);
+        $this->load->view('index/footer');
+    }
+
+    public function importarDatosPersonalesCSVaDB (){
+        
+        $config['upload_path']          = './assets/uploads/files';
+        $config['allowed_types']        = 'csv';
+        $config['max_size']             = 2048;
+
+
+        $this->load->library('upload', $config);
+
+
+        if ( !$this->upload->do_upload('file'))
+                {   
+                        // echo "HAY ERRORES";
+                        $valueSelected = $this->input->post(array('importData'), TRUE);
+                        // var_dump($valueSelected);
+                        $data['mensaje'] = $this->upload->display_errors();
+                        $data['tabla'] = $valueSelected;
+                        // return print_r( $data['error']);
+                       
+                        $tableList = $this->tablas_model->get_tables();
+                        $data['tableList'] = $tableList;
+                        $this->load->view('index/header');
+                        $this->load->view('index/navBar/navBarGrocery');
+                        $this->load->view('cargaMasiva/datos_personales',$data);
+                        $this->load->view('index/footer');
+                }
+                else
+                {
+                    // echo "NO HAY ERRORES";
+                    $valueSelected = $this->input->post(array('importData'));
+                        $data['tabla'] = $valueSelected;
+                        $data['input'] = $this->upload->data();
+
+                        $columnas_extra = $this->campos_extra($valueSelected);
+                        
+                        $file = fopen($data['input']['full_path'],"r");
+
+                        $i = 1;             // Comienzo de lectura->fila = 1
+                        $csvArr = array();  // Array que contiene datos del archivo leido
+                                            // maximo de 1Mill de filas, separado por ,
+                        while ( ($filedata = fgetcsv($file , 1000000, ",")) !== FALSE ){
+                           
+
+                            if ($i >= 2){
+                                                    // Columna 0 -> 1er
+                                $csvArr[$i]['cuit'] = $filedata[0];
+                                $csvArr[$i]['telefono'] = $filedata[1];
+                                $csvArr[$i]['email'] = $filedata[2];
+                                
+                                
+                            }
+                            $i++;
+                            
+                        }
+
+                       
+
+                        fclose($file);
+                        
+                        //$tabla = $this->bada_celulares_model->get_table_name($valueSelected['importData'])[0]->nombre;
+
+                        //Verificar si existe el cuit
+
+                        $udpdated = 0;
+                        $count = 0;
+                        $existe = false;
+                        
+
+                        foreach ($csvArr as $person) {
+                          
+                           $existe = $this->bada_celulares_model->existe_cuit($person['cuit']);
+
+                           $cuit = $person['cuit'];
+                           $telefono = $person['telefono'];
+                           $mail = $person['email'];
+
+                           if ($existe){
+                            //updatear
+                            $this->bada_celulares_model->update_datos_personales($cuit,$telefono,$mail);
+                            $udpdated ++;
+                           } else{
+                            //crear 
+                            $this->bada_celulares_model->create_datos_personales($cuit,$telefono,$mail);
+                            $count++;
+                           }
+
+                        }
+
+                        $data['mensaje'] = 'Registros nuevos : ' . $count . '<br>
+                        Registros actualizados : ' . $udpdated . '<br>
+                        Registos totales : ' . ($count + $udpdated) . '<br>';
+                       
+
+                        $this->load->view('index/header');
+                        $this->load->view('index/navBar/navBarGrocery');
+                        $this->load->view('cargaMasiva/datos_personales',$data);
+                        $this->load->view('index/footer');
+                }
     }
 
     public function form_tabla(){
